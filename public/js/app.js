@@ -1916,6 +1916,3131 @@ var weakMemoize = function weakMemoize(func) {
 
 /***/ }),
 
+/***/ "./node_modules/@floating-ui/react-dom-interactions/dist/floating-ui.react-dom-interactions.esm.js":
+/*!*********************************************************************************************************!*\
+  !*** ./node_modules/@floating-ui/react-dom-interactions/dist/floating-ui.react-dom-interactions.esm.js ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FloatingDelayGroup": () => (/* binding */ FloatingDelayGroup),
+/* harmony export */   "FloatingFocusManager": () => (/* binding */ FloatingFocusManager),
+/* harmony export */   "FloatingNode": () => (/* binding */ FloatingNode),
+/* harmony export */   "FloatingOverlay": () => (/* binding */ FloatingOverlay),
+/* harmony export */   "FloatingPortal": () => (/* binding */ FloatingPortal),
+/* harmony export */   "FloatingTree": () => (/* binding */ FloatingTree),
+/* harmony export */   "arrow": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.arrow),
+/* harmony export */   "autoPlacement": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.autoPlacement),
+/* harmony export */   "autoUpdate": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.autoUpdate),
+/* harmony export */   "computePosition": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.computePosition),
+/* harmony export */   "detectOverflow": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.detectOverflow),
+/* harmony export */   "flip": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.flip),
+/* harmony export */   "getOverflowAncestors": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.getOverflowAncestors),
+/* harmony export */   "hide": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.hide),
+/* harmony export */   "inline": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.inline),
+/* harmony export */   "inner": () => (/* binding */ inner),
+/* harmony export */   "limitShift": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.limitShift),
+/* harmony export */   "offset": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.offset),
+/* harmony export */   "platform": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.platform),
+/* harmony export */   "safePolygon": () => (/* binding */ safePolygon),
+/* harmony export */   "shift": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.shift),
+/* harmony export */   "size": () => (/* reexport safe */ _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.size),
+/* harmony export */   "useClick": () => (/* binding */ useClick),
+/* harmony export */   "useDelayGroup": () => (/* binding */ useDelayGroup),
+/* harmony export */   "useDelayGroupContext": () => (/* binding */ useDelayGroupContext),
+/* harmony export */   "useDismiss": () => (/* binding */ useDismiss),
+/* harmony export */   "useFloating": () => (/* binding */ useFloating),
+/* harmony export */   "useFloatingNodeId": () => (/* binding */ useFloatingNodeId),
+/* harmony export */   "useFloatingParentNodeId": () => (/* binding */ useFloatingParentNodeId),
+/* harmony export */   "useFloatingPortalNode": () => (/* binding */ useFloatingPortalNode),
+/* harmony export */   "useFloatingTree": () => (/* binding */ useFloatingTree),
+/* harmony export */   "useFocus": () => (/* binding */ useFocus),
+/* harmony export */   "useHover": () => (/* binding */ useHover),
+/* harmony export */   "useId": () => (/* binding */ useId),
+/* harmony export */   "useInnerOffset": () => (/* binding */ useInnerOffset),
+/* harmony export */   "useInteractions": () => (/* binding */ useInteractions),
+/* harmony export */   "useListNavigation": () => (/* binding */ useListNavigation),
+/* harmony export */   "useRole": () => (/* binding */ useRole),
+/* harmony export */   "useTypeahead": () => (/* binding */ useTypeahead)
+/* harmony export */ });
+/* harmony import */ var _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @floating-ui/react-dom */ "./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.esm.js");
+/* harmony import */ var _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @floating-ui/react-dom */ "./node_modules/@floating-ui/core/dist/floating-ui.core.browser.mjs");
+/* harmony import */ var _floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @floating-ui/react-dom */ "./node_modules/@floating-ui/dom/dist/floating-ui.dom.browser.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var aria_hidden__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! aria-hidden */ "./node_modules/aria-hidden/dist/es2015/index.js");
+
+
+
+
+
+
+
+var index = typeof document !== 'undefined' ? react__WEBPACK_IMPORTED_MODULE_1__.useLayoutEffect : react__WEBPACK_IMPORTED_MODULE_1__.useEffect;
+
+function createPubSub() {
+  const map = new Map();
+  return {
+    emit(event, data) {
+      var _map$get;
+
+      (_map$get = map.get(event)) == null ? void 0 : _map$get.forEach(handler => handler(data));
+    },
+
+    on(event, listener) {
+      map.set(event, [...(map.get(event) || []), listener]);
+    },
+
+    off(event, listener) {
+      map.set(event, (map.get(event) || []).filter(l => l !== listener));
+    }
+
+  };
+}
+
+let serverHandoffComplete = false;
+let count = 0;
+
+const genId = () => "floating-ui-" + count++;
+
+function useFloatingId() {
+  const [id, setId] = react__WEBPACK_IMPORTED_MODULE_1__.useState(() => serverHandoffComplete ? genId() : undefined);
+  index(() => {
+    if (id == null) {
+      setId(genId());
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, []);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!serverHandoffComplete) {
+      serverHandoffComplete = true;
+    }
+  }, []);
+  return id;
+} // `toString()` prevents bundlers from trying to `import { useId } from 'react'`
+
+
+const useReactId = react__WEBPACK_IMPORTED_MODULE_1__[/*#__PURE__*/'useId'.toString()];
+/**
+ * Uses React 18's built-in `useId()` when available, or falls back to a
+ * slightly less performant (requiring a double render) implementation for
+ * earlier React versions.
+ * @see https://floating-ui.com/docs/useId
+ */
+
+const useId = useReactId != null ? useReactId : useFloatingId;
+
+const FloatingNodeContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createContext(null);
+const FloatingTreeContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createContext(null);
+const useFloatingParentNodeId = () => {
+  var _React$useContext$id, _React$useContext;
+
+  return (_React$useContext$id = (_React$useContext = react__WEBPACK_IMPORTED_MODULE_1__.useContext(FloatingNodeContext)) == null ? void 0 : _React$useContext.id) != null ? _React$useContext$id : null;
+};
+const useFloatingTree = () => react__WEBPACK_IMPORTED_MODULE_1__.useContext(FloatingTreeContext);
+/**
+ * Registers a node into the floating tree, returning its id.
+ */
+
+const useFloatingNodeId = () => {
+  const id = useId();
+  const tree = useFloatingTree();
+  const parentId = useFloatingParentNodeId();
+  index(() => {
+    const node = {
+      id,
+      parentId
+    };
+    tree == null ? void 0 : tree.addNode(node);
+    return () => {
+      tree == null ? void 0 : tree.removeNode(node);
+    };
+  }, [tree, id, parentId]);
+  return id;
+};
+/**
+ * Provides parent node context for nested floating elements.
+ * @see https://floating-ui.com/docs/FloatingTree
+ */
+
+const FloatingNode = _ref => {
+  let {
+    children,
+    id
+  } = _ref;
+  const parentId = useFloatingParentNodeId();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(FloatingNodeContext.Provider, {
+    value: react__WEBPACK_IMPORTED_MODULE_1__.useMemo(() => ({
+      id,
+      parentId
+    }), [id, parentId])
+  }, children);
+};
+/**
+ * Provides context for nested floating elements when they are not children of
+ * each other on the DOM (i.e. portalled to a common node, rather than their
+ * respective parent).
+ * @see https://floating-ui.com/docs/FloatingTree
+ */
+
+const FloatingTree = _ref2 => {
+  let {
+    children
+  } = _ref2;
+  const nodesRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef([]);
+  const addNode = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(node => {
+    nodesRef.current = [...nodesRef.current, node];
+  }, []);
+  const removeNode = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(node => {
+    nodesRef.current = nodesRef.current.filter(n => n !== node);
+  }, []);
+  const events = react__WEBPACK_IMPORTED_MODULE_1__.useState(() => createPubSub())[0];
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(FloatingTreeContext.Provider, {
+    value: react__WEBPACK_IMPORTED_MODULE_1__.useMemo(() => ({
+      nodesRef,
+      addNode,
+      removeNode,
+      events
+    }), [nodesRef, addNode, removeNode, events])
+  }, children);
+};
+
+function getDocument(floating) {
+  var _floating$ownerDocume;
+
+  return (_floating$ownerDocume = floating == null ? void 0 : floating.ownerDocument) != null ? _floating$ownerDocume : document;
+}
+
+function getWindow(value) {
+  var _getDocument$defaultV;
+
+  return (_getDocument$defaultV = getDocument(value).defaultView) != null ? _getDocument$defaultV : window;
+}
+
+function isElement(value) {
+  return value ? value instanceof getWindow(value).Element : false;
+}
+function isHTMLElement(value) {
+  return value ? value instanceof getWindow(value).HTMLElement : false;
+}
+
+// `toString()` prevents bundlers from trying to `import { useInsertionEffect } from 'react'`
+const useInsertionEffect = react__WEBPACK_IMPORTED_MODULE_1__[/*#__PURE__*/'useInsertionEffect'.toString()];
+function useEvent(callback) {
+  const ref = react__WEBPACK_IMPORTED_MODULE_1__.useRef(() => {
+    if (true) {
+      throw new Error('Cannot call an event handler while rendering.');
+    }
+  });
+
+  if (useInsertionEffect) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useInsertionEffect(() => {
+      ref.current = callback;
+    });
+  } else {
+    ref.current = callback;
+  }
+
+  return react__WEBPACK_IMPORTED_MODULE_1__.useCallback(function () {
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return ref.current == null ? void 0 : ref.current(...args);
+  }, []);
+}
+
+function useFloating(_temp) {
+  let {
+    open = false,
+    onOpenChange: unstable_onOpenChange,
+    whileElementsMounted,
+    placement,
+    middleware,
+    strategy,
+    nodeId
+  } = _temp === void 0 ? {} : _temp;
+  const [domReference, setDomReference] = react__WEBPACK_IMPORTED_MODULE_1__.useState(null);
+  const tree = useFloatingTree();
+  const domReferenceRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(null);
+  const dataRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef({});
+  const events = react__WEBPACK_IMPORTED_MODULE_1__.useState(() => createPubSub())[0];
+  const position = (0,_floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_0__.useFloating)({
+    placement,
+    middleware,
+    strategy,
+    whileElementsMounted
+  });
+  const onOpenChange = useEvent(unstable_onOpenChange);
+  const refs = react__WEBPACK_IMPORTED_MODULE_1__.useMemo(() => ({ ...position.refs,
+    domReference: domReferenceRef
+  }), [position.refs]);
+  const context = react__WEBPACK_IMPORTED_MODULE_1__.useMemo(() => ({ ...position,
+    refs,
+    dataRef,
+    nodeId,
+    events,
+    open,
+    onOpenChange,
+    _: {
+      domReference
+    }
+  }), [position, nodeId, events, open, onOpenChange, refs, domReference]);
+  index(() => {
+    const node = tree == null ? void 0 : tree.nodesRef.current.find(node => node.id === nodeId);
+
+    if (node) {
+      node.context = context;
+    }
+  });
+  const {
+    reference
+  } = position;
+  const setReference = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(node => {
+    if (isElement(node) || node === null) {
+      context.refs.domReference.current = node;
+      setDomReference(node);
+    }
+
+    reference(node);
+  }, [reference, context.refs]);
+  return react__WEBPACK_IMPORTED_MODULE_1__.useMemo(() => ({ ...position,
+    context,
+    refs,
+    reference: setReference
+  }), [position, refs, context, setReference]);
+}
+
+function mergeProps(userProps, propsList, elementKey) {
+  const map = new Map();
+  return { ...(elementKey === 'floating' && {
+      tabIndex: -1
+    }),
+    ...userProps,
+    ...propsList.map(value => value ? value[elementKey] : null).concat(userProps).reduce((acc, props) => {
+      if (!props) {
+        return acc;
+      }
+
+      Object.entries(props).forEach(_ref => {
+        let [key, value] = _ref;
+
+        if (key.indexOf('on') === 0) {
+          if (!map.has(key)) {
+            map.set(key, []);
+          }
+
+          if (typeof value === 'function') {
+            var _map$get;
+
+            (_map$get = map.get(key)) == null ? void 0 : _map$get.push(value);
+
+            acc[key] = function () {
+              var _map$get2;
+
+              for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+                args[_key] = arguments[_key];
+              }
+
+              (_map$get2 = map.get(key)) == null ? void 0 : _map$get2.forEach(fn => fn(...args));
+            };
+          }
+        } else {
+          acc[key] = value;
+        }
+      });
+      return acc;
+    }, {})
+  };
+}
+
+const useInteractions = function (propsList) {
+  if (propsList === void 0) {
+    propsList = [];
+  }
+
+  return {
+    getReferenceProps: userProps => mergeProps(userProps, propsList, 'reference'),
+    getFloatingProps: userProps => mergeProps(userProps, propsList, 'floating'),
+    getItemProps: userProps => mergeProps(userProps, propsList, 'item')
+  };
+};
+
+function getChildren(nodes, id) {
+  var _nodes$filter;
+
+  let allChildren = (_nodes$filter = nodes.filter(node => {
+    var _node$context;
+
+    return node.parentId === id && ((_node$context = node.context) == null ? void 0 : _node$context.open);
+  })) != null ? _nodes$filter : [];
+  let currentChildren = allChildren;
+
+  while (currentChildren.length) {
+    var _nodes$filter2;
+
+    currentChildren = (_nodes$filter2 = nodes.filter(node => {
+      var _currentChildren;
+
+      return (_currentChildren = currentChildren) == null ? void 0 : _currentChildren.some(n => {
+        var _node$context2;
+
+        return node.parentId === n.id && ((_node$context2 = node.context) == null ? void 0 : _node$context2.open);
+      });
+    })) != null ? _nodes$filter2 : [];
+    allChildren = allChildren.concat(currentChildren);
+  }
+
+  return allChildren;
+}
+
+function isPointInPolygon(point, polygon) {
+  const [x, y] = point;
+  let isInside = false;
+  const length = polygon.length;
+
+  for (let i = 0, j = length - 1; i < length; j = i++) {
+    const [xi, yi] = polygon[i] || [0, 0];
+    const [xj, yj] = polygon[j] || [0, 0];
+    const intersect = yi >= y !== yj >= y && x <= (xj - xi) * (y - yi) / (yj - yi) + xi;
+
+    if (intersect) {
+      isInside = !isInside;
+    }
+  }
+
+  return isInside;
+}
+
+function safePolygon(_temp) {
+  let {
+    restMs = 0,
+    buffer = 0.5,
+    blockPointerEvents = true,
+    debug = null
+  } = _temp === void 0 ? {} : _temp;
+  let timeoutId;
+  let polygonIsDestroyed = false;
+
+  const fn = _ref => {
+    let {
+      x,
+      y,
+      placement,
+      refs,
+      onClose,
+      nodeId,
+      tree,
+      leave = false
+    } = _ref;
+    return function onPointerMove(event) {
+      var _refs$domReference$cu, _refs$floating$curren;
+
+      clearTimeout(timeoutId);
+
+      function close() {
+        clearTimeout(timeoutId);
+        onClose();
+      }
+
+      if (event.pointerType && event.pointerType !== 'mouse') {
+        return;
+      }
+
+      const {
+        clientX,
+        clientY
+      } = event;
+      const target = 'composedPath' in event ? event.composedPath()[0] : event.target;
+      const targetNode = target; // If the pointer is over the reference or floating element already, there
+      // is no need to run the logic.
+
+      if (event.type === 'pointermove' && (_refs$domReference$cu = refs.domReference.current) != null && _refs$domReference$cu.contains(targetNode)) {
+        return;
+      } // If any nested child is open, abort.
+
+
+      if (tree && getChildren(tree.nodesRef.current, nodeId).some(_ref2 => {
+        let {
+          context
+        } = _ref2;
+        return context == null ? void 0 : context.open;
+      })) {
+        return;
+      } // The cursor landed, so we destroy the polygon logic
+
+
+      if ((_refs$floating$curren = refs.floating.current) != null && _refs$floating$curren.contains(targetNode) && !leave) {
+        polygonIsDestroyed = true;
+        return;
+      }
+
+      if (!refs.domReference.current || !refs.floating.current || placement == null || x == null || y == null) {
+        return;
+      }
+
+      const refRect = refs.domReference.current.getBoundingClientRect();
+      const rect = refs.floating.current.getBoundingClientRect();
+      const side = placement.split('-')[0];
+      const cursorLeaveFromRight = x > rect.right - rect.width / 2;
+      const cursorLeaveFromBottom = y > rect.bottom - rect.height / 2; // If the pointer is leaving from the opposite side, the "buffer" logic
+      // creates a point where the floating element remains open, but should be
+      // ignored.
+      // A constant of 1 handles floating point rounding errors.
+
+      if (side === 'top' && y >= refRect.bottom - 1 || side === 'bottom' && y <= refRect.top + 1 || side === 'left' && x >= refRect.right - 1 || side === 'right' && x <= refRect.left + 1) {
+        return close();
+      } // Ignore when the cursor is within the rectangular trough between the
+      // two elements. Since the triangle is created from the cursor point,
+      // which can start beyond the ref element's edge, traversing back and
+      // forth from the ref to the floating element can cause it to close. This
+      // ensures it always remains open in that case.
+
+
+      switch (side) {
+        case 'top':
+          if (clientX >= rect.left && clientX <= rect.right && clientY >= rect.top && clientY <= refRect.top + 1) {
+            return;
+          }
+
+          break;
+
+        case 'bottom':
+          if (clientX >= rect.left && clientX <= rect.right && clientY >= refRect.bottom - 1 && clientY <= rect.bottom) {
+            return;
+          }
+
+          break;
+
+        case 'left':
+          if (clientX >= rect.left && clientX <= refRect.left + 1 && clientY >= rect.top && clientY <= rect.bottom) {
+            return;
+          }
+
+          break;
+
+        case 'right':
+          if (clientX >= refRect.right - 1 && clientX <= rect.right && clientY >= rect.top && clientY <= rect.bottom) {
+            return;
+          }
+
+          break;
+      }
+
+      if (polygonIsDestroyed) {
+        return close();
+      }
+
+      function getPolygon(_ref3) {
+        let [x, y] = _ref3;
+        const isFloatingWider = rect.width > refRect.width;
+        const isFloatingTaller = rect.height > refRect.height;
+
+        switch (side) {
+          case 'top':
+            {
+              const cursorPointOne = [isFloatingWider ? x + buffer / 2 : cursorLeaveFromRight ? x + buffer * 4 : x - buffer * 4, y + buffer + 1];
+              const cursorPointTwo = [isFloatingWider ? x - buffer / 2 : cursorLeaveFromRight ? x + buffer * 4 : x - buffer * 4, y + buffer + 1];
+              const commonPoints = [[rect.left, cursorLeaveFromRight ? rect.bottom - buffer : isFloatingWider ? rect.bottom - buffer : rect.top], [rect.right, cursorLeaveFromRight ? isFloatingWider ? rect.bottom - buffer : rect.top : rect.bottom - buffer]];
+              return [cursorPointOne, cursorPointTwo, ...commonPoints];
+            }
+
+          case 'bottom':
+            {
+              const cursorPointOne = [isFloatingWider ? x + buffer / 2 : cursorLeaveFromRight ? x + buffer * 4 : x - buffer * 4, y - buffer];
+              const cursorPointTwo = [isFloatingWider ? x - buffer / 2 : cursorLeaveFromRight ? x + buffer * 4 : x - buffer * 4, y - buffer];
+              const commonPoints = [[rect.left, cursorLeaveFromRight ? rect.top + buffer : isFloatingWider ? rect.top + buffer : rect.bottom], [rect.right, cursorLeaveFromRight ? isFloatingWider ? rect.top + buffer : rect.bottom : rect.top + buffer]];
+              return [cursorPointOne, cursorPointTwo, ...commonPoints];
+            }
+
+          case 'left':
+            {
+              const cursorPointOne = [x + buffer + 1, isFloatingTaller ? y + buffer / 2 : cursorLeaveFromBottom ? y + buffer * 4 : y - buffer * 4];
+              const cursorPointTwo = [x + buffer + 1, isFloatingTaller ? y - buffer / 2 : cursorLeaveFromBottom ? y + buffer * 4 : y - buffer * 4];
+              const commonPoints = [[cursorLeaveFromBottom ? rect.right - buffer : isFloatingTaller ? rect.right - buffer : rect.left, rect.top], [cursorLeaveFromBottom ? isFloatingTaller ? rect.right - buffer : rect.left : rect.right - buffer, rect.bottom]];
+              return [...commonPoints, cursorPointOne, cursorPointTwo];
+            }
+
+          case 'right':
+            {
+              const cursorPointOne = [x - buffer, isFloatingTaller ? y + buffer / 2 : cursorLeaveFromBottom ? y + buffer * 4 : y - buffer * 4];
+              const cursorPointTwo = [x - buffer, isFloatingTaller ? y - buffer / 2 : cursorLeaveFromBottom ? y + buffer * 4 : y - buffer * 4];
+              const commonPoints = [[cursorLeaveFromBottom ? rect.left + buffer : isFloatingTaller ? rect.left + buffer : rect.right, rect.top], [cursorLeaveFromBottom ? isFloatingTaller ? rect.left + buffer : rect.right : rect.left + buffer, rect.bottom]];
+              return [cursorPointOne, cursorPointTwo, ...commonPoints];
+            }
+        }
+      }
+
+      const poly = getPolygon([x, y]);
+
+      if (true) {
+        debug == null ? void 0 : debug(poly.slice(0, 4).join(', '));
+      }
+
+      if (!isPointInPolygon([clientX, clientY], poly)) {
+        close();
+      } else if (restMs) {
+        timeoutId = setTimeout(onClose, restMs);
+      }
+    };
+  };
+
+  fn.__options = {
+    blockPointerEvents
+  };
+  return fn;
+}
+
+const DEFAULT_ID = 'floating-ui-root';
+const useFloatingPortalNode = function (_temp) {
+  let {
+    id = DEFAULT_ID,
+    enabled = true
+  } = _temp === void 0 ? {} : _temp;
+  const [portalEl, setPortalEl] = react__WEBPACK_IMPORTED_MODULE_1__.useState(null);
+  index(() => {
+    if (!enabled) {
+      return;
+    }
+
+    const rootNode = document.getElementById(id);
+
+    if (rootNode) {
+      setPortalEl(rootNode);
+    } else {
+      const newPortalEl = document.createElement('div');
+      newPortalEl.id = id;
+      setPortalEl(newPortalEl);
+
+      if (!document.body.contains(newPortalEl)) {
+        document.body.appendChild(newPortalEl);
+      }
+    }
+  }, [id, enabled]);
+  return portalEl;
+};
+/**
+ * Portals your floating element outside of the main app node.
+ * @see https://floating-ui.com/docs/FloatingPortal
+ */
+
+const FloatingPortal = _ref => {
+  let {
+    children,
+    id = DEFAULT_ID,
+    root = null
+  } = _ref;
+  const portalNode = useFloatingPortalNode({
+    id,
+    enabled: !root
+  });
+
+  if (root) {
+    return /*#__PURE__*/(0,react_dom__WEBPACK_IMPORTED_MODULE_2__.createPortal)(children, root);
+  }
+
+  if (portalNode) {
+    return /*#__PURE__*/(0,react_dom__WEBPACK_IMPORTED_MODULE_2__.createPortal)(children, portalNode);
+  }
+
+  return null;
+};
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+// Avoid Chrome DevTools blue warning
+function getPlatform() {
+  const uaData = navigator.userAgentData;
+
+  if (uaData != null && uaData.platform) {
+    return uaData.platform;
+  }
+
+  return navigator.platform;
+}
+function getUserAgent() {
+  const uaData = navigator.userAgentData;
+
+  if (uaData != null && uaData.brands) {
+    return uaData.brands.map(_ref => {
+      let {
+        brand,
+        version
+      } = _ref;
+      return brand + "/" + version;
+    }).join(' ');
+  }
+
+  return navigator.userAgent;
+}
+
+const identifier = 'data-floating-ui-scroll-lock';
+/**
+ * Provides base styling for a fixed overlay element to dim content or block
+ * pointer events behind a floating element.
+ * It's a regular `<div>`, so it can be styled via any CSS solution you prefer.
+ * @see https://floating-ui.com/docs/FloatingOverlay
+ */
+
+const FloatingOverlay = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(function FloatingOverlay(_ref, ref) {
+  let {
+    lockScroll = false,
+    ...rest
+  } = _ref;
+  index(() => {
+    var _window$visualViewpor, _window$visualViewpor2, _window$visualViewpor3, _window$visualViewpor4;
+
+    if (!lockScroll) {
+      return;
+    }
+
+    const alreadyLocked = document.body.hasAttribute(identifier);
+
+    if (alreadyLocked) {
+      return;
+    }
+
+    document.body.setAttribute(identifier, ''); // RTL <body> scrollbar
+
+    const scrollbarX = Math.round(document.documentElement.getBoundingClientRect().left) + document.documentElement.scrollLeft;
+    const paddingProp = scrollbarX ? 'paddingLeft' : 'paddingRight';
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth; // Only iOS doesn't respect `overflow: hidden` on document.body, and this
+    // technique has fewer side effects.
+
+    if (!/iP(hone|ad|od)|iOS/.test(getPlatform())) {
+      Object.assign(document.body.style, {
+        overflow: 'hidden',
+        [paddingProp]: scrollbarWidth + "px"
+      });
+      return () => {
+        document.body.removeAttribute(identifier);
+        Object.assign(document.body.style, {
+          overflow: '',
+          [paddingProp]: ''
+        });
+      };
+    } // iOS 12 does not support `visuaViewport`.
+
+
+    const offsetLeft = (_window$visualViewpor = (_window$visualViewpor2 = window.visualViewport) == null ? void 0 : _window$visualViewpor2.offsetLeft) != null ? _window$visualViewpor : 0;
+    const offsetTop = (_window$visualViewpor3 = (_window$visualViewpor4 = window.visualViewport) == null ? void 0 : _window$visualViewpor4.offsetTop) != null ? _window$visualViewpor3 : 0;
+    const scrollX = window.pageXOffset;
+    const scrollY = window.pageYOffset;
+    Object.assign(document.body.style, {
+      position: 'fixed',
+      overflow: 'hidden',
+      top: -(scrollY - Math.floor(offsetTop)) + "px",
+      left: -(scrollX - Math.floor(offsetLeft)) + "px",
+      right: '0',
+      [paddingProp]: scrollbarWidth + "px"
+    });
+    return () => {
+      Object.assign(document.body.style, {
+        position: '',
+        overflow: '',
+        top: '',
+        left: '',
+        right: '',
+        [paddingProp]: ''
+      });
+      document.body.removeAttribute(identifier);
+      window.scrollTo(scrollX, scrollY);
+    };
+  }, [lockScroll]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", _extends({
+    ref: ref
+  }, rest, {
+    style: {
+      position: 'fixed',
+      overflow: 'auto',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      ...rest.style
+    }
+  }));
+});
+
+/**
+ * Find the real active element. Traverses into shadowRoots.
+ */
+function activeElement(doc) {
+  let activeElement = doc.activeElement;
+
+  while (((_activeElement = activeElement) == null ? void 0 : (_activeElement$shadow = _activeElement.shadowRoot) == null ? void 0 : _activeElement$shadow.activeElement) != null) {
+    var _activeElement, _activeElement$shadow;
+
+    activeElement = activeElement.shadowRoot.activeElement;
+  }
+
+  return activeElement;
+}
+
+function getAncestors(nodes, id) {
+  var _nodes$find;
+
+  let allAncestors = [];
+  let currentParentId = (_nodes$find = nodes.find(node => node.id === id)) == null ? void 0 : _nodes$find.parentId;
+
+  while (currentParentId) {
+    const currentNode = nodes.find(node => node.id === currentParentId);
+    currentParentId = currentNode == null ? void 0 : currentNode.parentId;
+
+    if (currentNode) {
+      allAncestors = allAncestors.concat(currentNode);
+    }
+  }
+
+  return allAncestors;
+}
+
+function getTarget(event) {
+  if ('composedPath' in event) {
+    return event.composedPath()[0];
+  } // TS thinks `event` is of type never as it assumes all browsers support
+  // `composedPath()`, but browsers without shadow DOM don't.
+
+
+  return event.target;
+}
+
+const TYPEABLE_SELECTOR = "input:not([type='hidden']):not([disabled])," + "[contenteditable]:not([contenteditable='false']),textarea:not([disabled])";
+function isTypeableElement(element) {
+  return isHTMLElement(element) && element.matches(TYPEABLE_SELECTOR);
+}
+
+function stopEvent(event) {
+  event.preventDefault();
+  event.stopPropagation();
+}
+
+function useLatestRef(value) {
+  const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(value);
+  index(() => {
+    ref.current = value;
+  });
+  return ref;
+}
+
+function focus(el, preventScroll) {
+  if (preventScroll === void 0) {
+    preventScroll = false;
+  }
+
+  // `mousedown` clicks occur before `focus`, so the button will steal the
+  // focus unless we wait a frame.
+  requestAnimationFrame(() => {
+    el == null ? void 0 : el.focus({
+      preventScroll
+    });
+  });
+}
+
+const SELECTOR = 'select:not([disabled]),a[href],button:not([disabled]),[tabindex],' + 'iframe,object,embed,area[href],audio[controls],video[controls],' + TYPEABLE_SELECTOR;
+const FocusGuard = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(function FocusGuard(props, ref) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", _extends({}, props, {
+    ref: ref,
+    tabIndex: 0,
+    style: {
+      position: 'fixed',
+      opacity: '0',
+      pointerEvents: 'none',
+      outline: '0'
+    }
+  }));
+});
+
+/**
+ * Provides focus management for the floating element.
+ * @see https://floating-ui.com/docs/FloatingFocusManager
+ */
+function FloatingFocusManager(_ref) {
+  let {
+    context: {
+      refs,
+      nodeId,
+      onOpenChange,
+      dataRef,
+      events
+    },
+    children,
+    order = ['content'],
+    endGuard = true,
+    initialFocus = 0,
+    returnFocus = true,
+    modal = true
+  } = _ref;
+  const orderRef = useLatestRef(order);
+  const tree = useFloatingTree();
+  const getTabbableElements = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(() => {
+    return orderRef.current.map(type => {
+      if (type === 'reference') {
+        return refs.domReference.current;
+      }
+
+      if (refs.floating.current && type === 'floating') {
+        return refs.floating.current;
+      }
+
+      if (type === 'content') {
+        var _refs$floating$curren, _refs$floating$curren2;
+
+        return Array.from((_refs$floating$curren = (_refs$floating$curren2 = refs.floating.current) == null ? void 0 : _refs$floating$curren2.querySelectorAll(SELECTOR)) != null ? _refs$floating$curren : []);
+      }
+
+      return null;
+    }).flat().filter(el => {
+      if (el === refs.floating.current || el === refs.domReference.current) {
+        return true;
+      }
+
+      if (isHTMLElement(el)) {
+        var _el$getAttribute;
+
+        const tabIndex = (_el$getAttribute = el.getAttribute('tabindex')) != null ? _el$getAttribute : '0';
+        return tabIndex[0].trim() !== '-';
+      }
+    });
+  }, [orderRef, refs]);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!modal) {
+      return;
+    } // If the floating element has no focusable elements inside it, fallback
+    // to focusing the floating element and preventing tab navigation
+
+
+    const noTabbableContentElements = getTabbableElements().filter(el => el !== refs.floating.current && el !== refs.domReference.current).length === 0;
+
+    function onKeyDown(event) {
+      if (event.key === 'Tab') {
+        if (noTabbableContentElements) {
+          stopEvent(event);
+        }
+
+        const els = getTabbableElements();
+        const target = getTarget(event);
+
+        if (orderRef.current[0] === 'reference' && target === refs.domReference.current) {
+          stopEvent(event);
+
+          if (event.shiftKey) {
+            focus(els[els.length - 1]);
+          } else {
+            focus(els[1]);
+          }
+        }
+
+        if (orderRef.current[1] === 'floating' && target === refs.floating.current && event.shiftKey) {
+          stopEvent(event);
+          focus(els[0]);
+        }
+      }
+    }
+
+    const doc = getDocument(refs.floating.current);
+    doc.addEventListener('keydown', onKeyDown);
+    return () => {
+      doc.removeEventListener('keydown', onKeyDown);
+    };
+  }, [modal, getTabbableElements, orderRef, refs]);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    let isPointerDown = false;
+
+    function onFocusOut(event) {
+      var _refs$floating$curren3, _getAncestors;
+
+      const relatedTarget = event.relatedTarget;
+      const focusMovedOutsideFloating = !((_refs$floating$curren3 = refs.floating.current) != null && _refs$floating$curren3.contains(relatedTarget));
+      const focusMovedOutsideReference = isElement(refs.domReference.current) && !refs.domReference.current.contains(relatedTarget);
+      const isChildOpen = tree && getChildren(tree.nodesRef.current, nodeId).length > 0;
+      const isParentRelated = tree && event.currentTarget === refs.domReference.current && ((_getAncestors = getAncestors(tree.nodesRef.current, nodeId)) == null ? void 0 : _getAncestors.some(node => {
+        var _node$context, _node$context$refs$fl;
+
+        return (_node$context = node.context) == null ? void 0 : (_node$context$refs$fl = _node$context.refs.floating.current) == null ? void 0 : _node$context$refs$fl.contains(relatedTarget);
+      }));
+
+      if (focusMovedOutsideFloating && focusMovedOutsideReference && !isChildOpen && !isParentRelated && !isPointerDown) {
+        onOpenChange(false);
+      }
+    }
+
+    function onPointerDown() {
+      // In Safari, buttons *lose* focus when pressing them. This causes the
+      // reference `focusout` to fire, which closes the floating element.
+      isPointerDown = true;
+      setTimeout(() => {
+        isPointerDown = false;
+      });
+    }
+
+    const floating = refs.floating.current;
+    const reference = refs.domReference.current;
+
+    if (floating && isHTMLElement(reference)) {
+      if (!modal) {
+        floating.addEventListener('focusout', onFocusOut);
+        reference.addEventListener('focusout', onFocusOut);
+        reference.addEventListener('pointerdown', onPointerDown);
+      }
+
+      let cleanup;
+
+      if (modal) {
+        if (orderRef.current.includes('reference')) {
+          cleanup = (0,aria_hidden__WEBPACK_IMPORTED_MODULE_3__.hideOthers)([reference, floating]);
+        } else {
+          cleanup = (0,aria_hidden__WEBPACK_IMPORTED_MODULE_3__.hideOthers)(floating);
+        }
+      }
+
+      return () => {
+        if (!modal) {
+          floating.removeEventListener('focusout', onFocusOut);
+          reference.removeEventListener('focusout', onFocusOut);
+          reference.removeEventListener('pointerdown', onPointerDown);
+        }
+
+        cleanup == null ? void 0 : cleanup();
+      };
+    }
+  }, [nodeId, tree, modal, onOpenChange, orderRef, dataRef, getTabbableElements, refs]);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    const floating = refs.floating.current;
+    const doc = getDocument(floating);
+    let returnFocusValue = returnFocus;
+    let preventReturnFocusScroll = false;
+    let previouslyFocusedElement = activeElement(doc);
+
+    if (previouslyFocusedElement === doc.body && refs.domReference.current) {
+      previouslyFocusedElement = refs.domReference.current;
+    }
+
+    if (typeof initialFocus === 'number') {
+      var _getTabbableElements$;
+
+      const el = (_getTabbableElements$ = getTabbableElements()[initialFocus]) != null ? _getTabbableElements$ : floating;
+      focus(el, el === floating);
+    } else if (isHTMLElement(initialFocus.current)) {
+      var _initialFocus$current;
+
+      const el = (_initialFocus$current = initialFocus.current) != null ? _initialFocus$current : floating;
+      focus(el, el === floating);
+    } // Dismissing via outside press should always ignore `returnFocus` to
+    // prevent unwanted scrolling.
+
+
+    function onDismiss(allowReturnFocus) {
+      if (allowReturnFocus === void 0) {
+        allowReturnFocus = false;
+      }
+
+      if (typeof allowReturnFocus === 'object') {
+        returnFocusValue = true;
+        preventReturnFocusScroll = allowReturnFocus.preventScroll;
+      } else {
+        returnFocusValue = allowReturnFocus;
+      }
+    }
+
+    events.on('dismiss', onDismiss);
+    return () => {
+      events.off('dismiss', onDismiss);
+
+      if (returnFocusValue && isHTMLElement(previouslyFocusedElement)) {
+        focus(previouslyFocusedElement, preventReturnFocusScroll);
+      }
+    };
+  }, [getTabbableElements, initialFocus, returnFocus, refs, events]);
+
+  const isTypeableCombobox = () => {
+    var _refs$domReference$cu;
+
+    return ((_refs$domReference$cu = refs.domReference.current) == null ? void 0 : _refs$domReference$cu.getAttribute('role')) === 'combobox' && isTypeableElement(refs.domReference.current);
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, modal && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(FocusGuard, {
+    onFocus: event => {
+      if (isTypeableCombobox()) {
+        return;
+      }
+
+      stopEvent(event);
+      const els = getTabbableElements();
+
+      if (order[0] === 'reference') {
+        focus(els[0]);
+      } else {
+        focus(els[els.length - 1]);
+      }
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.cloneElement(children, order.includes('floating') ? {
+    tabIndex: 0
+  } : {}), modal && endGuard && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(FocusGuard, {
+    onFocus: event => {
+      if (isTypeableCombobox()) {
+        return;
+      }
+
+      stopEvent(event);
+      focus(getTabbableElements()[0]);
+    }
+  }));
+}
+
+function usePrevious(value) {
+  const ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+  index(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+}
+
+function getDelay(value, prop, pointerType) {
+  if (pointerType && pointerType !== 'mouse') {
+    return 0;
+  }
+
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  return value == null ? void 0 : value[prop];
+}
+
+/**
+ * Adds hover event listeners that change the open state, like CSS :hover.
+ * @see https://floating-ui.com/docs/useHover
+ */
+const useHover = function (context, _temp) {
+  let {
+    enabled = true,
+    delay = 0,
+    handleClose = null,
+    mouseOnly = false,
+    restMs = 0,
+    move = true
+  } = _temp === void 0 ? {} : _temp;
+  const {
+    open,
+    onOpenChange,
+    dataRef,
+    events,
+    refs,
+    _
+  } = context;
+  const tree = useFloatingTree();
+  const parentId = useFloatingParentNodeId();
+  const handleCloseRef = useLatestRef(handleClose);
+  const delayRef = useLatestRef(delay);
+  const previousOpen = usePrevious(open);
+  const pointerTypeRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef();
+  const timeoutRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef();
+  const handlerRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef();
+  const restTimeoutRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef();
+  const blockMouseMoveRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(true);
+  const performedPointerEventsMutationRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(false);
+  const isHoverOpen = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(() => {
+    var _dataRef$current$open;
+
+    const type = (_dataRef$current$open = dataRef.current.openEvent) == null ? void 0 : _dataRef$current$open.type;
+    return (type == null ? void 0 : type.includes('mouse')) && type !== 'mousedown';
+  }, [dataRef]);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    function onDismiss() {
+      clearTimeout(timeoutRef.current);
+      clearTimeout(restTimeoutRef.current);
+      blockMouseMoveRef.current = true;
+    }
+
+    events.on('dismiss', onDismiss);
+    return () => {
+      events.off('dismiss', onDismiss);
+    };
+  }, [enabled, events, refs]);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!enabled || !handleCloseRef.current) {
+      return;
+    }
+
+    function onLeave() {
+      if (isHoverOpen()) {
+        onOpenChange(false);
+      }
+    }
+
+    const html = getDocument(refs.floating.current).documentElement;
+    html.addEventListener('mouseleave', onLeave);
+    return () => {
+      html.removeEventListener('mouseleave', onLeave);
+    };
+  }, [refs, onOpenChange, enabled, handleCloseRef, dataRef, isHoverOpen]);
+  const closeWithDelay = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(function (runElseBranch) {
+    if (runElseBranch === void 0) {
+      runElseBranch = true;
+    }
+
+    const closeDelay = getDelay(delayRef.current, 'close', pointerTypeRef.current);
+
+    if (closeDelay && !handlerRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => onOpenChange(false), closeDelay);
+    } else if (runElseBranch) {
+      clearTimeout(timeoutRef.current);
+      onOpenChange(false);
+    }
+  }, [delayRef, onOpenChange]);
+  const cleanupPointerMoveHandler = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(() => {
+    if (handlerRef.current) {
+      getDocument(refs.floating.current).removeEventListener('pointermove', handlerRef.current);
+      handlerRef.current = undefined;
+    }
+  }, [refs]);
+  const clearPointerEvents = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(() => {
+    getDocument(refs.floating.current).body.style.pointerEvents = '';
+    performedPointerEventsMutationRef.current = false;
+  }, [refs]); // Registering the mouse events on the reference directly to bypass React's
+  // delegation system. If the cursor was on a disabled element and then entered
+  // the reference (no gap), `mouseenter` doesn't fire in the delegation system.
+
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    function isClickLikeOpenEvent() {
+      return dataRef.current.openEvent ? ['click', 'mousedown'].includes(dataRef.current.openEvent.type) : false;
+    }
+
+    function onMouseEnter(event) {
+      clearTimeout(timeoutRef.current);
+      blockMouseMoveRef.current = false;
+
+      if (mouseOnly && pointerTypeRef.current !== 'mouse' || restMs > 0 && getDelay(delayRef.current, 'open') === 0) {
+        return;
+      }
+
+      dataRef.current.openEvent = event;
+      const openDelay = getDelay(delayRef.current, 'open', pointerTypeRef.current);
+
+      if (openDelay) {
+        timeoutRef.current = setTimeout(() => {
+          onOpenChange(true);
+        }, openDelay);
+      } else {
+        onOpenChange(true);
+      }
+    }
+
+    function onMouseLeave(event) {
+      if (isClickLikeOpenEvent()) {
+        return;
+      }
+
+      const doc = getDocument(refs.floating.current);
+      clearTimeout(restTimeoutRef.current);
+
+      if (handleCloseRef.current) {
+        clearTimeout(timeoutRef.current);
+        handlerRef.current && doc.removeEventListener('pointermove', handlerRef.current);
+        handlerRef.current = handleCloseRef.current({ ...context,
+          tree,
+          x: event.clientX,
+          y: event.clientY,
+
+          onClose() {
+            clearPointerEvents();
+            cleanupPointerMoveHandler();
+            closeWithDelay();
+          }
+
+        });
+        doc.addEventListener('pointermove', handlerRef.current);
+        return;
+      }
+
+      closeWithDelay();
+    } // Ensure the floating element closes after scrolling even if the pointer
+    // did not move.
+    // https://github.com/floating-ui/floating-ui/discussions/1692
+
+
+    function onScrollMouseLeave(event) {
+      if (isClickLikeOpenEvent()) {
+        return;
+      }
+
+      handleCloseRef.current == null ? void 0 : handleCloseRef.current({ ...context,
+        tree,
+        x: event.clientX,
+        y: event.clientY,
+        leave: true,
+
+        onClose() {
+          clearPointerEvents();
+          cleanupPointerMoveHandler();
+          closeWithDelay();
+        }
+
+      })(event);
+    }
+
+    const floating = refs.floating.current;
+    const reference = refs.domReference.current;
+
+    if (isElement(reference)) {
+      open && reference.addEventListener('mouseleave', onScrollMouseLeave);
+      floating == null ? void 0 : floating.addEventListener('mouseleave', onScrollMouseLeave);
+      move && reference.addEventListener('mousemove', onMouseEnter, {
+        once: true
+      });
+      reference.addEventListener('mouseenter', onMouseEnter);
+      reference.addEventListener('mouseleave', onMouseLeave);
+      return () => {
+        open && reference.removeEventListener('mouseleave', onScrollMouseLeave);
+        floating == null ? void 0 : floating.removeEventListener('mouseleave', onScrollMouseLeave);
+        move && reference.removeEventListener('mousemove', onMouseEnter);
+        reference.removeEventListener('mouseenter', onMouseEnter);
+        reference.removeEventListener('mouseleave', onMouseLeave);
+      };
+    }
+  }, [// Ensure the effect is re-run when the reference changes.
+  // https://github.com/floating-ui/floating-ui/issues/1833
+  _.domReference, enabled, context, mouseOnly, restMs, move, closeWithDelay, cleanupPointerMoveHandler, clearPointerEvents, onOpenChange, open, tree, refs, delayRef, handleCloseRef, dataRef]); // Block pointer-events of every element other than the reference and floating
+  // while the floating element is open and has a `handleClose` handler. Also
+  // handles nested floating elements.
+  // https://github.com/floating-ui/floating-ui/issues/1722
+
+  index(() => {
+    if (!enabled) {
+      return;
+    }
+
+    if (open && handleCloseRef.current && handleCloseRef.current.__options.blockPointerEvents && isHoverOpen()) {
+      getDocument(refs.floating.current).body.style.pointerEvents = 'none';
+      performedPointerEventsMutationRef.current = true;
+      const reference = refs.domReference.current;
+      const floating = refs.floating.current;
+
+      if (isElement(reference) && floating) {
+        var _tree$nodesRef$curren, _tree$nodesRef$curren2;
+
+        const parentFloating = tree == null ? void 0 : (_tree$nodesRef$curren = tree.nodesRef.current.find(node => node.id === parentId)) == null ? void 0 : (_tree$nodesRef$curren2 = _tree$nodesRef$curren.context) == null ? void 0 : _tree$nodesRef$curren2.refs.floating.current;
+
+        if (parentFloating) {
+          parentFloating.style.pointerEvents = '';
+        }
+
+        reference.style.pointerEvents = 'auto';
+        floating.style.pointerEvents = 'auto';
+        return () => {
+          reference.style.pointerEvents = '';
+          floating.style.pointerEvents = '';
+        };
+      }
+    }
+  }, [enabled, open, parentId, refs, tree, handleCloseRef, dataRef, isHoverOpen]);
+  index(() => {
+    if (previousOpen && !open) {
+      pointerTypeRef.current = undefined;
+      cleanupPointerMoveHandler();
+      clearPointerEvents();
+    }
+  });
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    return () => {
+      cleanupPointerMoveHandler();
+      clearTimeout(timeoutRef.current);
+      clearTimeout(restTimeoutRef.current);
+
+      if (performedPointerEventsMutationRef.current) {
+        clearPointerEvents();
+      }
+    };
+  }, [enabled, cleanupPointerMoveHandler, clearPointerEvents]);
+
+  if (!enabled) {
+    return {};
+  }
+
+  function setPointerRef(event) {
+    pointerTypeRef.current = event.pointerType;
+  }
+
+  return {
+    reference: {
+      onPointerDown: setPointerRef,
+      onPointerEnter: setPointerRef,
+
+      onMouseMove() {
+        if (open || restMs === 0) {
+          return;
+        }
+
+        clearTimeout(restTimeoutRef.current);
+        restTimeoutRef.current = setTimeout(() => {
+          if (!blockMouseMoveRef.current) {
+            onOpenChange(true);
+          }
+        }, restMs);
+      }
+
+    },
+    floating: {
+      onMouseEnter() {
+        clearTimeout(timeoutRef.current);
+      },
+
+      onMouseLeave() {
+        closeWithDelay(false);
+      }
+
+    }
+  };
+};
+
+const FloatingDelayGroupContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createContext({
+  delay: 1000,
+  initialDelay: 1000,
+  currentId: null,
+  setCurrentId: () => {},
+  setState: () => {}
+});
+const useDelayGroupContext = () => react__WEBPACK_IMPORTED_MODULE_1__.useContext(FloatingDelayGroupContext);
+/**
+ * Provides context for a group of floating elements that should share a
+ * `delay`.
+ * @see https://floating-ui.com/docs/FloatingDelayGroup
+ */
+
+const FloatingDelayGroup = _ref => {
+  let {
+    children,
+    delay
+  } = _ref;
+  const [state, setState] = react__WEBPACK_IMPORTED_MODULE_1__.useState({
+    delay,
+    initialDelay: delay,
+    currentId: null
+  });
+  const setCurrentId = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(currentId => {
+    setState(state => ({ ...state,
+      currentId
+    }));
+  }, []);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(FloatingDelayGroupContext.Provider, {
+    value: react__WEBPACK_IMPORTED_MODULE_1__.useMemo(() => ({ ...state,
+      setState,
+      setCurrentId
+    }), [state, setState, setCurrentId])
+  }, children);
+};
+const useDelayGroup = (_ref2, _ref3) => {
+  let {
+    open,
+    onOpenChange
+  } = _ref2;
+  let {
+    id
+  } = _ref3;
+  const {
+    currentId,
+    initialDelay,
+    setState
+  } = useDelayGroupContext();
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (currentId) {
+      setState(state => ({ ...state,
+        delay: {
+          open: 1,
+          close: getDelay(initialDelay, 'close')
+        }
+      }));
+
+      if (currentId !== id) {
+        onOpenChange(false);
+      }
+    }
+  }, [id, onOpenChange, setState, currentId, initialDelay]);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!open && currentId === id) {
+      onOpenChange(false);
+      setState(state => ({ ...state,
+        delay: initialDelay,
+        currentId: null
+      }));
+    }
+  }, [open, setState, currentId, id, onOpenChange, initialDelay]);
+};
+
+function getArgsWithCustomFloatingHeight(args, prop) {
+  return { ...args,
+    rects: { ...args.rects,
+      floating: { ...args.rects.floating,
+        height: args.elements.floating[prop]
+      }
+    }
+  };
+}
+
+const inner = options => ({
+  name: 'inner',
+  options,
+
+  async fn(middlewareArguments) {
+    const {
+      listRef,
+      overflowRef,
+      onFallbackChange,
+      offset: innerOffset = 0,
+      index = 0,
+      minItemsVisible = 4,
+      referenceOverflowThreshold = 0,
+      ...detectOverflowOptions
+    } = options;
+    const {
+      rects,
+      elements: {
+        floating
+      }
+    } = middlewareArguments;
+    const item = listRef.current[index];
+
+    if (true) {
+      if (!middlewareArguments.placement.startsWith('bottom')) {
+        console.warn(['Floating UI: `placement` side must be "bottom" when using the', '`inner` middleware.'].join(' '));
+      }
+    }
+
+    if (!item) {
+      return {};
+    }
+
+    const nextArgs = { ...middlewareArguments,
+      ...(await (0,_floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_4__.offset)(-item.offsetTop - rects.reference.height / 2 - item.offsetHeight / 2 - innerOffset).fn(middlewareArguments))
+    };
+    const overflow = await (0,_floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_4__.detectOverflow)(getArgsWithCustomFloatingHeight(nextArgs, 'scrollHeight'), detectOverflowOptions);
+    const refOverflow = await (0,_floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_4__.detectOverflow)(nextArgs, { ...detectOverflowOptions,
+      elementContext: 'reference'
+    });
+    const diffY = Math.max(0, overflow.top);
+    const nextY = nextArgs.y + diffY;
+    const maxHeight = Math.max(0, floating.scrollHeight - diffY - Math.max(0, overflow.bottom));
+    floating.style.maxHeight = maxHeight + "px";
+    floating.scrollTop = diffY; // There is not enough space, fallback to standard anchored positioning
+
+    if (onFallbackChange) {
+      if (floating.offsetHeight < item.offsetHeight * Math.min(minItemsVisible, listRef.current.length - 1) - 1 || refOverflow.top >= -referenceOverflowThreshold || refOverflow.bottom >= -referenceOverflowThreshold) {
+        (0,react_dom__WEBPACK_IMPORTED_MODULE_2__.flushSync)(() => onFallbackChange(true));
+      } else {
+        (0,react_dom__WEBPACK_IMPORTED_MODULE_2__.flushSync)(() => onFallbackChange(false));
+      }
+    }
+
+    if (overflowRef) {
+      overflowRef.current = await (0,_floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_4__.detectOverflow)(getArgsWithCustomFloatingHeight({ ...nextArgs,
+        y: nextY
+      }, 'offsetHeight'), detectOverflowOptions);
+    }
+
+    return {
+      y: nextY
+    };
+  }
+
+});
+const useInnerOffset = (_ref, _ref2) => {
+  let {
+    open,
+    refs
+  } = _ref;
+  let {
+    enabled = true,
+    overflowRef,
+    onChange
+  } = _ref2;
+  const onChangeRef = useLatestRef(onChange);
+  const controlledScrollingRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(false);
+  const prevScrollTopRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(null);
+  const initialOverflowRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(null);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    function onWheel(e) {
+      if (e.ctrlKey || !el || overflowRef.current == null) {
+        return;
+      }
+
+      const dY = e.deltaY;
+      const isAtTop = overflowRef.current.top >= -0.5;
+      const isAtBottom = overflowRef.current.bottom >= -0.5;
+      const remainingScroll = el.scrollHeight - el.clientHeight;
+      const sign = dY < 0 ? -1 : 1;
+      const method = dY < 0 ? 'max' : 'min';
+
+      if (el.scrollHeight <= el.clientHeight) {
+        return;
+      }
+
+      if (!isAtTop && dY > 0 || !isAtBottom && dY < 0) {
+        e.preventDefault();
+        (0,react_dom__WEBPACK_IMPORTED_MODULE_2__.flushSync)(() => {
+          onChangeRef.current(d => d + Math[method](dY, remainingScroll * sign));
+        });
+      } else if (/firefox/i.test(getUserAgent())) {
+        // Needed to propagate scrolling during momentum scrolling phase once
+        // it gets limited by the boundary. UX improvement, not critical.
+        el.scrollTop += dY;
+      }
+    }
+
+    const el = refs.floating.current;
+
+    if (open && el) {
+      el.addEventListener('wheel', onWheel); // Wait for the position to be ready.
+
+      requestAnimationFrame(() => {
+        prevScrollTopRef.current = el.scrollTop;
+
+        if (overflowRef.current != null) {
+          initialOverflowRef.current = { ...overflowRef.current
+          };
+        }
+      });
+      return () => {
+        prevScrollTopRef.current = null;
+        initialOverflowRef.current = null;
+        el.removeEventListener('wheel', onWheel);
+      };
+    }
+  }, [enabled, open, refs, overflowRef, onChangeRef]);
+
+  if (!enabled) {
+    return {};
+  }
+
+  return {
+    floating: {
+      onKeyDown() {
+        controlledScrollingRef.current = true;
+      },
+
+      onWheel() {
+        controlledScrollingRef.current = false;
+      },
+
+      onPointerMove() {
+        controlledScrollingRef.current = false;
+      },
+
+      onScroll() {
+        const el = refs.floating.current;
+
+        if (!overflowRef.current || !el || !controlledScrollingRef.current) {
+          return;
+        }
+
+        if (prevScrollTopRef.current !== null) {
+          const scrollDiff = el.scrollTop - prevScrollTopRef.current;
+
+          if (overflowRef.current.bottom < -0.5 && scrollDiff < -1 || overflowRef.current.top < -0.5 && scrollDiff > 1) {
+            (0,react_dom__WEBPACK_IMPORTED_MODULE_2__.flushSync)(() => onChange(d => d + scrollDiff));
+          }
+        } // [Firefox] Wait for the height change to have been applied.
+
+
+        requestAnimationFrame(() => {
+          prevScrollTopRef.current = el.scrollTop;
+        });
+      }
+
+    }
+  };
+};
+
+/**
+ * Adds relevant screen reader props for a given element `role`.
+ * @see https://floating-ui.com/docs/useRole
+ */
+const useRole = function (_ref, _temp) {
+  let {
+    open
+  } = _ref;
+  let {
+    enabled = true,
+    role = 'dialog'
+  } = _temp === void 0 ? {} : _temp;
+  const rootId = useId();
+  const referenceId = useId();
+  const floatingProps = {
+    id: rootId,
+    role
+  };
+
+  if (!enabled) {
+    return {};
+  }
+
+  if (role === 'tooltip') {
+    return {
+      reference: {
+        'aria-describedby': open ? rootId : undefined
+      },
+      floating: floatingProps
+    };
+  }
+
+  return {
+    reference: {
+      'aria-expanded': open ? 'true' : 'false',
+      'aria-haspopup': role === 'alertdialog' ? 'dialog' : role,
+      'aria-controls': open ? rootId : undefined,
+      ...(role === 'listbox' && {
+        role: 'combobox'
+      }),
+      ...(role === 'menu' && {
+        id: referenceId
+      })
+    },
+    floating: { ...floatingProps,
+      ...(role === 'menu' && {
+        'aria-labelledby': referenceId
+      })
+    }
+  };
+};
+
+function isButtonTarget(event) {
+  return isHTMLElement(event.target) && event.target.tagName === 'BUTTON';
+}
+
+/**
+ * Adds click event listeners that change the open state.
+ * @see https://floating-ui.com/docs/useClick
+ */
+const useClick = function (_ref, _temp) {
+  let {
+    open,
+    onOpenChange,
+    dataRef,
+    refs
+  } = _ref;
+  let {
+    enabled = true,
+    event: eventOption = 'click',
+    toggle = true,
+    ignoreMouse = false,
+    keyboardHandlers = true
+  } = _temp === void 0 ? {} : _temp;
+  const pointerTypeRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef();
+
+  function isSpaceIgnored() {
+    return isTypeableElement(refs.domReference.current);
+  }
+
+  if (!enabled) {
+    return {};
+  }
+
+  return {
+    reference: {
+      onPointerDown(event) {
+        pointerTypeRef.current = event.pointerType;
+      },
+
+      onMouseDown(event) {
+        // Ignore all buttons except for the "main" button.
+        // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
+        if (event.button !== 0) {
+          return;
+        }
+
+        if (pointerTypeRef.current === 'mouse' && ignoreMouse) {
+          return;
+        }
+
+        if (eventOption === 'click') {
+          return;
+        }
+
+        if (open) {
+          if (toggle && (dataRef.current.openEvent ? dataRef.current.openEvent.type === 'mousedown' : true)) {
+            onOpenChange(false);
+          }
+        } else {
+          onOpenChange(true);
+        }
+
+        dataRef.current.openEvent = event.nativeEvent;
+      },
+
+      onClick(event) {
+        if (eventOption === 'mousedown' && pointerTypeRef.current) {
+          pointerTypeRef.current = undefined;
+          return;
+        }
+
+        if (pointerTypeRef.current === 'mouse' && ignoreMouse) {
+          return;
+        }
+
+        if (open) {
+          if (toggle && (dataRef.current.openEvent ? dataRef.current.openEvent.type === 'click' : true)) {
+            onOpenChange(false);
+          }
+        } else {
+          onOpenChange(true);
+        }
+
+        dataRef.current.openEvent = event.nativeEvent;
+      },
+
+      onKeyDown(event) {
+        pointerTypeRef.current = undefined;
+
+        if (!keyboardHandlers) {
+          return;
+        }
+
+        if (isButtonTarget(event)) {
+          return;
+        }
+
+        if (event.key === ' ' && !isSpaceIgnored()) {
+          // Prvent scrolling
+          event.preventDefault();
+        }
+
+        if (event.key === 'Enter') {
+          if (open) {
+            if (toggle) {
+              onOpenChange(false);
+            }
+          } else {
+            onOpenChange(true);
+          }
+        }
+      },
+
+      onKeyUp(event) {
+        if (!keyboardHandlers) {
+          return;
+        }
+
+        if (isButtonTarget(event) || isSpaceIgnored()) {
+          return;
+        }
+
+        if (event.key === ' ') {
+          if (open) {
+            if (toggle) {
+              onOpenChange(false);
+            }
+          } else {
+            onOpenChange(true);
+          }
+        }
+      }
+
+    }
+  };
+};
+
+/**
+ * Check whether the event.target is within the provided node. Uses event.composedPath if available for custom element support.
+ *
+ * @param event The event whose target/composedPath to check
+ * @param node The node to check against
+ * @returns Whether the event.target/composedPath is within the node.
+ */
+function isEventTargetWithin(event, node) {
+  if (node == null) {
+    return false;
+  }
+
+  if ('composedPath' in event) {
+    return event.composedPath().includes(node);
+  } // TS thinks `event` is of type never as it assumes all browsers support composedPath, but browsers without shadow dom don't
+
+
+  const e = event;
+  return e.target != null && node.contains(e.target);
+}
+
+const bubbleHandlerKeys = {
+  pointerdown: 'onPointerDown',
+  mousedown: 'onMouseDown',
+  click: 'onClick'
+};
+const captureHandlerKeys = {
+  pointerdown: 'onPointerDownCapture',
+  mousedown: 'onMouseDownCapture',
+  click: 'onClickCapture'
+};
+
+/**
+ * Adds listeners that dismiss (close) the floating element.
+ * @see https://floating-ui.com/docs/useDismiss
+ */
+const useDismiss = function (_ref, _temp) {
+  let {
+    open,
+    onOpenChange,
+    refs,
+    events,
+    nodeId
+  } = _ref;
+  let {
+    enabled = true,
+    escapeKey = true,
+    outsidePress = true,
+    outsidePressEvent = 'pointerdown',
+    referencePress = false,
+    referencePressEvent = 'pointerdown',
+    ancestorScroll = false,
+    bubbles = true
+  } = _temp === void 0 ? {} : _temp;
+  const tree = useFloatingTree();
+  const nested = useFloatingParentNodeId() != null;
+  const insideReactTreeRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(false);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!open || !enabled) {
+      return;
+    }
+
+    function onKeyDown(event) {
+      if (event.key === 'Escape') {
+        if (!bubbles && tree && getChildren(tree.nodesRef.current, nodeId).length > 0) {
+          return;
+        }
+
+        events.emit('dismiss', {
+          preventScroll: false
+        });
+        onOpenChange(false);
+      }
+    }
+
+    function onOutsidePress(event) {
+      // Given developers can stop the propagation of the synthetic event,
+      // we can only be confident with a positive value.
+      const insideReactTree = insideReactTreeRef.current;
+      insideReactTreeRef.current = false;
+
+      if (insideReactTree) {
+        return;
+      }
+
+      const target = getTarget(event); // Check if the click occurred on the scrollbar
+
+      if (isElement(target) && refs.floating.current) {
+        var _refs$floating$curren;
+
+        const win = (_refs$floating$curren = refs.floating.current.ownerDocument.defaultView) != null ? _refs$floating$curren : window;
+        const canScrollX = target.scrollWidth > target.clientWidth;
+        const canScrollY = target.scrollHeight > target.clientHeight;
+        let xCond = canScrollY && event.offsetX > target.clientWidth; // In some browsers it is possible to change the <body> (or window)
+        // scrollbar to the left side, but is very rare and is difficult to
+        // check for. Plus, for modal dialogs with backdrops, it is more
+        // important that the backdrop is checked but not so much the window.
+
+        if (canScrollY) {
+          const isRTL = win.getComputedStyle(target).direction === 'rtl';
+
+          if (isRTL) {
+            xCond = event.offsetX <= target.offsetWidth - target.clientWidth;
+          }
+        }
+
+        if (xCond || canScrollX && event.offsetY > target.clientHeight) {
+          return;
+        }
+      }
+
+      const targetIsInsideChildren = tree && getChildren(tree.nodesRef.current, nodeId).some(node => {
+        var _node$context;
+
+        return isEventTargetWithin(event, (_node$context = node.context) == null ? void 0 : _node$context.refs.floating.current);
+      });
+
+      if (isEventTargetWithin(event, refs.floating.current) || isEventTargetWithin(event, refs.domReference.current) || targetIsInsideChildren) {
+        return;
+      }
+
+      if (!bubbles && tree && getChildren(tree.nodesRef.current, nodeId).length > 0) {
+        return;
+      }
+
+      events.emit('dismiss', nested ? {
+        preventScroll: true
+      } : false);
+      onOpenChange(false);
+    }
+
+    function onScroll() {
+      onOpenChange(false);
+    }
+
+    const doc = getDocument(refs.floating.current);
+    escapeKey && doc.addEventListener('keydown', onKeyDown);
+    outsidePress && doc.addEventListener(outsidePressEvent, onOutsidePress);
+    const ancestors = (ancestorScroll ? [...(isElement(refs.reference.current) ? (0,_floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_5__.getOverflowAncestors)(refs.reference.current) : []), ...(isElement(refs.floating.current) ? (0,_floating_ui_react_dom__WEBPACK_IMPORTED_MODULE_5__.getOverflowAncestors)(refs.floating.current) : [])] : []).filter(ancestor => {
+      var _doc$defaultView;
+
+      return (// Ignore the visual viewport for scrolling dismissal (allow pinch-zoom)
+        ancestor !== ((_doc$defaultView = doc.defaultView) == null ? void 0 : _doc$defaultView.visualViewport)
+      );
+    });
+    ancestors.forEach(ancestor => ancestor.addEventListener('scroll', onScroll, {
+      passive: true
+    }));
+    return () => {
+      escapeKey && doc.removeEventListener('keydown', onKeyDown);
+      outsidePress && doc.removeEventListener(outsidePressEvent, onOutsidePress);
+      ancestors.forEach(ancestor => ancestor.removeEventListener('scroll', onScroll));
+    };
+  }, [escapeKey, outsidePress, outsidePressEvent, events, tree, nodeId, open, onOpenChange, ancestorScroll, enabled, bubbles, refs, nested]);
+
+  if (!enabled) {
+    return {};
+  }
+
+  return {
+    reference: {
+      [bubbleHandlerKeys[referencePressEvent]]: () => {
+        if (referencePress) {
+          events.emit('dismiss');
+          onOpenChange(false);
+        }
+      }
+    },
+    floating: {
+      [captureHandlerKeys[outsidePressEvent]]: () => {
+        insideReactTreeRef.current = true;
+      }
+    }
+  };
+};
+
+/**
+ * Adds focus event listeners that change the open state, like CSS :focus.
+ * @see https://floating-ui.com/docs/useFocus
+ */
+const useFocus = function (_ref, _temp) {
+  let {
+    open,
+    onOpenChange,
+    dataRef,
+    refs,
+    events
+  } = _ref;
+  let {
+    enabled = true,
+    keyboardOnly = true
+  } = _temp === void 0 ? {} : _temp;
+  const pointerTypeRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef('');
+  const blockFocusRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(false);
+  const timeoutRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef();
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    var _doc$defaultView;
+
+    if (!enabled) {
+      return;
+    }
+
+    const doc = getDocument(refs.floating.current);
+    const win = (_doc$defaultView = doc.defaultView) != null ? _doc$defaultView : window;
+
+    function onBlur() {
+      if (!open && isHTMLElement(refs.domReference.current)) {
+        refs.domReference.current.blur();
+      }
+    }
+
+    win.addEventListener('blur', onBlur);
+    return () => {
+      win.removeEventListener('blur', onBlur);
+    };
+  }, [refs, open, enabled]);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    function onDismiss() {
+      blockFocusRef.current = true;
+    }
+
+    events.on('dismiss', onDismiss);
+    return () => {
+      events.off('dismiss', onDismiss);
+    };
+  }, [events, enabled]);
+  react__WEBPACK_IMPORTED_MODULE_1__.useEffect(() => {
+    return () => {
+      clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  if (!enabled) {
+    return {};
+  }
+
+  return {
+    reference: {
+      onPointerDown(_ref2) {
+        let {
+          pointerType
+        } = _ref2;
+        pointerTypeRef.current = pointerType;
+        blockFocusRef.current = !!(pointerType && keyboardOnly);
+      },
+
+      onPointerLeave() {
+        blockFocusRef.current = false;
+      },
+
+      onFocus(event) {
+        var _dataRef$current$open, _refs$domReference$cu, _dataRef$current$open2;
+
+        if (blockFocusRef.current) {
+          return;
+        } // Dismiss with click should ignore the subsequent `focus` trigger, but
+        // only if the click originated inside the reference element.
+
+
+        if (event.type === 'focus' && ((_dataRef$current$open = dataRef.current.openEvent) == null ? void 0 : _dataRef$current$open.type) === 'mousedown' && (_refs$domReference$cu = refs.domReference.current) != null && _refs$domReference$cu.contains((_dataRef$current$open2 = dataRef.current.openEvent) == null ? void 0 : _dataRef$current$open2.target)) {
+          return;
+        }
+
+        dataRef.current.openEvent = event.nativeEvent;
+        onOpenChange(true);
+      },
+
+      onBlur(event) {
+        const target = event.relatedTarget; // Wait for the window blur listener to fire.
+
+        timeoutRef.current = setTimeout(() => {
+          var _refs$floating$curren, _refs$domReference$cu2;
+
+          // When focusing the reference element (e.g. regular click), then
+          // clicking into the floating element, prevent it from hiding.
+          // Note: it must be focusable, e.g. `tabindex="-1"`.
+          if ((_refs$floating$curren = refs.floating.current) != null && _refs$floating$curren.contains(target) || (_refs$domReference$cu2 = refs.domReference.current) != null && _refs$domReference$cu2.contains(target)) {
+            return;
+          }
+
+          blockFocusRef.current = false;
+          onOpenChange(false);
+        });
+      }
+
+    }
+  };
+};
+
+const ARROW_UP = 'ArrowUp';
+const ARROW_DOWN = 'ArrowDown';
+const ARROW_LEFT = 'ArrowLeft';
+const ARROW_RIGHT = 'ArrowRight';
+
+function isDifferentRow(index, cols, prevRow) {
+  return Math.floor(index / cols) !== prevRow;
+}
+
+function isIndexOutOfBounds(listRef, index) {
+  return index < 0 || index >= listRef.current.length;
+}
+
+function findNonDisabledIndex(listRef, _temp) {
+  let {
+    startingIndex = -1,
+    decrement = false,
+    disabledIndices,
+    amount = 1
+  } = _temp === void 0 ? {} : _temp;
+  const list = listRef.current;
+  let index = startingIndex;
+
+  do {
+    var _list$index, _list$index2;
+
+    index = index + (decrement ? -amount : amount);
+  } while (index >= 0 && index <= list.length - 1 && (disabledIndices ? disabledIndices.includes(index) : list[index] == null || ((_list$index = list[index]) == null ? void 0 : _list$index.hasAttribute('disabled')) || ((_list$index2 = list[index]) == null ? void 0 : _list$index2.getAttribute('aria-disabled')) === 'true'));
+
+  return index;
+}
+
+function doSwitch(orientation, vertical, horizontal) {
+  switch (orientation) {
+    case 'vertical':
+      return vertical;
+
+    case 'horizontal':
+      return horizontal;
+
+    default:
+      return vertical || horizontal;
+  }
+}
+
+function isMainOrientationKey(key, orientation) {
+  const vertical = key === ARROW_UP || key === ARROW_DOWN;
+  const horizontal = key === ARROW_LEFT || key === ARROW_RIGHT;
+  return doSwitch(orientation, vertical, horizontal);
+}
+
+function isMainOrientationToEndKey(key, orientation, rtl) {
+  const vertical = key === ARROW_DOWN;
+  const horizontal = rtl ? key === ARROW_LEFT : key === ARROW_RIGHT;
+  return doSwitch(orientation, vertical, horizontal) || key === 'Enter' || key == ' ' || key === '';
+}
+
+function isCrossOrientationOpenKey(key, orientation, rtl) {
+  const vertical = rtl ? key === ARROW_LEFT : key === ARROW_RIGHT;
+  const horizontal = key === ARROW_DOWN;
+  return doSwitch(orientation, vertical, horizontal);
+}
+
+function isCrossOrientationCloseKey(key, orientation, rtl) {
+  const vertical = rtl ? key === ARROW_RIGHT : key === ARROW_LEFT;
+  const horizontal = key === ARROW_UP;
+  return doSwitch(orientation, vertical, horizontal);
+}
+
+function getMinIndex(listRef, disabledIndices) {
+  return findNonDisabledIndex(listRef, {
+    disabledIndices
+  });
+}
+
+function getMaxIndex(listRef, disabledIndices) {
+  return findNonDisabledIndex(listRef, {
+    decrement: true,
+    startingIndex: listRef.current.length,
+    disabledIndices
+  });
+}
+
+/**
+ * Adds focus-managed indexed navigation via arrow keys to a list of items
+ * within the floating element.
+ * @see https://floating-ui.com/docs/useListNavigation
+ */
+const useListNavigation = function (_ref, _temp2) {
+  let {
+    open,
+    onOpenChange,
+    refs
+  } = _ref;
+  let {
+    listRef,
+    activeIndex,
+    onNavigate: unstable_onNavigate = () => {},
+    enabled = true,
+    selectedIndex = null,
+    allowEscape = false,
+    loop = false,
+    nested = false,
+    rtl = false,
+    virtual = false,
+    focusItemOnOpen = 'auto',
+    focusItemOnHover = true,
+    openOnArrowKeyDown = true,
+    disabledIndices = undefined,
+    orientation = 'vertical',
+    cols = 1
+  } = _temp2 === void 0 ? {
+    listRef: {
+      current: []
+    },
+    activeIndex: null,
+    onNavigate: () => {}
+  } : _temp2;
+
+  if (true) {
+    if (allowEscape) {
+      if (!loop) {
+        console.warn(['Floating UI: `useListNavigation` looping must be enabled to allow', 'escaping.'].join(' '));
+      }
+
+      if (!virtual) {
+        console.warn(['Floating UI: `useListNavigation` must be virtual to allow', 'escaping.'].join(' '));
+      }
+    }
+
+    if (orientation === 'vertical' && cols > 1) {
+      console.warn(['Floating UI: In grid list navigation mode (`cols` > 1), the', '`orientation` should be either "horizontal" or "both".'].join(' '));
+    }
+  }
+
+  const parentId = useFloatingParentNodeId();
+  const tree = useFloatingTree();
+  const previousOpen = usePrevious(open);
+  const onNavigate = useEvent(unstable_onNavigate);
+  const previousOnNavigate = useEvent(usePrevious(unstable_onNavigate));
+  const focusItemOnOpenRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(focusItemOnOpen);
+  const indexRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(selectedIndex != null ? selectedIndex : -1);
+  const keyRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(null);
+  const disabledIndicesRef = useLatestRef(disabledIndices);
+  const blockPointerLeaveRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(false);
+  const frameRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(-1);
+  const [activeId, setActiveId] = react__WEBPACK_IMPORTED_MODULE_1__.useState();
+  const focusItem = react__WEBPACK_IMPORTED_MODULE_1__.useCallback((listRef, indexRef) => {
+    // `mousedown` clicks occur before `focus`, so the button will steal the
+    // focus unless we wait a frame.
+    frameRef.current = requestAnimationFrame(() => {
+      if (virtual) {
+        var _listRef$current$inde;
+
+        setActiveId((_listRef$current$inde = listRef.current[indexRef.current]) == null ? void 0 : _listRef$current$inde.id);
+      } else {
+        var _listRef$current$inde2;
+
+        (_listRef$current$inde2 = listRef.current[indexRef.current]) == null ? void 0 : _listRef$current$inde2.focus({
+          preventScroll: true
+        });
+      }
+    });
+  }, [virtual]); // Sync `selectedIndex` to be the `activeIndex` upon opening the floating
+  // element. Also, reset `activeIndex` upon closing the floating element.
+
+  index(() => {
+    if (!enabled) {
+      return;
+    }
+
+    if (!previousOpen && open && focusItemOnOpenRef.current && selectedIndex != null) {
+      onNavigate(selectedIndex);
+    } // Unset `activeIndex`. Since the user can specify `onNavigate`
+    // conditionally (onNavigate: open ? setActiveIndex : setSelectedIndex)
+    // we store and call the previous function
+
+
+    if (previousOpen && !open) {
+      cancelAnimationFrame(frameRef.current);
+      indexRef.current = -1;
+      previousOnNavigate(null);
+    }
+  }, [open, previousOpen, selectedIndex, listRef, focusItem, enabled, onNavigate, previousOnNavigate]); // Sync `activeIndex` to be the focused item while the floating element is
+  // open.
+
+  index(() => {
+    if (!enabled) {
+      return;
+    }
+
+    if (open) {
+      if (activeIndex == null) {
+        if (selectedIndex != null) {
+          return;
+        } // Reset while the floating element was open (e.g. the list changed).
+
+
+        if (previousOpen) {
+          indexRef.current = -1;
+          focusItem(listRef, indexRef);
+        } // Initial sync
+
+
+        if (!previousOpen && focusItemOnOpenRef.current && (keyRef.current != null || focusItemOnOpenRef.current === true && keyRef.current == null)) {
+          indexRef.current = keyRef.current == null || isMainOrientationToEndKey(keyRef.current, orientation, rtl) || nested ? getMinIndex(listRef, disabledIndicesRef.current) : getMaxIndex(listRef, disabledIndicesRef.current);
+          onNavigate(indexRef.current);
+          focusItem(listRef, indexRef);
+        }
+      } else if (!isIndexOutOfBounds(listRef, activeIndex)) {
+        indexRef.current = activeIndex;
+        focusItem(listRef, indexRef);
+      }
+    }
+  }, [open, previousOpen, activeIndex, selectedIndex, nested, listRef, onNavigate, focusItem, enabled, allowEscape, orientation, rtl, virtual, disabledIndicesRef]); // Ensure the parent floating element has focus when a nested child closes
+  // to allow arrow key navigation to work after the pointer leaves the child.
+
+  index(() => {
+    if (!enabled) {
+      return;
+    }
+
+    if (!open && previousOpen) {
+      var _tree$nodesRef$curren, _tree$nodesRef$curren2;
+
+      const parentFloating = tree == null ? void 0 : (_tree$nodesRef$curren = tree.nodesRef.current.find(node => node.id === parentId)) == null ? void 0 : (_tree$nodesRef$curren2 = _tree$nodesRef$curren.context) == null ? void 0 : _tree$nodesRef$curren2.refs.floating.current;
+
+      if (parentFloating && !parentFloating.contains(activeElement(getDocument(parentFloating)))) {
+        parentFloating.focus({
+          preventScroll: true
+        });
+      }
+    }
+  }, [enabled, open, previousOpen, tree, parentId]);
+  index(() => {
+    keyRef.current = null;
+  });
+
+  function onKeyDown(event) {
+    blockPointerLeaveRef.current = true;
+
+    if (nested && isCrossOrientationCloseKey(event.key, orientation, rtl)) {
+      stopEvent(event);
+      onOpenChange(false);
+
+      if (isHTMLElement(refs.domReference.current)) {
+        refs.domReference.current.focus();
+      }
+
+      return;
+    }
+
+    const currentIndex = indexRef.current;
+    const minIndex = getMinIndex(listRef, disabledIndices);
+    const maxIndex = getMaxIndex(listRef, disabledIndices);
+
+    if (event.key === 'Home') {
+      indexRef.current = minIndex;
+      onNavigate(indexRef.current);
+    }
+
+    if (event.key === 'End') {
+      indexRef.current = maxIndex;
+      onNavigate(indexRef.current);
+    } // Grid navigation
+
+
+    if (cols > 1) {
+      const prevIndex = indexRef.current;
+
+      if (event.key === ARROW_UP) {
+        stopEvent(event);
+
+        if (prevIndex === -1) {
+          indexRef.current = maxIndex;
+        } else {
+          indexRef.current = findNonDisabledIndex(listRef, {
+            startingIndex: prevIndex,
+            amount: cols,
+            decrement: true,
+            disabledIndices
+          });
+
+          if (loop && (prevIndex - cols < minIndex || indexRef.current < 0)) {
+            const col = prevIndex % cols;
+            const maxCol = maxIndex % cols;
+            const offset = maxIndex - (maxCol - col);
+
+            if (maxCol === col) {
+              indexRef.current = maxIndex;
+            } else {
+              indexRef.current = maxCol > col ? offset : offset - cols;
+            }
+          }
+        }
+
+        if (isIndexOutOfBounds(listRef, indexRef.current)) {
+          indexRef.current = prevIndex;
+        }
+
+        onNavigate(indexRef.current);
+      }
+
+      if (event.key === ARROW_DOWN) {
+        stopEvent(event);
+
+        if (prevIndex === -1) {
+          indexRef.current = minIndex;
+        } else {
+          indexRef.current = findNonDisabledIndex(listRef, {
+            startingIndex: prevIndex,
+            amount: cols,
+            disabledIndices
+          });
+
+          if (loop && prevIndex + cols > maxIndex) {
+            indexRef.current = findNonDisabledIndex(listRef, {
+              startingIndex: prevIndex % cols - cols,
+              amount: cols,
+              disabledIndices
+            });
+          }
+        }
+
+        if (isIndexOutOfBounds(listRef, indexRef.current)) {
+          indexRef.current = prevIndex;
+        }
+
+        onNavigate(indexRef.current);
+      } // Remains on the same row/column
+
+
+      if (orientation === 'both') {
+        const prevRow = Math.floor(prevIndex / cols);
+
+        if (event.key === ARROW_RIGHT) {
+          stopEvent(event);
+
+          if (prevIndex % cols !== cols - 1) {
+            indexRef.current = findNonDisabledIndex(listRef, {
+              startingIndex: prevIndex,
+              disabledIndices
+            });
+
+            if (loop && isDifferentRow(indexRef.current, cols, prevRow)) {
+              indexRef.current = findNonDisabledIndex(listRef, {
+                startingIndex: prevIndex - prevIndex % cols - 1,
+                disabledIndices
+              });
+            }
+          } else if (loop) {
+            indexRef.current = findNonDisabledIndex(listRef, {
+              startingIndex: prevIndex - prevIndex % cols - 1,
+              disabledIndices
+            });
+          }
+
+          if (isDifferentRow(indexRef.current, cols, prevRow)) {
+            indexRef.current = prevIndex;
+          }
+        }
+
+        if (event.key === ARROW_LEFT) {
+          stopEvent(event);
+
+          if (prevIndex % cols !== 0) {
+            indexRef.current = findNonDisabledIndex(listRef, {
+              startingIndex: prevIndex,
+              disabledIndices,
+              decrement: true
+            });
+
+            if (loop && isDifferentRow(indexRef.current, cols, prevRow)) {
+              indexRef.current = findNonDisabledIndex(listRef, {
+                startingIndex: prevIndex + (cols - prevIndex % cols),
+                decrement: true,
+                disabledIndices
+              });
+            }
+          } else if (loop) {
+            indexRef.current = findNonDisabledIndex(listRef, {
+              startingIndex: prevIndex + (cols - prevIndex % cols),
+              decrement: true,
+              disabledIndices
+            });
+          }
+
+          if (isDifferentRow(indexRef.current, cols, prevRow)) {
+            indexRef.current = prevIndex;
+          }
+        }
+
+        const lastRow = Math.floor(maxIndex / cols) === prevRow;
+
+        if (isIndexOutOfBounds(listRef, indexRef.current)) {
+          if (loop && lastRow) {
+            indexRef.current = event.key === ARROW_LEFT ? maxIndex : findNonDisabledIndex(listRef, {
+              startingIndex: prevIndex - prevIndex % cols - 1,
+              disabledIndices
+            });
+          } else {
+            indexRef.current = prevIndex;
+          }
+        }
+
+        onNavigate(indexRef.current);
+        return;
+      }
+    }
+
+    if (isMainOrientationKey(event.key, orientation)) {
+      stopEvent(event); // Reset the index if no item is focused.
+
+      if (open && !virtual && activeElement(event.currentTarget.ownerDocument) === event.currentTarget) {
+        indexRef.current = isMainOrientationToEndKey(event.key, orientation, rtl) ? minIndex : maxIndex;
+        onNavigate(indexRef.current);
+        return;
+      }
+
+      if (isMainOrientationToEndKey(event.key, orientation, rtl)) {
+        if (loop) {
+          indexRef.current = currentIndex >= maxIndex ? allowEscape && currentIndex !== listRef.current.length ? -1 : minIndex : findNonDisabledIndex(listRef, {
+            startingIndex: currentIndex,
+            disabledIndices
+          });
+        } else {
+          indexRef.current = Math.min(maxIndex, findNonDisabledIndex(listRef, {
+            startingIndex: currentIndex,
+            disabledIndices
+          }));
+        }
+      } else {
+        if (loop) {
+          indexRef.current = currentIndex <= minIndex ? allowEscape && currentIndex !== -1 ? listRef.current.length : maxIndex : findNonDisabledIndex(listRef, {
+            startingIndex: currentIndex,
+            decrement: true,
+            disabledIndices
+          });
+        } else {
+          indexRef.current = Math.max(minIndex, findNonDisabledIndex(listRef, {
+            startingIndex: currentIndex,
+            decrement: true,
+            disabledIndices
+          }));
+        }
+      }
+
+      if (isIndexOutOfBounds(listRef, indexRef.current)) {
+        onNavigate(null);
+      } else {
+        onNavigate(indexRef.current);
+      }
+    }
+  }
+
+  if (!enabled) {
+    return {};
+  }
+
+  return {
+    reference: { ...(virtual && open && activeIndex != null && {
+        'aria-activedescendant': activeId
+      }),
+
+      onKeyDown(event) {
+        blockPointerLeaveRef.current = true;
+
+        if (virtual && open) {
+          return onKeyDown(event);
+        }
+
+        const isNavigationKey = event.key.indexOf('Arrow') === 0 || event.key === 'Enter' || event.key === ' ' || event.key === '';
+
+        if (isNavigationKey) {
+          keyRef.current = event.key;
+        }
+
+        if (nested) {
+          if (isCrossOrientationOpenKey(event.key, orientation, rtl)) {
+            stopEvent(event);
+
+            if (open) {
+              indexRef.current = getMinIndex(listRef, disabledIndices);
+              onNavigate(indexRef.current);
+            } else {
+              onOpenChange(true);
+            }
+          }
+
+          return;
+        }
+
+        if (isMainOrientationKey(event.key, orientation)) {
+          if (selectedIndex != null) {
+            indexRef.current = selectedIndex;
+          }
+
+          stopEvent(event);
+
+          if (!open && openOnArrowKeyDown) {
+            onOpenChange(true);
+          } else {
+            onKeyDown(event);
+          }
+
+          if (open) {
+            onNavigate(indexRef.current);
+          }
+        }
+      }
+
+    },
+    floating: {
+      'aria-orientation': orientation === 'both' ? undefined : orientation,
+      ...(virtual && activeIndex != null && {
+        'aria-activedescendant': activeId
+      }),
+      onKeyDown,
+
+      onPointerMove() {
+        blockPointerLeaveRef.current = false;
+      }
+
+    },
+    item: {
+      onFocus(_ref2) {
+        let {
+          currentTarget
+        } = _ref2;
+        const index = listRef.current.indexOf(currentTarget);
+
+        if (index !== -1) {
+          onNavigate(index);
+        }
+      },
+
+      onClick: _ref3 => {
+        let {
+          currentTarget
+        } = _ref3;
+        return currentTarget.focus({
+          preventScroll: true
+        });
+      },
+      // Safari
+      ...(focusItemOnHover && {
+        onMouseMove(_ref4) {
+          let {
+            currentTarget
+          } = _ref4;
+          const target = currentTarget;
+
+          if (target) {
+            const index = listRef.current.indexOf(target);
+
+            if (index !== -1) {
+              onNavigate(index);
+            }
+          }
+        },
+
+        onPointerLeave() {
+          if (!blockPointerLeaveRef.current) {
+            indexRef.current = -1;
+            focusItem(listRef, indexRef);
+            onNavigate(null);
+
+            if (!virtual) {
+              requestAnimationFrame(() => {
+                var _refs$floating$curren;
+
+                (_refs$floating$curren = refs.floating.current) == null ? void 0 : _refs$floating$curren.focus({
+                  preventScroll: true
+                });
+              });
+            }
+          }
+        }
+
+      })
+    }
+  };
+};
+
+/**
+ * Provides a matching callback that can be used to focus an item as the user
+ * types, often used in tandem with `useListNavigation()`.
+ * @see https://floating-ui.com/docs/useTypeahead
+ */
+const useTypeahead = function (_ref, _temp) {
+  var _ref2;
+
+  let {
+    open,
+    dataRef
+  } = _ref;
+  let {
+    listRef,
+    activeIndex,
+    onMatch = () => {},
+    enabled = true,
+    findMatch = null,
+    resetMs = 1000,
+    ignoreKeys = [],
+    selectedIndex = null
+  } = _temp === void 0 ? {
+    listRef: {
+      current: []
+    },
+    activeIndex: null
+  } : _temp;
+  const timeoutIdRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef();
+  const stringRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef('');
+  const prevIndexRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef((_ref2 = selectedIndex != null ? selectedIndex : activeIndex) != null ? _ref2 : -1);
+  const matchIndexRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(null);
+  index(() => {
+    if (open) {
+      clearTimeout(timeoutIdRef.current);
+      matchIndexRef.current = null;
+      stringRef.current = '';
+    }
+  }, [open]);
+  index(() => {
+    // Sync arrow key navigation but not typeahead navigation
+    if (open && stringRef.current === '') {
+      var _ref3;
+
+      prevIndexRef.current = (_ref3 = selectedIndex != null ? selectedIndex : activeIndex) != null ? _ref3 : -1;
+    }
+  }, [open, selectedIndex, activeIndex]);
+
+  function onKeyDown(event) {
+    // Correctly scope nested non-portalled floating elements. Since the nested
+    // floating element is inside of the another, we find the closest role
+    // that indicates the floating element scope.
+    const target = getTarget(event.nativeEvent);
+
+    if (isElement(target) && (activeElement(getDocument(target)) !== event.currentTarget ? target.closest('[role="dialog"],[role="menu"],[role="listbox"],[role="tree"],[role="grid"]') !== event.currentTarget : false)) {
+      return;
+    }
+
+    if (stringRef.current.length > 0 && stringRef.current[0] !== ' ') {
+      dataRef.current.typing = true;
+
+      if (event.key === ' ') {
+        stopEvent(event);
+      }
+    }
+
+    const listContent = listRef.current;
+
+    if (listContent == null || ignoreKeys.includes(event.key) || // Character key
+    event.key.length !== 1 || // Modifier key
+    event.ctrlKey || event.metaKey || event.altKey) {
+      return;
+    } // Bail out if the list contains a word like "llama" or "aaron". TODO:
+    // allow it in this case, too.
+
+
+    const allowRapidSuccessionOfFirstLetter = listContent.every(text => {
+      var _text$, _text$2;
+
+      return text ? ((_text$ = text[0]) == null ? void 0 : _text$.toLocaleLowerCase()) !== ((_text$2 = text[1]) == null ? void 0 : _text$2.toLocaleLowerCase()) : true;
+    }); // Allows the user to cycle through items that start with the same letter
+    // in rapid succession
+
+    if (allowRapidSuccessionOfFirstLetter && stringRef.current === event.key) {
+      stringRef.current = '';
+      prevIndexRef.current = matchIndexRef.current;
+    }
+
+    stringRef.current += event.key;
+    clearTimeout(timeoutIdRef.current);
+    timeoutIdRef.current = setTimeout(() => {
+      stringRef.current = '';
+      prevIndexRef.current = matchIndexRef.current;
+      dataRef.current.typing = false;
+    }, resetMs);
+    const prevIndex = prevIndexRef.current;
+    const orderedList = [...listContent.slice((prevIndex != null ? prevIndex : 0) + 1), ...listContent.slice(0, (prevIndex != null ? prevIndex : 0) + 1)];
+    const str = findMatch ? findMatch(orderedList, stringRef.current) : orderedList.find(text => (text == null ? void 0 : text.toLocaleLowerCase().indexOf(stringRef.current.toLocaleLowerCase())) === 0);
+    const index = str ? listContent.indexOf(str) : -1;
+
+    if (index !== -1) {
+      onMatch(index);
+      matchIndexRef.current = index;
+    }
+  }
+
+  if (!enabled) {
+    return {};
+  }
+
+  return {
+    reference: {
+      onKeyDown
+    },
+    floating: {
+      onKeyDown
+    }
+  };
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.esm.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.esm.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "arrow": () => (/* binding */ arrow),
+/* harmony export */   "autoPlacement": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.autoPlacement),
+/* harmony export */   "autoUpdate": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.autoUpdate),
+/* harmony export */   "computePosition": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.computePosition),
+/* harmony export */   "detectOverflow": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.detectOverflow),
+/* harmony export */   "flip": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.flip),
+/* harmony export */   "getOverflowAncestors": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.getOverflowAncestors),
+/* harmony export */   "hide": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.hide),
+/* harmony export */   "inline": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.inline),
+/* harmony export */   "limitShift": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.limitShift),
+/* harmony export */   "offset": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.offset),
+/* harmony export */   "platform": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.platform),
+/* harmony export */   "shift": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.shift),
+/* harmony export */   "size": () => (/* reexport safe */ _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.size),
+/* harmony export */   "useFloating": () => (/* binding */ useFloating)
+/* harmony export */ });
+/* harmony import */ var _floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @floating-ui/dom */ "./node_modules/@floating-ui/dom/dist/floating-ui.dom.browser.mjs");
+/* harmony import */ var _floating_ui_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @floating-ui/dom */ "./node_modules/@floating-ui/core/dist/floating-ui.core.browser.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+
+
+
+
+
+var index = typeof document !== 'undefined' ? react__WEBPACK_IMPORTED_MODULE_1__.useLayoutEffect : react__WEBPACK_IMPORTED_MODULE_1__.useEffect;
+
+// Fork of `fast-deep-equal` that only does the comparisons we need and compares
+// functions
+function deepEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+
+  if (typeof a !== typeof b) {
+    return false;
+  }
+
+  if (typeof a === 'function' && a.toString() === b.toString()) {
+    return true;
+  }
+
+  let length, i, keys;
+
+  if (a && b && typeof a == 'object') {
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length != b.length) return false;
+
+      for (i = length; i-- !== 0;) {
+        if (!deepEqual(a[i], b[i])) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    keys = Object.keys(a);
+    length = keys.length;
+
+    if (length !== Object.keys(b).length) {
+      return false;
+    }
+
+    for (i = length; i-- !== 0;) {
+      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) {
+        return false;
+      }
+    }
+
+    for (i = length; i-- !== 0;) {
+      const key = keys[i];
+
+      if (key === '_owner' && a.$$typeof) {
+        continue;
+      }
+
+      if (!deepEqual(a[key], b[key])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  return a !== a && b !== b;
+}
+
+function useLatestRef(value) {
+  const ref = react__WEBPACK_IMPORTED_MODULE_1__.useRef(value);
+  index(() => {
+    ref.current = value;
+  });
+  return ref;
+}
+
+function useFloating(_temp) {
+  let {
+    middleware,
+    placement = 'bottom',
+    strategy = 'absolute',
+    whileElementsMounted
+  } = _temp === void 0 ? {} : _temp;
+  const [data, setData] = react__WEBPACK_IMPORTED_MODULE_1__.useState({
+    // Setting these to `null` will allow the consumer to determine if
+    // `computePosition()` has run yet
+    x: null,
+    y: null,
+    strategy,
+    placement,
+    middlewareData: {}
+  });
+  const [latestMiddleware, setLatestMiddleware] = react__WEBPACK_IMPORTED_MODULE_1__.useState(middleware);
+
+  if (!deepEqual(latestMiddleware == null ? void 0 : latestMiddleware.map(_ref => {
+    let {
+      name,
+      options
+    } = _ref;
+    return {
+      name,
+      options
+    };
+  }), middleware == null ? void 0 : middleware.map(_ref2 => {
+    let {
+      name,
+      options
+    } = _ref2;
+    return {
+      name,
+      options
+    };
+  }))) {
+    setLatestMiddleware(middleware);
+  }
+
+  const reference = react__WEBPACK_IMPORTED_MODULE_1__.useRef(null);
+  const floating = react__WEBPACK_IMPORTED_MODULE_1__.useRef(null);
+  const cleanupRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(null);
+  const dataRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(data);
+  const whileElementsMountedRef = useLatestRef(whileElementsMounted);
+  const update = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(() => {
+    if (!reference.current || !floating.current) {
+      return;
+    }
+
+    (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_0__.computePosition)(reference.current, floating.current, {
+      middleware: latestMiddleware,
+      placement,
+      strategy
+    }).then(data => {
+      if (isMountedRef.current && !deepEqual(dataRef.current, data)) {
+        dataRef.current = data;
+        react_dom__WEBPACK_IMPORTED_MODULE_2__.flushSync(() => {
+          setData(data);
+        });
+      }
+    });
+  }, [latestMiddleware, placement, strategy]);
+  index(() => {
+    // Skip first update
+    if (isMountedRef.current) {
+      update();
+    }
+  }, [update]);
+  const isMountedRef = react__WEBPACK_IMPORTED_MODULE_1__.useRef(false);
+  index(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+  const runElementMountCallback = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(() => {
+    if (typeof cleanupRef.current === 'function') {
+      cleanupRef.current();
+      cleanupRef.current = null;
+    }
+
+    if (reference.current && floating.current) {
+      if (whileElementsMountedRef.current) {
+        const cleanupFn = whileElementsMountedRef.current(reference.current, floating.current, update);
+        cleanupRef.current = cleanupFn;
+      } else {
+        update();
+      }
+    }
+  }, [update, whileElementsMountedRef]);
+  const setReference = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(node => {
+    reference.current = node;
+    runElementMountCallback();
+  }, [runElementMountCallback]);
+  const setFloating = react__WEBPACK_IMPORTED_MODULE_1__.useCallback(node => {
+    floating.current = node;
+    runElementMountCallback();
+  }, [runElementMountCallback]);
+  const refs = react__WEBPACK_IMPORTED_MODULE_1__.useMemo(() => ({
+    reference,
+    floating
+  }), []);
+  return react__WEBPACK_IMPORTED_MODULE_1__.useMemo(() => ({ ...data,
+    update,
+    refs,
+    reference: setReference,
+    floating: setFloating
+  }), [data, update, refs, setReference, setFloating]);
+}
+
+/**
+ * Positions an inner element of the floating element such that it is centered
+ * to the reference element.
+ * This wraps the core `arrow` middleware to allow React refs as the element.
+ * @see https://floating-ui.com/docs/arrow
+ */
+
+const arrow = options => {
+  const {
+    element,
+    padding
+  } = options;
+
+  function isRef(value) {
+    return Object.prototype.hasOwnProperty.call(value, 'current');
+  }
+
+  return {
+    name: 'arrow',
+    options,
+
+    fn(args) {
+      if (isRef(element)) {
+        if (element.current != null) {
+          return (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_3__.arrow)({
+            element: element.current,
+            padding
+          }).fn(args);
+        }
+
+        return {};
+      } else if (element) {
+        return (0,_floating_ui_dom__WEBPACK_IMPORTED_MODULE_3__.arrow)({
+          element,
+          padding
+        }).fn(args);
+      }
+
+      return {};
+    }
+
+  };
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/core/esm/Accordion/ChevronIcon.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/@mantine/core/esm/Accordion/ChevronIcon.js ***!
@@ -2184,6 +5309,81 @@ var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((t
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
 
 //# sourceMappingURL=ActionIcon.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Affix/Affix.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Affix/Affix.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Affix": () => (/* binding */ Affix)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/utils/get-default-z-index/get-default-z-index.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/MantineProvider.js");
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/pack-sx/pack-sx.js");
+/* harmony import */ var _Portal_OptionalPortal_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Portal/OptionalPortal.js */ "./node_modules/@mantine/core/esm/Portal/OptionalPortal.js");
+/* harmony import */ var _Box_Box_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Box/Box.js */ "./node_modules/@mantine/core/esm/Box/Box.js");
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const defaultProps = {
+  position: { bottom: 0, right: 0 },
+  zIndex: (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.getDefaultZIndex)("modal"),
+  withinPortal: true
+};
+const Affix = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((props, ref) => {
+  const _a = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_2__.useComponentDefaultProps)("Affix", defaultProps, props), { target, position, zIndex, sx, withinPortal } = _a, others = __objRest(_a, ["target", "position", "zIndex", "sx", "withinPortal"]);
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Portal_OptionalPortal_js__WEBPACK_IMPORTED_MODULE_3__.OptionalPortal, {
+    withinPortal,
+    target
+  }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Box_Box_js__WEBPACK_IMPORTED_MODULE_4__.Box, __spreadValues({
+    sx: [__spreadValues({ position: "fixed", zIndex }, position), ...(0,_mantine_utils__WEBPACK_IMPORTED_MODULE_5__.packSx)(sx)],
+    ref
+  }, others)));
+});
+Affix.displayName = "@mantine/core/Affix";
+
+
+//# sourceMappingURL=Affix.js.map
 
 
 /***/ }),
@@ -3563,6 +6763,544 @@ const Center = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_4__.createPolymorphicC
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/core/esm/Checkbox/Checkbox.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Checkbox/Checkbox.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Checkbox": () => (/* binding */ Checkbox)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/MantineProvider.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/utils/extract-system-styles/extract-system-styles.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-id/use-id.js");
+/* harmony import */ var _CheckboxIcon_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CheckboxIcon.js */ "./node_modules/@mantine/core/esm/Checkbox/CheckboxIcon.js");
+/* harmony import */ var _CheckboxGroup_CheckboxGroup_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./CheckboxGroup/CheckboxGroup.js */ "./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup/CheckboxGroup.js");
+/* harmony import */ var _CheckboxGroup_context_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CheckboxGroup.context.js */ "./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup.context.js");
+/* harmony import */ var _Checkbox_styles_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Checkbox.styles.js */ "./node_modules/@mantine/core/esm/Checkbox/Checkbox.styles.js");
+/* harmony import */ var _Box_Box_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Box/Box.js */ "./node_modules/@mantine/core/esm/Box/Box.js");
+
+
+
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const defaultProps = {
+  size: "sm",
+  transitionDuration: 100,
+  icon: _CheckboxIcon_js__WEBPACK_IMPORTED_MODULE_1__.CheckboxIcon
+};
+const Checkbox = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((props, ref) => {
+  const _a = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_2__.useComponentDefaultProps)("Checkbox", defaultProps, props), {
+    className,
+    style,
+    sx,
+    checked,
+    disabled,
+    color,
+    label,
+    indeterminate,
+    id,
+    size,
+    radius,
+    wrapperProps,
+    children,
+    classNames,
+    styles,
+    transitionDuration,
+    icon: Icon,
+    unstyled
+  } = _a, others = __objRest(_a, [
+    "className",
+    "style",
+    "sx",
+    "checked",
+    "disabled",
+    "color",
+    "label",
+    "indeterminate",
+    "id",
+    "size",
+    "radius",
+    "wrapperProps",
+    "children",
+    "classNames",
+    "styles",
+    "transitionDuration",
+    "icon",
+    "unstyled"
+  ]);
+  const ctx = (0,_CheckboxGroup_context_js__WEBPACK_IMPORTED_MODULE_3__.useCheckboxGroupContext)();
+  const uuid = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_4__.useId)(id);
+  const { systemStyles, rest } = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_5__.extractSystemStyles)(others);
+  const { classes, cx } = (0,_Checkbox_styles_js__WEBPACK_IMPORTED_MODULE_6__["default"])({ size: (ctx == null ? void 0 : ctx.size) || size, radius, color, transitionDuration }, { name: "Checkbox", classNames, styles, unstyled });
+  const contextProps = ctx ? {
+    checked: ctx.value.includes(rest.value),
+    onChange: ctx.onChange
+  } : {};
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Box_Box_js__WEBPACK_IMPORTED_MODULE_7__.Box, __spreadValues(__spreadValues({
+    className: cx(classes.root, className),
+    style,
+    sx
+  }, systemStyles), wrapperProps), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: classes.inner
+  }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", __spreadValues(__spreadValues({
+    id: uuid,
+    ref,
+    type: "checkbox",
+    className: classes.input,
+    checked: indeterminate || checked,
+    disabled
+  }, rest), contextProps)), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Icon, {
+    indeterminate,
+    className: classes.icon
+  })), label && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    "data-disabled": disabled || void 0,
+    className: classes.label,
+    htmlFor: uuid
+  }, label));
+});
+Checkbox.displayName = "@mantine/core/Checkbox";
+Checkbox.Group = _CheckboxGroup_CheckboxGroup_js__WEBPACK_IMPORTED_MODULE_8__.CheckboxGroup;
+
+
+//# sourceMappingURL=Checkbox.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Checkbox/Checkbox.styles.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Checkbox/Checkbox.styles.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/tss/create-styles.js");
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+const sizes = {
+  xs: 16,
+  sm: 20,
+  md: 24,
+  lg: 30,
+  xl: 36
+};
+const iconSizes = {
+  xs: 8,
+  sm: 10,
+  md: 14,
+  lg: 16,
+  xl: 20
+};
+var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((theme, { size, radius, color, transitionDuration }, getRef) => {
+  const _size = theme.fn.size({ size, sizes });
+  const colors = theme.fn.variant({ variant: "filled", color });
+  return {
+    icon: {
+      ref: getRef("icon"),
+      color: theme.white,
+      transform: "translateY(5px) scale(0.5)",
+      opacity: 0,
+      transitionProperty: "opacity, transform",
+      transitionTimingFunction: "ease",
+      transitionDuration: `${transitionDuration}ms`,
+      pointerEvents: "none",
+      width: theme.fn.size({ size, sizes: iconSizes }),
+      position: "absolute",
+      zIndex: 1,
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      margin: "auto",
+      "@media (prefers-reduced-motion)": {
+        transitionDuration: theme.respectReducedMotion ? "0ms" : void 0
+      }
+    },
+    root: {
+      display: "flex",
+      alignItems: "center"
+    },
+    inner: {
+      position: "relative",
+      width: _size,
+      height: _size
+    },
+    label: __spreadProps(__spreadValues({}, theme.fn.fontStyles()), {
+      WebkitTapHighlightColor: "transparent",
+      paddingLeft: theme.spacing.sm,
+      fontSize: theme.fn.size({ size, sizes: theme.fontSizes }),
+      lineHeight: `${_size}px`,
+      color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+      cursor: theme.cursorType,
+      "&[data-disabled]": {
+        color: theme.colorScheme === "dark" ? theme.colors.dark[3] : theme.colors.gray[5]
+      }
+    }),
+    input: __spreadProps(__spreadValues({}, theme.fn.focusStyles()), {
+      appearance: "none",
+      backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
+      border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[4]}`,
+      width: _size,
+      height: _size,
+      borderRadius: theme.fn.radius(radius),
+      padding: 0,
+      display: "block",
+      margin: 0,
+      transition: `border-color ${transitionDuration}ms ease, background-color ${transitionDuration}ms ease`,
+      cursor: theme.cursorType,
+      "&:checked": {
+        backgroundColor: colors.background,
+        borderColor: colors.background,
+        [`& + .${getRef("icon")}`]: {
+          opacity: 1,
+          transform: "translateY(0) scale(1)"
+        }
+      },
+      "&:disabled": {
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2],
+        borderColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[3],
+        cursor: "not-allowed",
+        [`& + .${getRef("icon")}`]: {
+          color: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[5]
+        }
+      }
+    })
+  };
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
+//# sourceMappingURL=Checkbox.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup.context.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup.context.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CheckboxGroupProvider": () => (/* binding */ CheckboxGroupProvider),
+/* harmony export */   "useCheckboxGroupContext": () => (/* binding */ useCheckboxGroupContext)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const CheckboxGroupContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(null);
+const CheckboxGroupProvider = CheckboxGroupContext.Provider;
+const useCheckboxGroupContext = () => (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(CheckboxGroupContext);
+
+
+//# sourceMappingURL=CheckboxGroup.context.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup/CheckboxGroup.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup/CheckboxGroup.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CheckboxGroup": () => (/* binding */ CheckboxGroup)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-uncontrolled/use-uncontrolled.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/MantineProvider.js");
+/* harmony import */ var _InputsGroup_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./InputsGroup.js */ "./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup/InputsGroup.js");
+/* harmony import */ var _CheckboxGroup_context_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../CheckboxGroup.context.js */ "./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup.context.js");
+/* harmony import */ var _Input_Input_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../Input/Input.js */ "./node_modules/@mantine/core/esm/Input/Input.js");
+
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const defaultProps = {
+  orientation: "horizontal",
+  spacing: "lg",
+  size: "sm",
+  offset: "xs"
+};
+const CheckboxGroup = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((props, ref) => {
+  const _a = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useComponentDefaultProps)("CheckboxGroup", defaultProps, props), {
+    children,
+    value,
+    defaultValue,
+    onChange,
+    orientation,
+    spacing,
+    size,
+    wrapperProps,
+    offset
+  } = _a, others = __objRest(_a, [
+    "children",
+    "value",
+    "defaultValue",
+    "onChange",
+    "orientation",
+    "spacing",
+    "size",
+    "wrapperProps",
+    "offset"
+  ]);
+  const [_value, setValue] = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_2__.useUncontrolled)({
+    value,
+    defaultValue,
+    finalValue: [],
+    onChange
+  });
+  const handleChange = (event) => {
+    const itemValue = event.currentTarget.value;
+    setValue(_value.includes(itemValue) ? _value.filter((item) => item !== itemValue) : [..._value, itemValue]);
+  };
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CheckboxGroup_context_js__WEBPACK_IMPORTED_MODULE_3__.CheckboxGroupProvider, {
+    value: { value: _value, onChange: handleChange, size }
+  }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Input_Input_js__WEBPACK_IMPORTED_MODULE_4__.Input.Wrapper, __spreadValues(__spreadValues({
+    labelElement: "div",
+    size,
+    __staticSelector: "CheckboxGroup",
+    ref
+  }, wrapperProps), others), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_InputsGroup_js__WEBPACK_IMPORTED_MODULE_5__.InputsGroup, {
+    spacing,
+    orientation,
+    offset
+  }, children)));
+});
+CheckboxGroup.displayName = "@mantine/core/CheckboxGroup";
+
+
+//# sourceMappingURL=CheckboxGroup.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup/InputsGroup.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Checkbox/CheckboxGroup/InputsGroup.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "InputsGroup": () => (/* binding */ InputsGroup)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Group_Group_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Group/Group.js */ "./node_modules/@mantine/core/esm/Group/Group.js");
+/* harmony import */ var _Stack_Stack_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Stack/Stack.js */ "./node_modules/@mantine/core/esm/Stack/Stack.js");
+
+
+
+
+function InputsGroup({
+  spacing,
+  offset,
+  orientation,
+  children,
+  role,
+  unstyled
+}) {
+  if (orientation === "horizontal") {
+    return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Group_Group_js__WEBPACK_IMPORTED_MODULE_1__.Group, {
+      pt: offset,
+      spacing,
+      role,
+      unstyled
+    }, children);
+  }
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Stack_Stack_js__WEBPACK_IMPORTED_MODULE_2__.Stack, {
+    pt: offset,
+    spacing,
+    role,
+    unstyled
+  }, children);
+}
+
+
+//# sourceMappingURL=InputsGroup.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Checkbox/CheckboxIcon.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Checkbox/CheckboxIcon.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "CheckIcon": () => (/* binding */ CheckIcon),
+/* harmony export */   "CheckboxIcon": () => (/* binding */ CheckboxIcon)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+function CheckIcon(props) {
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", __spreadValues({
+    viewBox: "0 0 10 7",
+    fill: "none",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, props), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
+    d: "M4 4.586L1.707 2.293A1 1 0 1 0 .293 3.707l3 3a.997.997 0 0 0 1.414 0l5-5A1 1 0 1 0 8.293.293L4 4.586z",
+    fill: "currentColor",
+    fillRule: "evenodd",
+    clipRule: "evenodd"
+  }));
+}
+function CheckboxIcon(_a) {
+  var _b = _a, { indeterminate } = _b, others = __objRest(_b, ["indeterminate"]);
+  if (indeterminate) {
+    return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", __spreadValues({
+      xmlns: "http://www.w3.org/2000/svg",
+      fill: "none",
+      viewBox: "0 0 32 6"
+    }, others), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("rect", {
+      width: "32",
+      height: "6",
+      fill: "currentColor",
+      rx: "3"
+    }));
+  }
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(CheckIcon, __spreadValues({}, others));
+}
+
+
+//# sourceMappingURL=CheckboxIcon.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/core/esm/CloseButton/CloseButton.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@mantine/core/esm/CloseButton/CloseButton.js ***!
@@ -3947,6 +7685,202 @@ function useCollapse({
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/core/esm/Dialog/Dialog.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Dialog/Dialog.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Dialog": () => (/* binding */ Dialog),
+/* harmony export */   "DialogBody": () => (/* binding */ DialogBody)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/MantineProvider.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/utils/get-default-z-index/get-default-z-index.js");
+/* harmony import */ var _Dialog_styles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dialog.styles.js */ "./node_modules/@mantine/core/esm/Dialog/Dialog.styles.js");
+/* harmony import */ var _Affix_Affix_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Affix/Affix.js */ "./node_modules/@mantine/core/esm/Affix/Affix.js");
+/* harmony import */ var _Transition_Transition_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Transition/Transition.js */ "./node_modules/@mantine/core/esm/Transition/Transition.js");
+/* harmony import */ var _Paper_Paper_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Paper/Paper.js */ "./node_modules/@mantine/core/esm/Paper/Paper.js");
+/* harmony import */ var _CloseButton_CloseButton_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../CloseButton/CloseButton.js */ "./node_modules/@mantine/core/esm/CloseButton/CloseButton.js");
+
+
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const defaultProps = {
+  shadow: "md",
+  p: "md",
+  withBorder: true,
+  size: "md",
+  transition: "pop-top-right",
+  transitionDuration: 200
+};
+function DialogBody(props) {
+  const _a = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useComponentDefaultProps)("Dialog", defaultProps, props), {
+    withCloseButton,
+    onClose,
+    position,
+    shadow,
+    children,
+    className,
+    style,
+    classNames,
+    styles,
+    opened,
+    withBorder,
+    size,
+    transition,
+    transitionDuration,
+    transitionTimingFunction,
+    unstyled
+  } = _a, others = __objRest(_a, [
+    "withCloseButton",
+    "onClose",
+    "position",
+    "shadow",
+    "children",
+    "className",
+    "style",
+    "classNames",
+    "styles",
+    "opened",
+    "withBorder",
+    "size",
+    "transition",
+    "transitionDuration",
+    "transitionTimingFunction",
+    "unstyled"
+  ]);
+  const { classes, cx } = (0,_Dialog_styles_js__WEBPACK_IMPORTED_MODULE_2__["default"])({ size }, { classNames, styles, unstyled, name: "Dialog" });
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Transition_Transition_js__WEBPACK_IMPORTED_MODULE_3__.Transition, {
+    mounted: opened,
+    transition,
+    duration: transitionDuration,
+    timingFunction: transitionTimingFunction
+  }, (transitionStyles) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Paper_Paper_js__WEBPACK_IMPORTED_MODULE_4__.Paper, __spreadValues({
+    className: cx(classes.root, className),
+    style: __spreadValues(__spreadValues({}, style), transitionStyles),
+    shadow,
+    withBorder,
+    unstyled
+  }, others), withCloseButton && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_CloseButton_CloseButton_js__WEBPACK_IMPORTED_MODULE_5__.CloseButton, {
+    onClick: onClose,
+    className: classes.closeButton
+  }), children));
+}
+const Dialog = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((_a, ref) => {
+  var _b = _a, { zIndex = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_6__.getDefaultZIndex)("modal") } = _b, props = __objRest(_b, ["zIndex"]);
+  const theme = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useMantineTheme)();
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Affix_Affix_js__WEBPACK_IMPORTED_MODULE_7__.Affix, {
+    zIndex,
+    position: props.position || { bottom: theme.spacing.xl, right: theme.spacing.xl },
+    ref
+  }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(DialogBody, __spreadValues({}, props)));
+});
+Dialog.displayName = "@mantine/core/Dialog";
+
+
+//# sourceMappingURL=Dialog.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Dialog/Dialog.styles.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Dialog/Dialog.styles.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/tss/create-styles.js");
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+const sizes = {
+  xs: 160,
+  sm: 200,
+  md: 340,
+  lg: 400,
+  xl: 500
+};
+var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((theme, { size }) => ({
+  root: __spreadProps(__spreadValues({}, theme.fn.fontStyles()), {
+    color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+    position: "relative",
+    width: theme.fn.size({ size, sizes }),
+    maxWidth: "100%",
+    minHeight: 50
+  }),
+  closeButton: {
+    position: "absolute",
+    top: `calc(${theme.spacing.md}px / 2)`,
+    right: `calc(${theme.spacing.md}px / 2)`
+  }
+}));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
+//# sourceMappingURL=Dialog.styles.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/core/esm/Divider/Divider.js":
 /*!***********************************************************!*\
   !*** ./node_modules/@mantine/core/esm/Divider/Divider.js ***!
@@ -4141,6 +8075,346 @@ var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((t
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
 //# sourceMappingURL=Divider.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Floating/FloatingArrow/FloatingArrow.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Floating/FloatingArrow/FloatingArrow.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FloatingArrow": () => (/* binding */ FloatingArrow)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/MantineProvider.js");
+/* harmony import */ var _get_arrow_position_styles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./get-arrow-position-styles.js */ "./node_modules/@mantine/core/esm/Floating/FloatingArrow/get-arrow-position-styles.js");
+
+
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const FloatingArrow = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((_a, ref) => {
+  var _b = _a, { withBorder, position, arrowSize, arrowOffset, visible, arrowX, arrowY } = _b, others = __objRest(_b, ["withBorder", "position", "arrowSize", "arrowOffset", "visible", "arrowX", "arrowY"]);
+  const theme = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useMantineTheme)();
+  if (!visible) {
+    return null;
+  }
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", __spreadProps(__spreadValues({}, others), {
+    ref,
+    style: (0,_get_arrow_position_styles_js__WEBPACK_IMPORTED_MODULE_2__.getArrowPositionStyles)({
+      withBorder,
+      position,
+      arrowSize,
+      arrowOffset,
+      dir: theme.dir,
+      arrowX,
+      arrowY
+    })
+  }));
+});
+FloatingArrow.displayName = "@mantine/core/FloatingArrow";
+
+
+//# sourceMappingURL=FloatingArrow.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Floating/FloatingArrow/get-arrow-position-styles.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Floating/FloatingArrow/get-arrow-position-styles.js ***!
+  \********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getArrowPositionStyles": () => (/* binding */ getArrowPositionStyles)
+/* harmony export */ });
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+function horizontalSide(placement, arrowY, arrowOffset) {
+  if (placement === "center") {
+    return { top: arrowY };
+  }
+  if (placement === "end") {
+    return { bottom: arrowOffset };
+  }
+  if (placement === "start") {
+    return { top: arrowOffset };
+  }
+  return {};
+}
+function verticalSide(placement, arrowX, arrowOffset, dir) {
+  if (placement === "center") {
+    return { [dir === "ltr" ? "left" : "right"]: arrowX };
+  }
+  if (placement === "end") {
+    return { [dir === "ltr" ? "right" : "left"]: arrowOffset };
+  }
+  if (placement === "start") {
+    return { [dir === "ltr" ? "left" : "right"]: arrowOffset };
+  }
+  return {};
+}
+function getArrowPositionStyles({
+  position,
+  withBorder,
+  arrowSize,
+  arrowOffset,
+  arrowX,
+  arrowY,
+  dir
+}) {
+  const [side, placement = "center"] = position.split("-");
+  const baseStyles = {
+    width: arrowSize,
+    height: arrowSize,
+    transform: "rotate(45deg)",
+    position: "absolute"
+  };
+  const arrowPosition = withBorder ? -arrowSize / 2 - 1 : -arrowSize / 2;
+  if (side === "left") {
+    return __spreadProps(__spreadValues(__spreadValues({}, baseStyles), horizontalSide(placement, arrowY, arrowOffset)), {
+      right: arrowPosition,
+      borderLeft: 0,
+      borderBottom: 0
+    });
+  }
+  if (side === "right") {
+    return __spreadProps(__spreadValues(__spreadValues({}, baseStyles), horizontalSide(placement, arrowY, arrowOffset)), {
+      left: arrowPosition,
+      borderRight: 0,
+      borderTop: 0
+    });
+  }
+  if (side === "top") {
+    return __spreadProps(__spreadValues(__spreadValues({}, baseStyles), verticalSide(placement, arrowX, arrowOffset, dir)), {
+      bottom: arrowPosition,
+      borderTop: 0,
+      [dir === "ltr" ? "borderLeft" : "borderRight"]: 0
+    });
+  }
+  if (side === "bottom") {
+    return __spreadProps(__spreadValues(__spreadValues({}, baseStyles), verticalSide(placement, arrowX, arrowOffset, dir)), {
+      top: arrowPosition,
+      borderBottom: 0,
+      [dir === "ltr" ? "borderRight" : "borderLeft"]: 0
+    });
+  }
+  return {};
+}
+
+
+//# sourceMappingURL=get-arrow-position-styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Floating/get-floating-position/get-floating-position.js":
+/*!************************************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Floating/get-floating-position/get-floating-position.js ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getFloatingPosition": () => (/* binding */ getFloatingPosition)
+/* harmony export */ });
+function getFloatingPosition(dir, position) {
+  if (dir === "rtl" && (position.includes("right") || position.includes("left"))) {
+    const [side, placement] = position.split("-");
+    const flippedPosition = side === "right" ? "left" : "right";
+    return placement === void 0 ? flippedPosition : `${flippedPosition}-${placement}`;
+  }
+  return position;
+}
+
+
+//# sourceMappingURL=get-floating-position.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Floating/use-delayed-hover.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Floating/use-delayed-hover.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useDelayedHover": () => (/* binding */ useDelayedHover)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function useDelayedHover({ open, close, openDelay, closeDelay }) {
+  const openTimeout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(-1);
+  const closeTimeout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(-1);
+  const clearTimeouts = () => {
+    window.clearTimeout(openTimeout.current);
+    window.clearTimeout(closeTimeout.current);
+  };
+  const openDropdown = () => {
+    clearTimeouts();
+    if (openDelay === 0) {
+      open();
+    } else {
+      openTimeout.current = window.setTimeout(open, openDelay);
+    }
+  };
+  const closeDropdown = () => {
+    clearTimeouts();
+    if (closeDelay === 0) {
+      close();
+    } else {
+      closeTimeout.current = window.setTimeout(close, closeDelay);
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => clearTimeouts, []);
+  return { openDropdown, closeDropdown };
+}
+
+
+//# sourceMappingURL=use-delayed-hover.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Floating/use-floating-auto-update.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Floating/use-floating-auto-update.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useFloatingAutoUpdate": () => (/* binding */ useFloatingAutoUpdate)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @floating-ui/react-dom-interactions */ "./node_modules/@floating-ui/dom/dist/floating-ui.dom.browser.mjs");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-did-update/use-did-update.js");
+
+
+
+
+function useFloatingAutoUpdate({ opened, floating, positionDependencies }) {
+  const [delayedUpdate, setDelayedUpdate] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (floating.refs.reference.current && floating.refs.floating.current) {
+      return (0,_floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_1__.autoUpdate)(floating.refs.reference.current, floating.refs.floating.current, floating.update);
+    }
+    return void 0;
+  }, [floating.refs.reference, floating.refs.floating, opened, delayedUpdate]);
+  (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_2__.useDidUpdate)(() => {
+    floating.update();
+  }, positionDependencies);
+  (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_2__.useDidUpdate)(() => {
+    setDelayedUpdate((c) => c + 1);
+  }, [opened]);
+}
+
+
+//# sourceMappingURL=use-floating-auto-update.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/FocusTrap/FocusTrap.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/FocusTrap/FocusTrap.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FocusTrap": () => (/* binding */ FocusTrap)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/is-element/is-element.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-focus-trap/use-focus-trap.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-merged-ref/use-merged-ref.js");
+
+
+
+
+function FocusTrap({
+  children,
+  active = true,
+  refProp = "ref"
+}) {
+  const focusTrapRef = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_1__.useFocusTrap)(active);
+  const ref = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_2__.useMergedRef)(focusTrapRef, children == null ? void 0 : children.ref);
+  if (!(0,_mantine_utils__WEBPACK_IMPORTED_MODULE_3__.isElement)(children)) {
+    return children;
+  }
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(children, { [refProp]: ref });
+}
+FocusTrap.displayName = "@mantine/core/FocusTrap";
+
+
+//# sourceMappingURL=FocusTrap.js.map
 
 
 /***/ }),
@@ -6263,6 +10537,811 @@ var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)({
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/core/esm/Menu/Menu.context.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/Menu.context.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MenuContextProvider": () => (/* binding */ MenuContextProvider),
+/* harmony export */   "useMenuContext": () => (/* binding */ useMenuContext)
+/* harmony export */ });
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/create-safe-context/create-safe-context.js");
+/* harmony import */ var _Menu_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Menu.errors.js */ "./node_modules/@mantine/core/esm/Menu/Menu.errors.js");
+
+
+
+const [MenuContextProvider, useMenuContext] = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_0__.createSafeContext)(_Menu_errors_js__WEBPACK_IMPORTED_MODULE_1__.MENU_ERRORS.context);
+
+
+//# sourceMappingURL=Menu.context.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/Menu.errors.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/Menu.errors.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MENU_ERRORS": () => (/* binding */ MENU_ERRORS)
+/* harmony export */ });
+const MENU_ERRORS = {
+  context: "Menu component was not found in the tree",
+  children: "Menu.Target component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported"
+};
+
+
+//# sourceMappingURL=Menu.errors.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/Menu.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/Menu.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Menu": () => (/* binding */ Menu)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/use-hovered/use-hovered.js");
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/get-context-item-index/get-context-item-index.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-uncontrolled/use-uncontrolled.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-did-update/use-did-update.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/MantineProvider.js");
+/* harmony import */ var _MenuDivider_MenuDivider_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./MenuDivider/MenuDivider.js */ "./node_modules/@mantine/core/esm/Menu/MenuDivider/MenuDivider.js");
+/* harmony import */ var _MenuDropdown_MenuDropdown_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./MenuDropdown/MenuDropdown.js */ "./node_modules/@mantine/core/esm/Menu/MenuDropdown/MenuDropdown.js");
+/* harmony import */ var _MenuItem_MenuItem_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./MenuItem/MenuItem.js */ "./node_modules/@mantine/core/esm/Menu/MenuItem/MenuItem.js");
+/* harmony import */ var _MenuLabel_MenuLabel_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./MenuLabel/MenuLabel.js */ "./node_modules/@mantine/core/esm/Menu/MenuLabel/MenuLabel.js");
+/* harmony import */ var _MenuTarget_MenuTarget_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./MenuTarget/MenuTarget.js */ "./node_modules/@mantine/core/esm/Menu/MenuTarget/MenuTarget.js");
+/* harmony import */ var _Menu_context_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Menu.context.js */ "./node_modules/@mantine/core/esm/Menu/Menu.context.js");
+/* harmony import */ var _Menu_styles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Menu.styles.js */ "./node_modules/@mantine/core/esm/Menu/Menu.styles.js");
+/* harmony import */ var _Floating_use_delayed_hover_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Floating/use-delayed-hover.js */ "./node_modules/@mantine/core/esm/Floating/use-delayed-hover.js");
+/* harmony import */ var _Popover_Popover_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Popover/Popover.js */ "./node_modules/@mantine/core/esm/Popover/Popover.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const defaultProps = {
+  closeOnItemClick: true,
+  loop: true,
+  trigger: "click",
+  openDelay: 0,
+  closeDelay: 100
+};
+function Menu(props) {
+  const _a = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useComponentDefaultProps)("Menu", defaultProps, props), {
+    children,
+    onOpen,
+    onClose,
+    opened,
+    defaultOpened,
+    onChange,
+    closeOnItemClick,
+    loop,
+    closeOnEscape,
+    trigger,
+    openDelay,
+    closeDelay,
+    classNames,
+    styles,
+    unstyled,
+    radius
+  } = _a, others = __objRest(_a, [
+    "children",
+    "onOpen",
+    "onClose",
+    "opened",
+    "defaultOpened",
+    "onChange",
+    "closeOnItemClick",
+    "loop",
+    "closeOnEscape",
+    "trigger",
+    "openDelay",
+    "closeDelay",
+    "classNames",
+    "styles",
+    "unstyled",
+    "radius"
+  ]);
+  const { classes, cx } = (0,_Menu_styles_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  const [hovered, { setHovered, resetHovered }] = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_3__.useHovered)();
+  const [_opened, setOpened] = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_4__.useUncontrolled)({
+    value: opened,
+    defaultValue: defaultOpened,
+    finalValue: false,
+    onChange
+  });
+  const close = () => {
+    setOpened(false);
+    _opened && (onClose == null ? void 0 : onClose());
+  };
+  const open = () => {
+    setOpened(true);
+    !_opened && (onOpen == null ? void 0 : onOpen());
+  };
+  const toggleDropdown = () => _opened ? close() : open();
+  const { openDropdown, closeDropdown } = (0,_Floating_use_delayed_hover_js__WEBPACK_IMPORTED_MODULE_5__.useDelayedHover)({ open, close, closeDelay, openDelay });
+  const getItemIndex = (node) => (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_6__.getContextItemIndex)("[data-menu-item]", "[data-menu-dropdown]", node);
+  (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_7__.useDidUpdate)(() => {
+    resetHovered();
+  }, [_opened]);
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Menu_context_js__WEBPACK_IMPORTED_MODULE_8__.MenuContextProvider, {
+    value: {
+      opened: _opened,
+      toggleDropdown,
+      getItemIndex,
+      hovered,
+      setHovered,
+      closeOnItemClick,
+      closeDropdown: trigger === "click" ? close : closeDropdown,
+      openDropdown: trigger === "click" ? open : openDropdown,
+      closeDropdownImmediately: close,
+      loop,
+      trigger,
+      radius
+    }
+  }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Popover_Popover_js__WEBPACK_IMPORTED_MODULE_9__.Popover, __spreadProps(__spreadValues({}, others), {
+    radius,
+    opened: _opened,
+    onChange: setOpened,
+    defaultOpened,
+    trapFocus: trigger === "click",
+    closeOnEscape: closeOnEscape && trigger === "click",
+    __staticSelector: "Menu",
+    classNames: __spreadProps(__spreadValues({}, classNames), { dropdown: cx(classes.dropdown, classNames == null ? void 0 : classNames.dropdown) }),
+    styles,
+    unstyled,
+    onClose: close,
+    onOpen: open
+  }), children));
+}
+Menu.displayName = "@mantine/core/Menu";
+Menu.Item = _MenuItem_MenuItem_js__WEBPACK_IMPORTED_MODULE_10__.MenuItem;
+Menu.Label = _MenuLabel_MenuLabel_js__WEBPACK_IMPORTED_MODULE_11__.MenuLabel;
+Menu.Dropdown = _MenuDropdown_MenuDropdown_js__WEBPACK_IMPORTED_MODULE_12__.MenuDropdown;
+Menu.Target = _MenuTarget_MenuTarget_js__WEBPACK_IMPORTED_MODULE_13__.MenuTarget;
+Menu.Divider = _MenuDivider_MenuDivider_js__WEBPACK_IMPORTED_MODULE_14__.MenuDivider;
+
+
+//# sourceMappingURL=Menu.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/Menu.styles.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/Menu.styles.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/tss/create-styles.js");
+
+
+var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)({
+  dropdown: { padding: 4 }
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
+//# sourceMappingURL=Menu.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/MenuDivider/MenuDivider.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/MenuDivider/MenuDivider.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MenuDivider": () => (/* binding */ MenuDivider)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/StylesApiContext.js");
+/* harmony import */ var _MenuDivider_styles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MenuDivider.styles.js */ "./node_modules/@mantine/core/esm/Menu/MenuDivider/MenuDivider.styles.js");
+/* harmony import */ var _Box_Box_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Box/Box.js */ "./node_modules/@mantine/core/esm/Box/Box.js");
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+function MenuDivider(_a) {
+  var _b = _a, { children, className } = _b, others = __objRest(_b, ["children", "className"]);
+  const { classNames, styles, unstyled } = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useContextStylesApi)();
+  const { classes, cx } = (0,_MenuDivider_styles_js__WEBPACK_IMPORTED_MODULE_2__["default"])(null, { name: "Menu", classNames, styles, unstyled });
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Box_Box_js__WEBPACK_IMPORTED_MODULE_3__.Box, __spreadValues({
+    className: cx(classes.divider, className)
+  }, others));
+}
+MenuDivider.displayName = "@mantine/core/MenuDivider";
+
+
+//# sourceMappingURL=MenuDivider.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/MenuDivider/MenuDivider.styles.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/MenuDivider/MenuDivider.styles.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/tss/create-styles.js");
+
+
+var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((theme) => ({
+  divider: {
+    margin: `calc(${theme.spacing.xs}px / 2) -5px`,
+    borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`
+  }
+}));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
+//# sourceMappingURL=MenuDivider.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/MenuDropdown/MenuDropdown.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/MenuDropdown/MenuDropdown.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MenuDropdown": () => (/* binding */ MenuDropdown)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/create-event-handler/create-event-handler.js");
+/* harmony import */ var _Menu_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Menu.context.js */ "./node_modules/@mantine/core/esm/Menu/Menu.context.js");
+/* harmony import */ var _Popover_Popover_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Popover/Popover.js */ "./node_modules/@mantine/core/esm/Popover/Popover.js");
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+function MenuDropdown(_a) {
+  var _b = _a, {
+    children,
+    onMouseEnter,
+    onMouseLeave
+  } = _b, others = __objRest(_b, [
+    "children",
+    "onMouseEnter",
+    "onMouseLeave"
+  ]);
+  const wrapperRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const ctx = (0,_Menu_context_js__WEBPACK_IMPORTED_MODULE_1__.useMenuContext)();
+  const handleKeyDown = (event) => {
+    if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+      event.preventDefault();
+      wrapperRef.current.querySelectorAll("[data-menu-item]")[0].focus();
+    }
+  };
+  const handleMouseEnter = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_2__.createEventHandler)(onMouseEnter, () => ctx.trigger === "hover" && ctx.openDropdown());
+  const handleMouseLeave = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_2__.createEventHandler)(onMouseLeave, () => ctx.trigger === "hover" && ctx.closeDropdown());
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Popover_Popover_js__WEBPACK_IMPORTED_MODULE_3__.Popover.Dropdown, __spreadValues({
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    role: "menu",
+    "aria-orientation": "vertical"
+  }, others), /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    tabIndex: -1,
+    "data-menu-dropdown": true,
+    "data-autofocus": true,
+    onKeyDown: handleKeyDown,
+    ref: wrapperRef,
+    style: { outline: 0 }
+  }, children));
+}
+MenuDropdown.displayName = "@mantine/core/MenuDropdown";
+
+
+//# sourceMappingURL=MenuDropdown.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/MenuItem/MenuItem.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/MenuItem/MenuItem.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MenuItem": () => (/* binding */ MenuItem),
+/* harmony export */   "_MenuItem": () => (/* binding */ _MenuItem)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/StylesApiContext.js");
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/create-event-handler/create-event-handler.js");
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/create-scoped-keydown-handler/create-scoped-keydown-handler.js");
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/create-polymorphic-component/create-polymorphic-component.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-merged-ref/use-merged-ref.js");
+/* harmony import */ var _Menu_context_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Menu.context.js */ "./node_modules/@mantine/core/esm/Menu/Menu.context.js");
+/* harmony import */ var _MenuItem_styles_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./MenuItem.styles.js */ "./node_modules/@mantine/core/esm/Menu/MenuItem/MenuItem.styles.js");
+/* harmony import */ var _Box_Box_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Box/Box.js */ "./node_modules/@mantine/core/esm/Box/Box.js");
+
+
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const _MenuItem = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((_a, ref) => {
+  var _b = _a, { children, className, color, closeMenuOnClick, icon, rightSection } = _b, others = __objRest(_b, ["children", "className", "color", "closeMenuOnClick", "icon", "rightSection"]);
+  const ctx = (0,_Menu_context_js__WEBPACK_IMPORTED_MODULE_1__.useMenuContext)();
+  const { classNames, styles, unstyled } = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_2__.useContextStylesApi)();
+  const { classes, cx, theme } = (0,_MenuItem_styles_js__WEBPACK_IMPORTED_MODULE_3__["default"])({ radius: ctx.radius, color }, { name: "Menu", classNames, styles, unstyled });
+  const itemRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const itemIndex = ctx.getItemIndex(itemRef.current);
+  const _others = others;
+  const handleMouseLeave = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_4__.createEventHandler)(_others.onMouseLeave, () => ctx.setHovered(-1));
+  const handleMouseEnter = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_4__.createEventHandler)(_others.onMouseEnter, () => ctx.setHovered(ctx.getItemIndex(itemRef.current)));
+  const handleClick = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_4__.createEventHandler)(_others.onClick, () => {
+    if (typeof closeMenuOnClick === "boolean") {
+      closeMenuOnClick && ctx.closeDropdownImmediately();
+    } else {
+      ctx.closeOnItemClick && ctx.closeDropdownImmediately();
+    }
+  });
+  const handleFocus = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_4__.createEventHandler)(_others.onFocus, () => ctx.setHovered(ctx.getItemIndex(itemRef.current)));
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Box_Box_js__WEBPACK_IMPORTED_MODULE_5__.Box, __spreadProps(__spreadValues({
+    component: "button"
+  }, others), {
+    type: "button",
+    tabIndex: -1,
+    onFocus: handleFocus,
+    className: cx(classes.item, className),
+    ref: (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_6__.useMergedRef)(itemRef, ref),
+    role: "menuitem",
+    "data-menu-item": true,
+    "data-hovered": ctx.hovered === itemIndex ? true : void 0,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    onClick: handleClick,
+    onKeyDown: (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_7__.createScopedKeydownHandler)({
+      siblingSelector: "[data-menu-item]",
+      parentSelector: "[data-menu-dropdown]",
+      activateOnFocus: false,
+      loop: ctx.loop,
+      dir: theme.dir,
+      orientation: "vertical",
+      onKeyDown: _others.onKeydown
+    })
+  }), icon && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: classes.itemIcon
+  }, icon), children && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: classes.itemLabel
+  }, children), rightSection && /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: classes.itemRightSection
+  }, rightSection));
+});
+_MenuItem.displayName = "@mantine/core/MenuItem";
+const MenuItem = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_8__.createPolymorphicComponent)(_MenuItem);
+
+
+//# sourceMappingURL=MenuItem.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/MenuItem/MenuItem.styles.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/MenuItem/MenuItem.styles.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/tss/create-styles.js");
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((theme, { color, radius }) => ({
+  item: __spreadProps(__spreadValues({}, theme.fn.fontStyles()), {
+    WebkitTapHighlightColor: "transparent",
+    fontSize: theme.fontSizes.sm,
+    border: 0,
+    backgroundColor: "transparent",
+    outline: 0,
+    width: "100%",
+    textAlign: "left",
+    textDecoration: "none",
+    boxSizing: "border-box",
+    padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
+    cursor: "pointer",
+    borderRadius: theme.fn.radius(radius),
+    color: color ? theme.fn.variant({ variant: "filled", primaryFallback: false, color }).background : theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+    display: "flex",
+    alignItems: "center",
+    "&:disabled": {
+      color: theme.colorScheme === "dark" ? theme.colors.dark[3] : theme.colors.gray[5],
+      pointerEvents: "none",
+      userSelect: "none"
+    },
+    "&[data-hovered]": {
+      backgroundColor: color ? theme.fn.variant({ variant: "light", color }).background : theme.colorScheme === "dark" ? theme.fn.rgba(theme.colors.dark[3], 0.35) : theme.colors.gray[0]
+    }
+  }),
+  itemLabel: {
+    flex: 1
+  },
+  itemIcon: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: theme.spacing.xs
+  },
+  itemRightSection: {}
+}));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
+//# sourceMappingURL=MenuItem.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/MenuLabel/MenuLabel.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/MenuLabel/MenuLabel.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MenuLabel": () => (/* binding */ MenuLabel)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/StylesApiContext.js");
+/* harmony import */ var _MenuLabel_styles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MenuLabel.styles.js */ "./node_modules/@mantine/core/esm/Menu/MenuLabel/MenuLabel.styles.js");
+/* harmony import */ var _Text_Text_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Text/Text.js */ "./node_modules/@mantine/core/esm/Text/Text.js");
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+function MenuLabel(_a) {
+  var _b = _a, { children, className } = _b, others = __objRest(_b, ["children", "className"]);
+  const { classNames, styles, unstyled } = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useContextStylesApi)();
+  const { classes, cx } = (0,_MenuLabel_styles_js__WEBPACK_IMPORTED_MODULE_2__["default"])(null, { name: "Menu", classNames, styles, unstyled });
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Text_Text_js__WEBPACK_IMPORTED_MODULE_3__.Text, __spreadValues({
+    className: cx(classes.label, className)
+  }, others), children);
+}
+MenuLabel.displayName = "@mantine/core/MenuLabel";
+
+
+//# sourceMappingURL=MenuLabel.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/MenuLabel/MenuLabel.styles.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/MenuLabel/MenuLabel.styles.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/tss/create-styles.js");
+
+
+var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((theme) => ({
+  label: {
+    color: theme.colorScheme === "dark" ? theme.colors.dark[2] : theme.colors.gray[6],
+    fontWeight: 500,
+    fontSize: theme.fontSizes.xs,
+    padding: `calc(${theme.spacing.xs}px / 2) ${theme.spacing.sm}px`,
+    cursor: "default"
+  }
+}));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
+//# sourceMappingURL=MenuLabel.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Menu/MenuTarget/MenuTarget.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Menu/MenuTarget/MenuTarget.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MenuTarget": () => (/* binding */ MenuTarget)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/is-element/is-element.js");
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/create-event-handler/create-event-handler.js");
+/* harmony import */ var _Menu_context_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Menu.context.js */ "./node_modules/@mantine/core/esm/Menu/Menu.context.js");
+/* harmony import */ var _Menu_errors_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Menu.errors.js */ "./node_modules/@mantine/core/esm/Menu/Menu.errors.js");
+/* harmony import */ var _Popover_Popover_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Popover/Popover.js */ "./node_modules/@mantine/core/esm/Popover/Popover.js");
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const MenuTarget = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((_a, ref) => {
+  var _b = _a, { children, refProp = "ref" } = _b, others = __objRest(_b, ["children", "refProp"]);
+  if (!(0,_mantine_utils__WEBPACK_IMPORTED_MODULE_1__.isElement)(children)) {
+    throw new Error(_Menu_errors_js__WEBPACK_IMPORTED_MODULE_2__.MENU_ERRORS.children);
+  }
+  const ctx = (0,_Menu_context_js__WEBPACK_IMPORTED_MODULE_3__.useMenuContext)();
+  const onClick = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_4__.createEventHandler)(children.props.onClick, () => ctx.trigger === "click" && ctx.toggleDropdown());
+  const onMouseEnter = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_4__.createEventHandler)(children.props.onMouseEnter, () => ctx.trigger === "hover" && ctx.openDropdown());
+  const onMouseLeave = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_4__.createEventHandler)(children.props.onMouseLeave, () => ctx.trigger === "hover" && ctx.closeDropdown());
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Popover_Popover_js__WEBPACK_IMPORTED_MODULE_5__.Popover.Target, __spreadValues({
+    refProp,
+    popupType: "menu",
+    ref
+  }, others), (0,react__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(children, {
+    onClick,
+    onMouseEnter,
+    onMouseLeave,
+    "data-expanded": ctx.opened ? true : void 0
+  }));
+});
+MenuTarget.displayName = "@mantine/core/MenuTarget";
+
+
+//# sourceMappingURL=MenuTarget.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/core/esm/Modal/Modal.js":
 /*!*******************************************************!*\
   !*** ./node_modules/@mantine/core/esm/Modal/Modal.js ***!
@@ -7350,6 +12429,601 @@ var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((t
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/core/esm/Popover/Popover.context.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Popover/Popover.context.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PopoverContextProvider": () => (/* binding */ PopoverContextProvider),
+/* harmony export */   "usePopoverContext": () => (/* binding */ usePopoverContext)
+/* harmony export */ });
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/create-safe-context/create-safe-context.js");
+/* harmony import */ var _Popover_errors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Popover.errors.js */ "./node_modules/@mantine/core/esm/Popover/Popover.errors.js");
+
+
+
+const [PopoverContextProvider, usePopoverContext] = (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_0__.createSafeContext)(_Popover_errors_js__WEBPACK_IMPORTED_MODULE_1__.POPOVER_ERRORS.context);
+
+
+//# sourceMappingURL=Popover.context.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Popover/Popover.errors.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Popover/Popover.errors.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "POPOVER_ERRORS": () => (/* binding */ POPOVER_ERRORS)
+/* harmony export */ });
+const POPOVER_ERRORS = {
+  context: "Popover component was not found in the tree",
+  children: "Popover.Target component children should be an element or a component that accepts ref, fragments, strings, numbers and other primitive values are not supported"
+};
+
+
+//# sourceMappingURL=Popover.errors.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Popover/Popover.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Popover/Popover.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Popover": () => (/* binding */ Popover)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-id/use-id.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-click-outside/use-click-outside.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/utils/get-default-z-index/get-default-z-index.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/MantineProvider.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/StylesApiContext.js");
+/* harmony import */ var _use_popover_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./use-popover.js */ "./node_modules/@mantine/core/esm/Popover/use-popover.js");
+/* harmony import */ var _Popover_context_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Popover.context.js */ "./node_modules/@mantine/core/esm/Popover/Popover.context.js");
+/* harmony import */ var _PopoverTarget_PopoverTarget_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PopoverTarget/PopoverTarget.js */ "./node_modules/@mantine/core/esm/Popover/PopoverTarget/PopoverTarget.js");
+/* harmony import */ var _PopoverDropdown_PopoverDropdown_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./PopoverDropdown/PopoverDropdown.js */ "./node_modules/@mantine/core/esm/Popover/PopoverDropdown/PopoverDropdown.js");
+/* harmony import */ var _Floating_get_floating_position_get_floating_position_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Floating/get-floating-position/get-floating-position.js */ "./node_modules/@mantine/core/esm/Floating/get-floating-position/get-floating-position.js");
+
+
+
+
+
+
+
+
+
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const defaultProps = {
+  position: "bottom",
+  offset: 8,
+  positionDependencies: [],
+  transition: "fade",
+  transitionDuration: 150,
+  middlewares: { flip: true, shift: true },
+  arrowSize: 7,
+  arrowOffset: 5,
+  closeOnClickOutside: true,
+  withinPortal: false,
+  closeOnEscape: true,
+  trapFocus: false,
+  withRoles: true,
+  clickOutsideEvents: ["mousedown", "touchstart"],
+  zIndex: (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.getDefaultZIndex)("popover"),
+  __staticSelector: "Popover"
+};
+function Popover(props) {
+  var _b, _c, _d, _e, _f, _g;
+  const arrowRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  const _a = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_2__.useComponentDefaultProps)("Popover", defaultProps, props), {
+    children,
+    position,
+    offset,
+    onPositionChange,
+    positionDependencies,
+    opened,
+    transition,
+    transitionDuration,
+    width,
+    middlewares,
+    withArrow,
+    arrowSize,
+    arrowOffset,
+    unstyled,
+    classNames,
+    styles,
+    closeOnClickOutside,
+    withinPortal,
+    closeOnEscape,
+    clickOutsideEvents,
+    trapFocus,
+    onClose,
+    onOpen,
+    onChange,
+    zIndex,
+    radius,
+    shadow,
+    id,
+    defaultOpened,
+    exitTransitionDuration,
+    __staticSelector,
+    withRoles
+  } = _a, others = __objRest(_a, [
+    "children",
+    "position",
+    "offset",
+    "onPositionChange",
+    "positionDependencies",
+    "opened",
+    "transition",
+    "transitionDuration",
+    "width",
+    "middlewares",
+    "withArrow",
+    "arrowSize",
+    "arrowOffset",
+    "unstyled",
+    "classNames",
+    "styles",
+    "closeOnClickOutside",
+    "withinPortal",
+    "closeOnEscape",
+    "clickOutsideEvents",
+    "trapFocus",
+    "onClose",
+    "onOpen",
+    "onChange",
+    "zIndex",
+    "radius",
+    "shadow",
+    "id",
+    "defaultOpened",
+    "exitTransitionDuration",
+    "__staticSelector",
+    "withRoles"
+  ]);
+  const uid = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_3__.useId)(id);
+  const theme = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_2__.useMantineTheme)();
+  const popover = (0,_use_popover_js__WEBPACK_IMPORTED_MODULE_4__.usePopover)({
+    middlewares,
+    width,
+    position: (0,_Floating_get_floating_position_get_floating_position_js__WEBPACK_IMPORTED_MODULE_5__.getFloatingPosition)(theme.dir, position),
+    offset: offset + (withArrow ? arrowSize / 2 : 0),
+    arrowRef,
+    onPositionChange,
+    positionDependencies,
+    opened,
+    defaultOpened,
+    onChange,
+    onOpen,
+    onClose
+  });
+  (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_6__.useClickOutside)(() => closeOnClickOutside && popover.onClose(), clickOutsideEvents, [
+    popover.floating.refs.floating.current,
+    popover.floating.refs.reference.current
+  ]);
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_mantine_styles__WEBPACK_IMPORTED_MODULE_7__.StylesApiProvider, {
+    classNames,
+    styles,
+    unstyled,
+    staticSelector: __staticSelector
+  }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Popover_context_js__WEBPACK_IMPORTED_MODULE_8__.PopoverContextProvider, {
+    value: {
+      controlled: popover.controlled,
+      reference: popover.floating.reference,
+      floating: popover.floating.floating,
+      x: popover.floating.x,
+      y: popover.floating.y,
+      arrowX: (_d = (_c = (_b = popover.floating) == null ? void 0 : _b.middlewareData) == null ? void 0 : _c.arrow) == null ? void 0 : _d.x,
+      arrowY: (_g = (_f = (_e = popover.floating) == null ? void 0 : _e.middlewareData) == null ? void 0 : _f.arrow) == null ? void 0 : _g.y,
+      opened: popover.opened,
+      arrowRef,
+      transition,
+      transitionDuration,
+      exitTransitionDuration,
+      width,
+      withArrow,
+      arrowSize,
+      arrowOffset,
+      placement: popover.floating.placement,
+      trapFocus,
+      withinPortal,
+      zIndex,
+      radius,
+      shadow,
+      closeOnEscape,
+      onClose: popover.onClose,
+      onToggle: popover.onToggle,
+      getTargetId: () => `${uid}-target`,
+      getDropdownId: () => `${uid}-dropdown`,
+      withRoles,
+      targetProps: others
+    }
+  }, children));
+}
+Popover.Target = _PopoverTarget_PopoverTarget_js__WEBPACK_IMPORTED_MODULE_9__.PopoverTarget;
+Popover.Dropdown = _PopoverDropdown_PopoverDropdown_js__WEBPACK_IMPORTED_MODULE_10__.PopoverDropdown;
+Popover.displayName = "@mantine/core/Popover";
+
+
+//# sourceMappingURL=Popover.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Popover/PopoverDropdown/PopoverDropdown.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Popover/PopoverDropdown/PopoverDropdown.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PopoverDropdown": () => (/* binding */ PopoverDropdown)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/StylesApiContext.js");
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/close-on-escape/close-on-escape.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-focus-return/use-focus-return.js");
+/* harmony import */ var _Popover_context_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Popover.context.js */ "./node_modules/@mantine/core/esm/Popover/Popover.context.js");
+/* harmony import */ var _PopoverDropdown_styles_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PopoverDropdown.styles.js */ "./node_modules/@mantine/core/esm/Popover/PopoverDropdown/PopoverDropdown.styles.js");
+/* harmony import */ var _Portal_OptionalPortal_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../Portal/OptionalPortal.js */ "./node_modules/@mantine/core/esm/Portal/OptionalPortal.js");
+/* harmony import */ var _Transition_Transition_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../Transition/Transition.js */ "./node_modules/@mantine/core/esm/Transition/Transition.js");
+/* harmony import */ var _FocusTrap_FocusTrap_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../FocusTrap/FocusTrap.js */ "./node_modules/@mantine/core/esm/FocusTrap/FocusTrap.js");
+/* harmony import */ var _Box_Box_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../Box/Box.js */ "./node_modules/@mantine/core/esm/Box/Box.js");
+/* harmony import */ var _Floating_FloatingArrow_FloatingArrow_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../Floating/FloatingArrow/FloatingArrow.js */ "./node_modules/@mantine/core/esm/Floating/FloatingArrow/FloatingArrow.js");
+
+
+
+
+
+
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+function PopoverDropdown(_a) {
+  var _b = _a, { style, className, children } = _b, others = __objRest(_b, ["style", "className", "children"]);
+  const { classNames, styles, unstyled, staticSelector } = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useContextStylesApi)();
+  const ctx = (0,_Popover_context_js__WEBPACK_IMPORTED_MODULE_2__.usePopoverContext)();
+  const { classes, cx } = (0,_PopoverDropdown_styles_js__WEBPACK_IMPORTED_MODULE_3__["default"])({ radius: ctx.radius, shadow: ctx.shadow }, { name: staticSelector, classNames, styles, unstyled });
+  const returnFocus = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_4__.useFocusReturn)({
+    opened: ctx.opened,
+    shouldReturnFocus: false
+  });
+  const accessibleProps = ctx.withRoles ? {
+    "aria-labelledby": ctx.getTargetId(),
+    id: ctx.getDropdownId(),
+    role: "dialog"
+  } : {};
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Portal_OptionalPortal_js__WEBPACK_IMPORTED_MODULE_5__.OptionalPortal, {
+    withinPortal: ctx.withinPortal
+  }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Transition_Transition_js__WEBPACK_IMPORTED_MODULE_6__.Transition, {
+    mounted: ctx.opened,
+    transition: ctx.transition,
+    duration: ctx.transitionDuration,
+    exitDuration: typeof ctx.exitTransitionDuration === "number" ? ctx.exitTransitionDuration : ctx.transitionDuration
+  }, (transitionStyles) => {
+    var _a2, _b2;
+    return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_FocusTrap_FocusTrap_js__WEBPACK_IMPORTED_MODULE_7__.FocusTrap, {
+      active: ctx.trapFocus
+    }, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Box_Box_js__WEBPACK_IMPORTED_MODULE_8__.Box, __spreadValues(__spreadProps(__spreadValues({}, accessibleProps), {
+      tabIndex: -1,
+      ref: ctx.floating,
+      style: __spreadProps(__spreadValues(__spreadValues({}, style), transitionStyles), {
+        zIndex: ctx.zIndex,
+        top: (_a2 = ctx.y) != null ? _a2 : "",
+        left: (_b2 = ctx.x) != null ? _b2 : "",
+        width: ctx.width === "target" ? void 0 : ctx.width
+      }),
+      className: cx(classes.dropdown, className),
+      onKeyDownCapture: (0,_mantine_utils__WEBPACK_IMPORTED_MODULE_9__.closeOnEscape)(ctx.onClose, {
+        active: ctx.closeOnEscape,
+        onTrigger: returnFocus
+      }),
+      "data-position": ctx.placement
+    }), others), children, /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Floating_FloatingArrow_FloatingArrow_js__WEBPACK_IMPORTED_MODULE_10__.FloatingArrow, {
+      ref: ctx.arrowRef,
+      arrowX: ctx.arrowX,
+      arrowY: ctx.arrowY,
+      visible: ctx.withArrow,
+      withBorder: true,
+      position: ctx.placement,
+      arrowSize: ctx.arrowSize,
+      arrowOffset: ctx.arrowOffset,
+      className: classes.arrow
+    })));
+  }));
+}
+PopoverDropdown.displayName = "@mantine/core/PopoverDropdown";
+
+
+//# sourceMappingURL=PopoverDropdown.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Popover/PopoverDropdown/PopoverDropdown.styles.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Popover/PopoverDropdown/PopoverDropdown.styles.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/tss/create-styles.js");
+
+
+var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((theme, { radius, shadow }) => ({
+  dropdown: {
+    position: "absolute",
+    backgroundColor: theme.white,
+    background: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
+    border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`,
+    padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+    boxShadow: theme.shadows[shadow] || shadow || "none",
+    borderRadius: theme.fn.radius(radius),
+    "&:focus": {
+      outline: 0
+    }
+  },
+  arrow: {
+    backgroundColor: "inherit",
+    border: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]}`,
+    zIndex: 1
+  }
+}));
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
+//# sourceMappingURL=PopoverDropdown.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Popover/PopoverTarget/PopoverTarget.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Popover/PopoverTarget/PopoverTarget.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PopoverTarget": () => (/* binding */ PopoverTarget)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-merged-ref/use-merged-ref.js");
+/* harmony import */ var _mantine_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/utils */ "./node_modules/@mantine/utils/esm/is-element/is-element.js");
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var _Popover_context_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Popover.context.js */ "./node_modules/@mantine/core/esm/Popover/Popover.context.js");
+/* harmony import */ var _Popover_errors_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Popover.errors.js */ "./node_modules/@mantine/core/esm/Popover/Popover.errors.js");
+
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const PopoverTarget = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((_a, ref) => {
+  var _b = _a, { children, refProp = "ref", popupType = "dialog" } = _b, others = __objRest(_b, ["children", "refProp", "popupType"]);
+  if (!(0,_mantine_utils__WEBPACK_IMPORTED_MODULE_1__.isElement)(children)) {
+    throw new Error(_Popover_errors_js__WEBPACK_IMPORTED_MODULE_2__.POPOVER_ERRORS.children);
+  }
+  const forwardedProps = others;
+  const ctx = (0,_Popover_context_js__WEBPACK_IMPORTED_MODULE_3__.usePopoverContext)();
+  const targetRef = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_4__.useMergedRef)(ctx.reference, children.ref, ref);
+  const accessibleProps = ctx.withRoles ? {
+    "aria-haspopup": popupType,
+    "aria-expanded": ctx.opened,
+    "aria-controls": ctx.getDropdownId(),
+    id: ctx.getTargetId()
+  } : {};
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(children, __spreadValues(__spreadProps(__spreadValues(__spreadValues(__spreadValues({}, forwardedProps), accessibleProps), ctx.targetProps), {
+    className: (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_5__["default"])(ctx.targetProps.className, forwardedProps.className, children.props.className),
+    [refProp]: targetRef
+  }), !ctx.controlled ? { onClick: ctx.onToggle } : null));
+});
+PopoverTarget.displayName = "@mantine/core/PopoverTarget";
+
+
+//# sourceMappingURL=PopoverTarget.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Popover/use-popover.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Popover/use-popover.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "usePopover": () => (/* binding */ usePopover)
+/* harmony export */ });
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-uncontrolled/use-uncontrolled.js");
+/* harmony import */ var _mantine_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mantine/hooks */ "./node_modules/@mantine/hooks/esm/use-did-update/use-did-update.js");
+/* harmony import */ var _floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @floating-ui/react-dom-interactions */ "./node_modules/@floating-ui/core/dist/floating-ui.core.browser.mjs");
+/* harmony import */ var _floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @floating-ui/react-dom-interactions */ "./node_modules/@floating-ui/react-dom/dist/floating-ui.react-dom.esm.js");
+/* harmony import */ var _floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @floating-ui/react-dom-interactions */ "./node_modules/@floating-ui/react-dom-interactions/dist/floating-ui.react-dom-interactions.esm.js");
+/* harmony import */ var _Floating_use_floating_auto_update_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Floating/use-floating-auto-update.js */ "./node_modules/@mantine/core/esm/Floating/use-floating-auto-update.js");
+
+
+
+
+function getPopoverMiddlewares(options) {
+  const middlewares = [(0,_floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_0__.offset)(options.offset)];
+  if (options.middlewares.shift) {
+    middlewares.push((0,_floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_0__.shift)());
+  }
+  if (options.middlewares.flip) {
+    middlewares.push((0,_floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_0__.flip)());
+  }
+  middlewares.push((0,_floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_1__.arrow)({ element: options.arrowRef }));
+  return middlewares;
+}
+function usePopover(options) {
+  const [_opened, setOpened] = (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_2__.useUncontrolled)({
+    value: options.opened,
+    defaultValue: options.defaultOpened,
+    finalValue: false,
+    onChange: options.onChange
+  });
+  const onClose = () => {
+    var _a;
+    (_a = options.onClose) == null ? void 0 : _a.call(options);
+    setOpened(false);
+  };
+  const onToggle = () => {
+    var _a, _b;
+    if (_opened) {
+      (_a = options.onClose) == null ? void 0 : _a.call(options);
+      setOpened(false);
+    } else {
+      (_b = options.onOpen) == null ? void 0 : _b.call(options);
+      setOpened(true);
+    }
+  };
+  const floating = (0,_floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_3__.useFloating)({
+    placement: options.position,
+    middleware: [
+      ...getPopoverMiddlewares(options),
+      ...options.width === "target" ? [
+        (0,_floating_ui_react_dom_interactions__WEBPACK_IMPORTED_MODULE_0__.size)({
+          apply({ rects }) {
+            var _a, _b;
+            Object.assign((_b = (_a = floating.refs.floating.current) == null ? void 0 : _a.style) != null ? _b : {}, {
+              width: `${rects.reference.width}px`
+            });
+          }
+        })
+      ] : []
+    ]
+  });
+  (0,_Floating_use_floating_auto_update_js__WEBPACK_IMPORTED_MODULE_4__.useFloatingAutoUpdate)({
+    opened: options.opened,
+    positionDependencies: options.positionDependencies,
+    floating
+  });
+  (0,_mantine_hooks__WEBPACK_IMPORTED_MODULE_5__.useDidUpdate)(() => {
+    var _a;
+    (_a = options.onPositionChange) == null ? void 0 : _a.call(options, floating.placement);
+  }, [floating.placement]);
+  return {
+    floating,
+    controlled: typeof options.opened === "boolean",
+    opened: _opened,
+    onClose,
+    onToggle
+  };
+}
+
+
+//# sourceMappingURL=use-popover.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/core/esm/Portal/OptionalPortal.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/@mantine/core/esm/Portal/OptionalPortal.js ***!
@@ -8391,6 +14065,718 @@ var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((t
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
 //# sourceMappingURL=UnstyledButton.styles.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/clear-list-state/clear-list-state.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/clear-list-state/clear-list-state.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clearListState": () => (/* binding */ clearListState)
+/* harmony export */ });
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+function clearListState(field, state) {
+  if (state === null || typeof state !== "object") {
+    return {};
+  }
+  const clone = __spreadValues({}, state);
+  Object.keys(state).forEach((errorKey) => {
+    if (errorKey.includes(`${String(field)}.`)) {
+      delete clone[errorKey];
+    }
+  });
+  return clone;
+}
+
+
+//# sourceMappingURL=clear-list-state.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/filter-errors/filter-errors.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/filter-errors/filter-errors.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "filterErrors": () => (/* binding */ filterErrors)
+/* harmony export */ });
+function filterErrors(errors) {
+  if (errors === null || typeof errors !== "object") {
+    return {};
+  }
+  return Object.keys(errors).reduce((acc, key) => {
+    const errorValue = errors[key];
+    if (errorValue !== void 0 && errorValue !== null && errorValue !== false) {
+      acc[key] = errorValue;
+    }
+    return acc;
+  }, {});
+}
+
+
+//# sourceMappingURL=filter-errors.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/get-input-on-change/get-input-on-change.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/get-input-on-change/get-input-on-change.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getInputOnChange": () => (/* binding */ getInputOnChange)
+/* harmony export */ });
+function getInputOnChange(setValue) {
+  return (val) => {
+    if (!val) {
+      setValue(val);
+    } else if (typeof val === "function") {
+      setValue(val);
+    } else if (typeof val === "object" && "nativeEvent" in val) {
+      const { currentTarget } = val;
+      if (currentTarget instanceof HTMLInputElement) {
+        if (currentTarget.type === "checkbox") {
+          setValue(currentTarget.checked);
+        } else {
+          setValue(currentTarget.value);
+        }
+      } else if (currentTarget instanceof HTMLTextAreaElement || currentTarget instanceof HTMLSelectElement) {
+        setValue(currentTarget.value);
+      }
+    } else {
+      setValue(val);
+    }
+  };
+}
+
+
+//# sourceMappingURL=get-input-on-change.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/get-status/get-status.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/get-status/get-status.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getStatus": () => (/* binding */ getStatus)
+/* harmony export */ });
+function getStatus(status, path) {
+  const paths = Object.keys(status);
+  if (typeof path === "string") {
+    const nestedPaths = paths.filter((statusPath) => statusPath.includes(`${path}.`));
+    return status[path] || nestedPaths.some((statusPath) => status[statusPath]) || false;
+  }
+  return paths.some((statusPath) => status[statusPath]);
+}
+
+
+//# sourceMappingURL=get-status.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/paths/get-path.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/paths/get-path.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getPath": () => (/* binding */ getPath)
+/* harmony export */ });
+/* harmony import */ var _get_splitted_path_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-splitted-path.js */ "./node_modules/@mantine/form/esm/paths/get-splitted-path.js");
+
+
+function getPath(path, values) {
+  const splittedPath = (0,_get_splitted_path_js__WEBPACK_IMPORTED_MODULE_0__.getSplittedPath)(path);
+  if (splittedPath.length === 0 || typeof values !== "object" || values === null) {
+    return void 0;
+  }
+  let value = values[splittedPath[0]];
+  for (let i = 1; i < splittedPath.length; i += 1) {
+    if (value === void 0) {
+      break;
+    }
+    value = value[splittedPath[i]];
+  }
+  return value;
+}
+
+
+//# sourceMappingURL=get-path.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/paths/get-splitted-path.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/paths/get-splitted-path.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getSplittedPath": () => (/* binding */ getSplittedPath)
+/* harmony export */ });
+function getSplittedPath(path) {
+  if (typeof path !== "string") {
+    return [];
+  }
+  return path.split(".");
+}
+
+
+//# sourceMappingURL=get-splitted-path.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/paths/insert-path.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/paths/insert-path.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "insertPath": () => (/* binding */ insertPath)
+/* harmony export */ });
+/* harmony import */ var _get_path_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-path.js */ "./node_modules/@mantine/form/esm/paths/get-path.js");
+/* harmony import */ var _set_path_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./set-path.js */ "./node_modules/@mantine/form/esm/paths/set-path.js");
+
+
+
+function insertPath(path, value, index, values) {
+  const currentValue = (0,_get_path_js__WEBPACK_IMPORTED_MODULE_0__.getPath)(path, values);
+  if (!Array.isArray(currentValue)) {
+    return values;
+  }
+  const cloned = [...currentValue];
+  cloned.splice(typeof index === "number" ? index : cloned.length, 0, value);
+  return (0,_set_path_js__WEBPACK_IMPORTED_MODULE_1__.setPath)(path, cloned, values);
+}
+
+
+//# sourceMappingURL=insert-path.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/paths/remove-path.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/paths/remove-path.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "removePath": () => (/* binding */ removePath)
+/* harmony export */ });
+/* harmony import */ var _get_path_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-path.js */ "./node_modules/@mantine/form/esm/paths/get-path.js");
+/* harmony import */ var _set_path_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./set-path.js */ "./node_modules/@mantine/form/esm/paths/set-path.js");
+
+
+
+function removePath(path, index, values) {
+  const currentValue = (0,_get_path_js__WEBPACK_IMPORTED_MODULE_0__.getPath)(path, values);
+  if (!Array.isArray(currentValue)) {
+    return values;
+  }
+  return (0,_set_path_js__WEBPACK_IMPORTED_MODULE_1__.setPath)(path, currentValue.filter((_, itemIndex) => itemIndex !== index), values);
+}
+
+
+//# sourceMappingURL=remove-path.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/paths/reorder-path.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/paths/reorder-path.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "reorderPath": () => (/* binding */ reorderPath)
+/* harmony export */ });
+/* harmony import */ var _get_path_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./get-path.js */ "./node_modules/@mantine/form/esm/paths/get-path.js");
+/* harmony import */ var _set_path_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./set-path.js */ "./node_modules/@mantine/form/esm/paths/set-path.js");
+
+
+
+function reorderPath(path, { from, to }, values) {
+  const currentValue = (0,_get_path_js__WEBPACK_IMPORTED_MODULE_0__.getPath)(path, values);
+  if (!Array.isArray(currentValue)) {
+    return values;
+  }
+  const cloned = [...currentValue];
+  const item = currentValue[from];
+  cloned.splice(from, 1);
+  cloned.splice(to, 0, item);
+  return (0,_set_path_js__WEBPACK_IMPORTED_MODULE_1__.setPath)(path, cloned, values);
+}
+
+
+//# sourceMappingURL=reorder-path.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/paths/set-path.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/paths/set-path.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setPath": () => (/* binding */ setPath)
+/* harmony export */ });
+/* harmony import */ var klona__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! klona */ "./node_modules/klona/dist/index.mjs");
+/* harmony import */ var _get_splitted_path_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./get-splitted-path.js */ "./node_modules/@mantine/form/esm/paths/get-splitted-path.js");
+
+
+
+function setPath(path, value, values) {
+  const splittedPath = (0,_get_splitted_path_js__WEBPACK_IMPORTED_MODULE_1__.getSplittedPath)(path);
+  if (splittedPath.length === 0) {
+    return values;
+  }
+  const cloned = (0,klona__WEBPACK_IMPORTED_MODULE_0__.klona)(values);
+  if (splittedPath.length === 1) {
+    cloned[splittedPath[0]] = value;
+    return cloned;
+  }
+  let val = cloned[splittedPath[0]];
+  for (let i = 1; i < splittedPath.length - 1; i += 1) {
+    if (val === void 0) {
+      return cloned;
+    }
+    val = val[splittedPath[i]];
+  }
+  val[splittedPath[splittedPath.length - 1]] = value;
+  return cloned;
+}
+
+
+//# sourceMappingURL=set-path.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/use-form.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/use-form.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useForm": () => (/* binding */ useForm)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var fast_deep_equal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fast-deep-equal */ "./node_modules/fast-deep-equal/index.js");
+/* harmony import */ var fast_deep_equal__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fast_deep_equal__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _filter_errors_filter_errors_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filter-errors/filter-errors.js */ "./node_modules/@mantine/form/esm/filter-errors/filter-errors.js");
+/* harmony import */ var _validate_should_validate_on_change_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./validate/should-validate-on-change.js */ "./node_modules/@mantine/form/esm/validate/should-validate-on-change.js");
+/* harmony import */ var _paths_get_path_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./paths/get-path.js */ "./node_modules/@mantine/form/esm/paths/get-path.js");
+/* harmony import */ var _paths_set_path_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./paths/set-path.js */ "./node_modules/@mantine/form/esm/paths/set-path.js");
+/* harmony import */ var _validate_validate_field_value_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./validate/validate-field-value.js */ "./node_modules/@mantine/form/esm/validate/validate-field-value.js");
+/* harmony import */ var _paths_reorder_path_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./paths/reorder-path.js */ "./node_modules/@mantine/form/esm/paths/reorder-path.js");
+/* harmony import */ var _paths_remove_path_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./paths/remove-path.js */ "./node_modules/@mantine/form/esm/paths/remove-path.js");
+/* harmony import */ var _clear_list_state_clear_list_state_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./clear-list-state/clear-list-state.js */ "./node_modules/@mantine/form/esm/clear-list-state/clear-list-state.js");
+/* harmony import */ var _paths_insert_path_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./paths/insert-path.js */ "./node_modules/@mantine/form/esm/paths/insert-path.js");
+/* harmony import */ var _validate_validate_values_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./validate/validate-values.js */ "./node_modules/@mantine/form/esm/validate/validate-values.js");
+/* harmony import */ var _get_status_get_status_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./get-status/get-status.js */ "./node_modules/@mantine/form/esm/get-status/get-status.js");
+/* harmony import */ var _get_input_on_change_get_input_on_change_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./get-input-on-change/get-input-on-change.js */ "./node_modules/@mantine/form/esm/get-input-on-change/get-input-on-change.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+function useForm({
+  initialValues = {},
+  initialErrors = {},
+  initialDirty = {},
+  initialTouched = {},
+  clearInputErrorOnChange = true,
+  validateInputOnChange = false,
+  validateInputOnBlur = false,
+  validate: rules
+} = {}) {
+  const [touched, setTouched] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialTouched);
+  const [dirty, setDirty] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialDirty);
+  const [values, _setValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialValues);
+  const [errors, _setErrors] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_filter_errors_filter_errors_js__WEBPACK_IMPORTED_MODULE_2__.filterErrors)(initialErrors));
+  const _dirtyValues = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(initialValues);
+  const _setDirtyValues = (_values) => {
+    _dirtyValues.current = _values;
+  };
+  const resetTouched = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => setTouched({}), []);
+  const resetDirty = (_values) => {
+    _setDirtyValues(_values || values);
+    setDirty({});
+  };
+  const setErrors = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((errs) => _setErrors((current) => (0,_filter_errors_filter_errors_js__WEBPACK_IMPORTED_MODULE_2__.filterErrors)(typeof errs === "function" ? errs(current) : errs)), []);
+  const clearErrors = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => _setErrors({}), []);
+  const reset = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    _setValues(initialValues);
+    clearErrors();
+    resetDirty(initialValues);
+    resetTouched();
+  }, []);
+  const setFieldError = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path, error) => setErrors((current) => __spreadProps(__spreadValues({}, current), { [path]: error })), []);
+  const clearFieldError = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path) => setErrors((current) => {
+    if (typeof path !== "string") {
+      return current;
+    }
+    const clone = __spreadValues({}, current);
+    delete clone[path];
+    return clone;
+  }), []);
+  const setFieldValue = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path, value) => {
+    const shouldValidate = (0,_validate_should_validate_on_change_js__WEBPACK_IMPORTED_MODULE_3__.shouldValidateOnChange)(path, validateInputOnChange);
+    _setValues((current) => {
+      const initialValue = (0,_paths_get_path_js__WEBPACK_IMPORTED_MODULE_4__.getPath)(path, _dirtyValues.current);
+      const isFieldDirty = !fast_deep_equal__WEBPACK_IMPORTED_MODULE_1___default()(initialValue, value);
+      setDirty((currentDirty) => __spreadProps(__spreadValues({}, currentDirty), { [path]: isFieldDirty }));
+      setTouched((currentTouched) => __spreadProps(__spreadValues({}, currentTouched), { [path]: true }));
+      const result = (0,_paths_set_path_js__WEBPACK_IMPORTED_MODULE_5__.setPath)(path, value, current);
+      if (shouldValidate) {
+        const validationResults = (0,_validate_validate_field_value_js__WEBPACK_IMPORTED_MODULE_6__.validateFieldValue)(path, rules, result);
+        validationResults.hasError ? setFieldError(path, validationResults.error) : clearFieldError(path);
+      }
+      return result;
+    });
+    !shouldValidate && clearInputErrorOnChange && setFieldError(path, null);
+  }, []);
+  const setValues = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((payload) => {
+    _setValues((currentValues) => {
+      const valuesPartial = typeof payload === "function" ? payload(currentValues) : payload;
+      return __spreadValues(__spreadValues({}, currentValues), valuesPartial);
+    });
+    clearInputErrorOnChange && clearErrors();
+  }, []);
+  const reorderListItem = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path, payload) => _setValues((current) => (0,_paths_reorder_path_js__WEBPACK_IMPORTED_MODULE_7__.reorderPath)(path, payload, current)), []);
+  const removeListItem = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path, index) => {
+    _setValues((current) => (0,_paths_remove_path_js__WEBPACK_IMPORTED_MODULE_8__.removePath)(path, index, current));
+    _setErrors((errs) => (0,_clear_list_state_clear_list_state_js__WEBPACK_IMPORTED_MODULE_9__.clearListState)(path, errs));
+    setDirty((current) => (0,_clear_list_state_clear_list_state_js__WEBPACK_IMPORTED_MODULE_9__.clearListState)(`${String(path)}.${index}`, current));
+  }, []);
+  const insertListItem = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path, item, index) => _setValues((current) => (0,_paths_insert_path_js__WEBPACK_IMPORTED_MODULE_10__.insertPath)(path, item, index, current)), []);
+  const validate = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(() => {
+    const results = (0,_validate_validate_values_js__WEBPACK_IMPORTED_MODULE_11__.validateValues)(rules, values);
+    _setErrors(results.errors);
+    return results;
+  }, [values, rules]);
+  const validateField = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path) => {
+    const results = (0,_validate_validate_field_value_js__WEBPACK_IMPORTED_MODULE_6__.validateFieldValue)(path, rules, values);
+    results.hasError ? setFieldError(path, results.error) : clearFieldError(path);
+    return results;
+  }, [values, rules]);
+  const getInputProps = (path, { type = "input", withError = type === "input", withFocus = true } = {}) => {
+    const onChange = (0,_get_input_on_change_get_input_on_change_js__WEBPACK_IMPORTED_MODULE_12__.getInputOnChange)((value) => setFieldValue(path, value));
+    const payload = { onChange };
+    if (withError) {
+      payload.error = errors[path];
+    }
+    if (type === "checkbox") {
+      payload.checked = (0,_paths_get_path_js__WEBPACK_IMPORTED_MODULE_4__.getPath)(path, values);
+    } else {
+      payload.value = (0,_paths_get_path_js__WEBPACK_IMPORTED_MODULE_4__.getPath)(path, values);
+    }
+    if (withFocus) {
+      payload.onFocus = () => setTouched((current) => __spreadProps(__spreadValues({}, current), { [path]: true }));
+      payload.onBlur = () => {
+        if ((0,_validate_should_validate_on_change_js__WEBPACK_IMPORTED_MODULE_3__.shouldValidateOnChange)(path, validateInputOnBlur)) {
+          const validationResults = (0,_validate_validate_field_value_js__WEBPACK_IMPORTED_MODULE_6__.validateFieldValue)(path, rules, values);
+          validationResults.hasError ? setFieldError(path, validationResults.error) : clearFieldError(path);
+        }
+      };
+    }
+    return payload;
+  };
+  const onSubmit = (handleSubmit, handleValidationFailure) => (event) => {
+    event.preventDefault();
+    const results = validate();
+    if (results.hasErrors) {
+      handleValidationFailure == null ? void 0 : handleValidationFailure(results.errors, values, event);
+    } else {
+      handleSubmit(values, event);
+    }
+  };
+  const onReset = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((event) => {
+    event.preventDefault();
+    reset();
+  }, []);
+  const isDirty = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path) => (0,_get_status_get_status_js__WEBPACK_IMPORTED_MODULE_13__.getStatus)(dirty, path), [dirty]);
+  const isTouched = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path) => (0,_get_status_get_status_js__WEBPACK_IMPORTED_MODULE_13__.getStatus)(touched, path), [touched]);
+  const isValid = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)((path) => path ? !(0,_validate_validate_field_value_js__WEBPACK_IMPORTED_MODULE_6__.validateFieldValue)(path, rules, values).hasError : !(0,_validate_validate_values_js__WEBPACK_IMPORTED_MODULE_11__.validateValues)(rules, values).hasErrors, [values, rules]);
+  return {
+    values,
+    errors,
+    setValues,
+    setErrors,
+    setFieldValue,
+    setFieldError,
+    clearFieldError,
+    clearErrors,
+    reset,
+    validate,
+    validateField,
+    reorderListItem,
+    removeListItem,
+    insertListItem,
+    getInputProps,
+    onSubmit,
+    onReset,
+    isDirty,
+    isTouched,
+    setTouched,
+    setDirty,
+    resetTouched,
+    resetDirty,
+    isValid
+  };
+}
+
+
+//# sourceMappingURL=use-form.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/validate/should-validate-on-change.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/validate/should-validate-on-change.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "shouldValidateOnChange": () => (/* binding */ shouldValidateOnChange)
+/* harmony export */ });
+function shouldValidateOnChange(path, validateInputOnChange) {
+  if (!validateInputOnChange) {
+    return false;
+  }
+  if (typeof validateInputOnChange === "boolean") {
+    return validateInputOnChange;
+  }
+  if (Array.isArray(validateInputOnChange)) {
+    return validateInputOnChange.includes(path);
+  }
+  return false;
+}
+
+
+//# sourceMappingURL=should-validate-on-change.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/validate/validate-field-value.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/validate/validate-field-value.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "validateFieldValue": () => (/* binding */ validateFieldValue)
+/* harmony export */ });
+/* harmony import */ var _validate_values_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validate-values.js */ "./node_modules/@mantine/form/esm/validate/validate-values.js");
+
+
+function validateFieldValue(path, rules, values) {
+  if (typeof path !== "string") {
+    return { hasError: false, error: null };
+  }
+  const results = (0,_validate_values_js__WEBPACK_IMPORTED_MODULE_0__.validateValues)(rules, values);
+  const hasError = path in results.errors;
+  return { hasError, error: hasError ? results.errors[path] : null };
+}
+
+
+//# sourceMappingURL=validate-field-value.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/form/esm/validate/validate-values.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@mantine/form/esm/validate/validate-values.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "validateValues": () => (/* binding */ validateValues)
+/* harmony export */ });
+/* harmony import */ var _filter_errors_filter_errors_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../filter-errors/filter-errors.js */ "./node_modules/@mantine/form/esm/filter-errors/filter-errors.js");
+/* harmony import */ var _paths_get_path_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../paths/get-path.js */ "./node_modules/@mantine/form/esm/paths/get-path.js");
+
+
+
+function getValidationResults(errors) {
+  const filteredErrors = (0,_filter_errors_filter_errors_js__WEBPACK_IMPORTED_MODULE_0__.filterErrors)(errors);
+  return { hasErrors: Object.keys(filteredErrors).length > 0, errors: filteredErrors };
+}
+function validateRulesRecord(rules, values, path = "", errors = {}) {
+  if (typeof rules !== "object" || rules === null) {
+    return errors;
+  }
+  return Object.keys(rules).reduce((acc, ruleKey) => {
+    const rule = rules[ruleKey];
+    const rulePath = `${path === "" ? "" : `${path}.`}${ruleKey}`;
+    const value = (0,_paths_get_path_js__WEBPACK_IMPORTED_MODULE_1__.getPath)(rulePath, values);
+    let arrayValidation = false;
+    if (typeof rule === "function") {
+      acc[rulePath] = rule(value, values, rulePath);
+    }
+    if (typeof rule === "object" && Array.isArray(value)) {
+      arrayValidation = true;
+      value.forEach((_item, index) => validateRulesRecord(rule, values, `${rulePath}.${index}`, acc));
+    }
+    if (typeof rule === "object" && typeof value === "object" && value !== null) {
+      if (!arrayValidation) {
+        validateRulesRecord(rule, values, rulePath, acc);
+      }
+    }
+    return acc;
+  }, errors);
+}
+function validateValues(validate, values) {
+  if (typeof validate === "function") {
+    return getValidationResults(validate(values));
+  }
+  return getValidationResults(validateRulesRecord(validate, values));
+}
+
+
+//# sourceMappingURL=validate-values.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/hooks/esm/use-click-outside/use-click-outside.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@mantine/hooks/esm/use-click-outside/use-click-outside.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useClickOutside": () => (/* binding */ useClickOutside)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const DEFAULT_EVENTS = ["mousedown", "touchstart"];
+function useClickOutside(handler, events, nodes) {
+  const ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const listener = (event) => {
+      const { target } = event != null ? event : {};
+      if (Array.isArray(nodes)) {
+        const shouldIgnore = (target == null ? void 0 : target.hasAttribute("data-ignore-outside-clicks")) || !document.body.contains(target);
+        const shouldTrigger = nodes.every((node) => !!node && !node.contains(target));
+        shouldTrigger && !shouldIgnore && handler();
+      } else if (ref.current && !ref.current.contains(target)) {
+        handler();
+      }
+    };
+    (events || DEFAULT_EVENTS).forEach((fn) => document.addEventListener(fn, listener));
+    return () => {
+      (events || DEFAULT_EVENTS).forEach((fn) => document.removeEventListener(fn, listener));
+    };
+  }, [ref, handler, nodes]);
+  return ref;
+}
+
+
+//# sourceMappingURL=use-click-outside.js.map
 
 
 /***/ }),
@@ -10285,6 +16671,48 @@ function NormalizeCSS() {
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/styles/esm/theme/StylesApiContext.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@mantine/styles/esm/theme/StylesApiContext.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "StylesApiProvider": () => (/* binding */ StylesApiProvider),
+/* harmony export */   "useContextStylesApi": () => (/* binding */ useContextStylesApi)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const StylesApiContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
+  classNames: {},
+  styles: {},
+  unstyled: false
+});
+function StylesApiProvider({
+  children,
+  classNames,
+  unstyled,
+  styles,
+  staticSelector
+}) {
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(StylesApiContext.Provider, {
+    value: { classNames, styles, unstyled, staticSelector }
+  }, children);
+}
+function useContextStylesApi() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(StylesApiContext);
+}
+
+
+//# sourceMappingURL=StylesApiContext.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/styles/esm/theme/default-colors.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@mantine/styles/esm/theme/default-colors.js ***!
@@ -11776,6 +18204,63 @@ function useGuaranteedMemo(fn, deps) {
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/utils/esm/close-on-escape/close-on-escape.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@mantine/utils/esm/close-on-escape/close-on-escape.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "closeOnEscape": () => (/* binding */ closeOnEscape)
+/* harmony export */ });
+/* harmony import */ var _noop_noop_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../noop/noop.js */ "./node_modules/@mantine/utils/esm/noop/noop.js");
+
+
+function closeOnEscape(callback, options = { active: true }) {
+  if (typeof callback !== "function" || !options.active) {
+    return _noop_noop_js__WEBPACK_IMPORTED_MODULE_0__.noop;
+  }
+  return (event) => {
+    var _a;
+    if (event.key === "Escape") {
+      callback();
+      (_a = options.onTrigger) == null ? void 0 : _a.call(options);
+    }
+  };
+}
+
+
+//# sourceMappingURL=close-on-escape.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/utils/esm/create-event-handler/create-event-handler.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/@mantine/utils/esm/create-event-handler/create-event-handler.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createEventHandler": () => (/* binding */ createEventHandler)
+/* harmony export */ });
+function createEventHandler(parentEventHandler, eventHandler) {
+  return (event) => {
+    parentEventHandler == null ? void 0 : parentEventHandler(event);
+    eventHandler == null ? void 0 : eventHandler(event);
+  };
+}
+
+
+//# sourceMappingURL=create-event-handler.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/utils/esm/create-polymorphic-component/create-polymorphic-component.js":
 /*!******************************************************************************************************!*\
   !*** ./node_modules/@mantine/utils/esm/create-polymorphic-component/create-polymorphic-component.js ***!
@@ -11793,6 +18278,167 @@ function createPolymorphicComponent(component) {
 
 
 //# sourceMappingURL=create-polymorphic-component.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/utils/esm/create-safe-context/create-safe-context.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@mantine/utils/esm/create-safe-context/create-safe-context.js ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createSafeContext": () => (/* binding */ createSafeContext)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function createSafeContext(errorMessage) {
+  const Context = (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(null);
+  const useSafeContext = () => {
+    const ctx = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(Context);
+    if (ctx === null) {
+      throw new Error(errorMessage);
+    }
+    return ctx;
+  };
+  const Provider = ({ children, value }) => /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Context.Provider, {
+    value
+  }, children);
+  return [Provider, useSafeContext];
+}
+
+
+//# sourceMappingURL=create-safe-context.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/utils/esm/create-scoped-keydown-handler/create-scoped-keydown-handler.js":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@mantine/utils/esm/create-scoped-keydown-handler/create-scoped-keydown-handler.js ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createScopedKeydownHandler": () => (/* binding */ createScopedKeydownHandler)
+/* harmony export */ });
+/* harmony import */ var _find_element_ancestor_find_element_ancestor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../find-element-ancestor/find-element-ancestor.js */ "./node_modules/@mantine/utils/esm/find-element-ancestor/find-element-ancestor.js");
+
+
+function getPreviousIndex(current, elements, loop) {
+  for (let i = current - 1; i >= 0; i -= 1) {
+    if (!elements[i].disabled) {
+      return i;
+    }
+  }
+  if (loop) {
+    for (let i = elements.length - 1; i > -1; i -= 1) {
+      if (!elements[i].disabled) {
+        return i;
+      }
+    }
+  }
+  return current;
+}
+function getNextIndex(current, elements, loop) {
+  for (let i = current + 1; i < elements.length; i += 1) {
+    if (!elements[i].disabled) {
+      return i;
+    }
+  }
+  if (loop) {
+    for (let i = 0; i < elements.length; i += 1) {
+      if (!elements[i].disabled) {
+        return i;
+      }
+    }
+  }
+  return current;
+}
+function onSameLevel(target, sibling, parentSelector) {
+  return (0,_find_element_ancestor_find_element_ancestor_js__WEBPACK_IMPORTED_MODULE_0__.findElementAncestor)(target, parentSelector) === (0,_find_element_ancestor_find_element_ancestor_js__WEBPACK_IMPORTED_MODULE_0__.findElementAncestor)(sibling, parentSelector);
+}
+function createScopedKeydownHandler({
+  parentSelector,
+  siblingSelector,
+  onKeyDown,
+  loop = true,
+  activateOnFocus = false,
+  dir = "rtl",
+  orientation
+}) {
+  return (event) => {
+    var _a;
+    onKeyDown == null ? void 0 : onKeyDown(event);
+    const elements = Array.from(((_a = (0,_find_element_ancestor_find_element_ancestor_js__WEBPACK_IMPORTED_MODULE_0__.findElementAncestor)(event.currentTarget, parentSelector)) == null ? void 0 : _a.querySelectorAll(siblingSelector)) || []).filter((node) => onSameLevel(event.currentTarget, node, parentSelector));
+    const current = elements.findIndex((el) => event.currentTarget === el);
+    const _nextIndex = getNextIndex(current, elements, loop);
+    const _previousIndex = getPreviousIndex(current, elements, loop);
+    const nextIndex = dir === "rtl" ? _previousIndex : _nextIndex;
+    const previousIndex = dir === "rtl" ? _nextIndex : _previousIndex;
+    switch (event.key) {
+      case "ArrowRight": {
+        if (orientation === "horizontal") {
+          event.stopPropagation();
+          event.preventDefault();
+          elements[nextIndex].focus();
+          activateOnFocus && elements[nextIndex].click();
+        }
+        break;
+      }
+      case "ArrowLeft": {
+        if (orientation === "horizontal") {
+          event.stopPropagation();
+          event.preventDefault();
+          elements[previousIndex].focus();
+          activateOnFocus && elements[previousIndex].click();
+        }
+        break;
+      }
+      case "ArrowUp": {
+        if (orientation === "vertical") {
+          event.stopPropagation();
+          event.preventDefault();
+          elements[_previousIndex].focus();
+          activateOnFocus && elements[_previousIndex].click();
+        }
+        break;
+      }
+      case "ArrowDown": {
+        if (orientation === "vertical") {
+          event.stopPropagation();
+          event.preventDefault();
+          elements[_nextIndex].focus();
+          activateOnFocus && elements[_nextIndex].click();
+        }
+        break;
+      }
+      case "Home": {
+        event.stopPropagation();
+        event.preventDefault();
+        !elements[0].disabled && elements[0].focus();
+        break;
+      }
+      case "End": {
+        event.stopPropagation();
+        event.preventDefault();
+        const last = elements.length - 1;
+        !elements[last].disabled && elements[last].focus();
+        break;
+      }
+    }
+  };
+}
+
+
+//# sourceMappingURL=create-scoped-keydown-handler.js.map
 
 
 /***/ }),
@@ -11844,6 +18490,58 @@ function createUseExternalEvents(prefix) {
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/utils/esm/find-element-ancestor/find-element-ancestor.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@mantine/utils/esm/find-element-ancestor/find-element-ancestor.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "findElementAncestor": () => (/* binding */ findElementAncestor)
+/* harmony export */ });
+function findElementAncestor(element, selector) {
+  let _element = element;
+  while ((_element = _element.parentElement) && !_element.matches(selector))
+    ;
+  return _element;
+}
+
+
+//# sourceMappingURL=find-element-ancestor.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/utils/esm/get-context-item-index/get-context-item-index.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@mantine/utils/esm/get-context-item-index/get-context-item-index.js ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getContextItemIndex": () => (/* binding */ getContextItemIndex)
+/* harmony export */ });
+/* harmony import */ var _find_element_ancestor_find_element_ancestor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../find-element-ancestor/find-element-ancestor.js */ "./node_modules/@mantine/utils/esm/find-element-ancestor/find-element-ancestor.js");
+
+
+function getContextItemIndex(elementSelector, parentSelector, node) {
+  var _a;
+  if (!node) {
+    return null;
+  }
+  return Array.from(((_a = (0,_find_element_ancestor_find_element_ancestor_js__WEBPACK_IMPORTED_MODULE_0__.findElementAncestor)(node, parentSelector)) == null ? void 0 : _a.querySelectorAll(elementSelector)) || []).findIndex((element) => element === node);
+}
+
+
+//# sourceMappingURL=get-context-item-index.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/utils/esm/is-element/is-element.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@mantine/utils/esm/is-element/is-element.js ***!
@@ -11878,6 +18576,26 @@ function isElement(value) {
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/utils/esm/noop/noop.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@mantine/utils/esm/noop/noop.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "noop": () => (/* binding */ noop)
+/* harmony export */ });
+const noop = () => {
+};
+
+
+//# sourceMappingURL=noop.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/utils/esm/pack-sx/pack-sx.js":
 /*!************************************************************!*\
   !*** ./node_modules/@mantine/utils/esm/pack-sx/pack-sx.js ***!
@@ -11895,6 +18613,33 @@ function packSx(sx) {
 
 
 //# sourceMappingURL=pack-sx.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/utils/esm/use-hovered/use-hovered.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@mantine/utils/esm/use-hovered/use-hovered.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useHovered": () => (/* binding */ useHovered)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function useHovered() {
+  const [hovered, setHovered] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(-1);
+  const resetHovered = () => setHovered(-1);
+  return [hovered, { setHovered, resetHovered }];
+}
+
+
+//# sourceMappingURL=use-hovered.js.map
 
 
 /***/ }),
@@ -15064,6 +21809,3778 @@ function createURL(location) {
 
 /***/ }),
 
+/***/ "./node_modules/@rpldy/abort/lib/esm/abort.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@rpldy/abort/lib/esm/abort.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "abortAll": () => (/* binding */ abortAll),
+/* harmony export */   "abortBatch": () => (/* binding */ abortBatch),
+/* harmony export */   "abortItem": () => (/* binding */ abortItem)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _fastAbort__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fastAbort */ "./node_modules/@rpldy/abort/lib/esm/fastAbort.js");
+
+
+
+const abortNonUploadingItem = (item, aborts, finalizeItem) => {
+  _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`abort: aborting ${item.state} item  - `, item); //manually finish request for item that hasnt reached the sender yet
+
+  finalizeItem(item.id, {
+    status: 0,
+    state: _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ABORTED,
+    response: "aborted"
+  });
+  return true;
+};
+
+const ITEM_STATE_ABORTS = {
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.UPLOADING]: (item, aborts) => {
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`abort: aborting uploading item  - `, item);
+    return aborts[item.id]();
+  },
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ADDED]: abortNonUploadingItem,
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.PENDING]: abortNonUploadingItem
+};
+
+const callAbortOnItem = (item, aborts, finalizeItem) => {
+  const itemState = item === null || item === void 0 ? void 0 : item.state;
+  return !!itemState && //$FlowIssue[prop-missing]
+  ITEM_STATE_ABORTS[itemState] ? //$FlowExpectedError[extra-arg]
+  //$FlowIssue[prop-missing]
+  ITEM_STATE_ABORTS[itemState](item, aborts, finalizeItem) : false;
+};
+
+const abortItem = (id, items, aborts, finalizeItem) => callAbortOnItem(items[id], aborts, finalizeItem);
+
+const getIsFastAbortNeeded = (count, threshold) => {
+  let result = false;
+
+  if (threshold !== 0 && threshold) {
+    result = count >= threshold;
+  }
+
+  return result;
+};
+
+const abortAll = (items, aborts, queue, finalizeItem, options) => {
+  //$FlowIssue[incompatible-type] - no flat
+  const itemIds = Object.values(queue).flat();
+  const isFastAbort = getIsFastAbortNeeded(itemIds.length, options.fastAbortThreshold);
+  _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`abort: doing abort-all (${isFastAbort ? "fast" : "normal"} abort)`);
+
+  if (isFastAbort) {
+    (0,_fastAbort__WEBPACK_IMPORTED_MODULE_1__.fastAbortAll)(aborts);
+  } else {
+    itemIds.forEach(id => abortItem(id, items, aborts, finalizeItem));
+  }
+
+  return {
+    isFast: isFastAbort
+  };
+};
+
+const abortBatch = (batch, batchOptions, aborts, queue, finalizeItem, options) => {
+  const threshold = batchOptions.fastAbortThreshold === 0 ? 0 : batchOptions.fastAbortThreshold || options.fastAbortThreshold;
+  const isFastAbort = getIsFastAbortNeeded(queue[batch.id].length, threshold);
+  _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`abort: doing abort-batch on: ${batch.id} (${isFastAbort ? "fast" : "normal"} abort)`);
+
+  if (isFastAbort) {
+    (0,_fastAbort__WEBPACK_IMPORTED_MODULE_1__.fastAbortBatch)(batch, aborts);
+  } else {
+    batch.items.forEach(bi => callAbortOnItem(bi, aborts, finalizeItem));
+  }
+
+  return {
+    isFast: isFastAbort
+  };
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/abort/lib/esm/fastAbort.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@rpldy/abort/lib/esm/fastAbort.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fastAbortAll": () => (/* binding */ fastAbortAll),
+/* harmony export */   "fastAbortBatch": () => (/* binding */ fastAbortBatch)
+/* harmony export */ });
+const fastAbortBatch = (batch, aborts) => {
+  batch.items.forEach(_ref => {
+    var _aborts$id;
+
+    let {
+      id
+    } = _ref;
+    return (_aborts$id = aborts[id]) === null || _aborts$id === void 0 ? void 0 : _aborts$id.call(aborts);
+  });
+};
+
+const fastAbortAll = aborts => {
+  //$FlowIssue[not-a-function]: flow doesnt understand Object.values :(
+  Object.values(aborts).forEach(fn => fn());
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/abort/lib/esm/getAbortEnhancer.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@rpldy/abort/lib/esm/getAbortEnhancer.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _abort__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./abort */ "./node_modules/@rpldy/abort/lib/esm/abort.js");
+
+
+const getAbortEnhancer = () => {
+  /**
+   * an uploader enhancer function to add abort functionality
+   */
+  return uploader => {
+    //$FlowIssue[incompatible-call]: unsure how to tell Flow this is ok...
+    uploader.update({
+      abortAll: _abort__WEBPACK_IMPORTED_MODULE_0__.abortAll,
+      abortBatch: _abort__WEBPACK_IMPORTED_MODULE_0__.abortBatch,
+      abortItem: _abort__WEBPACK_IMPORTED_MODULE_0__.abortItem
+    });
+    return uploader;
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getAbortEnhancer);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/abort/lib/esm/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@rpldy/abort/lib/esm/index.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _getAbortEnhancer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getAbortEnhancer */ "./node_modules/@rpldy/abort/lib/esm/getAbortEnhancer.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_getAbortEnhancer__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/life-events/lib/esm/consts.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@rpldy/life-events/lib/esm/consts.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "LESYM": () => (/* binding */ LESYM),
+/* harmony export */   "LE_PACK_SYM": () => (/* binding */ LE_PACK_SYM)
+/* harmony export */ });
+const LESYM = Symbol.for("__le__");
+const LE_PACK_SYM = Symbol.for("__le__pack__");
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/life-events/lib/esm/defaults.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@rpldy/life-events/lib/esm/defaults.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+
+const defaults = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.devFreeze)({
+  allowRegisterNonExistent: true,
+  canAddEvents: true,
+  canRemoveEvents: true,
+  collectStats: false
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (defaults);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/life-events/lib/esm/index.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@rpldy/life-events/lib/esm/index.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addLife": () => (/* reexport safe */ _lifeEvents__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "createLifePack": () => (/* reexport safe */ _lifePack__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "default": () => (/* reexport safe */ _lifeEvents__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "isLE": () => (/* reexport safe */ _lifeEvents__WEBPACK_IMPORTED_MODULE_0__.isLE)
+/* harmony export */ });
+/* harmony import */ var _lifeEvents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lifeEvents */ "./node_modules/@rpldy/life-events/lib/esm/lifeEvents.js");
+/* harmony import */ var _lifePack__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lifePack */ "./node_modules/@rpldy/life-events/lib/esm/lifePack.js");
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/life-events/lib/esm/lifeEvents.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@rpldy/life-events/lib/esm/lifeEvents.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "isLE": () => (/* binding */ isLE)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _defaults__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./defaults */ "./node_modules/@rpldy/life-events/lib/esm/defaults.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "./node_modules/@rpldy/life-events/lib/esm/utils.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/life-events/lib/esm/consts.js");
+
+
+
+
+
+//TODO: implement STATS
+const getLE = obj => obj ? obj[_consts__WEBPACK_IMPORTED_MODULE_3__.LESYM] : null;
+
+const getValidLE = obj => {
+  const le = getLE(obj);
+
+  if (!le) {
+    throw new Error("Didnt find LE internal object. Something very bad happened!");
+  }
+
+  return le;
+};
+
+const isLE = obj => !!getLE(obj);
+
+const addRegistration = function (obj, name, cb) {
+  let once = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  (0,_utils__WEBPACK_IMPORTED_MODULE_2__.validateFunction)(cb, "cb");
+  const le = getValidLE(obj);
+
+  if (!le.options.allowRegisterNonExistent && !~le.events.indexOf(name)) {
+    throw new Error(`Cannot register for event ${name.toString()} that wasn't already defined (allowRegisterNonExistent = false)`);
+  }
+
+  const namedRegistry = le.registry[name] || [];
+
+  if (!namedRegistry.find(r => r.cb === cb)) {
+    //only add same callback for a name once
+    namedRegistry.push({
+      name,
+      cb,
+      once
+    });
+    le.registry[name] = namedRegistry;
+  }
+
+  return () => unregister.call(obj, name, cb);
+};
+
+const findRegistrations = (obj, name) => {
+  const registry = getValidLE(obj).registry;
+  return name ? registry[name] ? registry[name].slice() : [] : //$FlowIssue - flow doesnt know how to work with Array.values() :(
+  Object.values(registry).flat();
+};
+
+const publicMethods = {
+  "on": register,
+  "once": registerOnce,
+  "off": unregister,
+  "getEvents": getEvents
+};
+
+const getPublicMethods = () => Object.entries(publicMethods).reduce((res, _ref) => {
+  let [key, m] = _ref;
+  res[key] = {
+    value: m
+  };
+  return res;
+}, {}); //using string keys here because can't rely on function names to stay after (babel/webpack) build
+
+
+const apiMethods = {
+  "trigger": trigger,
+  "addEvent": addEvent,
+  "removeEvent": removeEvent,
+  "hasEvent": hasEvent,
+  "hasEventRegistrations": hasEventRegistrations,
+  "assign": assign
+};
+
+const createApi = target => Object.keys(apiMethods).reduce((res, name) => {
+  res[name] = apiMethods[name].bind(target);
+  return res;
+}, {
+  target,
+  ...apiMethods
+});
+
+const cleanRegistryForName = function (obj, name) {
+  let force = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  const registry = getValidLE(obj).registry;
+
+  if (registry[name] && (force || !registry[name].length)) {
+    delete registry[name];
+  }
+};
+
+const removeRegItem = (obj, name, cb) => {
+  const registry = getValidLE(obj).registry;
+
+  if (registry[name]) {
+    if (!cb) {
+      cleanRegistryForName(obj, name, true);
+    } else {
+      registry[name] = registry[name].filter(reg => reg.cb !== cb);
+      cleanRegistryForName(obj, name);
+    }
+  }
+};
+
+function register(name, cb) {
+  return addRegistration(this, name, cb);
+}
+
+function registerOnce(name, cb) {
+  return addRegistration(this, name, cb, true);
+}
+
+function unregister(name, cb) {
+  removeRegItem(this, name, cb);
+}
+
+function getEvents() {
+  return getValidLE(this).events.slice();
+}
+
+function trigger(name) {
+  for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    args[_key - 1] = arguments[_key];
+  }
+
+  const regs = findRegistrations(this, name);
+  let results;
+
+  if (regs.length) {
+    var _args$;
+
+    let packValue;
+
+    if (args.length === 1 && ((_args$ = args[0]) === null || _args$ === void 0 ? void 0 : _args$[_consts__WEBPACK_IMPORTED_MODULE_3__.LE_PACK_SYM]) === true) {
+      //life-pack always returns array as params to spread
+      packValue = args[0].resolve();
+    }
+
+    results = regs.map(r => {
+      let result;
+
+      if (r.once) {
+        removeRegItem(this, name, r.cb);
+      }
+
+      if (packValue) {
+        result = r.cb(...packValue);
+      } else if (!args.length) {
+        result = r.cb();
+      } else if (args.length === 1) {
+        result = r.cb(args[0]);
+      } else if (args.length === 2) {
+        result = r.cb(args[0], args[1]);
+      } else if (args.length === 3) {
+        result = r.cb(args[0], args[1], args[2]);
+      } else {
+        result = r.cb(...args);
+      }
+
+      return result;
+    }).filter(result => !(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isUndefined)(result)).map(result => (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isPromise)(result) ? result : Promise.resolve(result));
+  }
+
+  return results && (results.length ? results : undefined);
+} //registry, events, stats become shared
+
+
+function assign(toObj) {
+  const le = getValidLE(this);
+  defineLifeData(toObj, le.options, le.events, le.registry, le.stats);
+  return createApi(toObj);
+}
+
+function addEvent(name) {
+  const le = getValidLE(this);
+
+  if (le.options.canAddEvents) {
+    const index = le.events.indexOf(name);
+
+    if (!~index) {
+      le.events.push(name);
+    } else {
+      throw new Error(`Event '${name}' already defined`);
+    }
+  } else {
+    throw new Error("Cannot add new events (canAddEvents = false)");
+  }
+}
+
+function removeEvent(name) {
+  const le = getValidLE(this);
+
+  if (le.options.canRemoveEvents) {
+    const index = le.events.indexOf(name);
+    le.events.splice(index, 1);
+  } else {
+    throw new Error("Cannot remove events (canRemoveEvents = false)");
+  }
+}
+
+function hasEvent(name) {
+  const le = getValidLE(this);
+  return !!~le.events.indexOf(name);
+}
+
+function hasEventRegistrations(name) {
+  return !!findRegistrations(this, name).length;
+} // function getStats(name?: any) {
+//
+// }
+
+
+const defineLifeData = function (target, options) {
+  let events = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  let registry = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+  let stats = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
+  Object.defineProperties(target, {
+    [_consts__WEBPACK_IMPORTED_MODULE_3__.LESYM]: {
+      value: Object.seal({
+        registry,
+        events,
+        options,
+        stats
+      })
+    },
+    ...getPublicMethods()
+  });
+};
+
+const addLife = function (target) {
+  let events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  let options = arguments.length > 2 ? arguments[2] : undefined;
+  target = target || {};
+  options = { ..._defaults__WEBPACK_IMPORTED_MODULE_1__["default"],
+    ...options
+  };
+
+  if (!isLE(target)) {
+    defineLifeData(target, options, events);
+  }
+
+  return createApi(target);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (addLife);
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/life-events/lib/esm/lifePack.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@rpldy/life-events/lib/esm/lifePack.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/life-events/lib/esm/consts.js");
+
+/**
+ * create a pack that will only execute when there are registered event handlers
+ *
+ * @param creator - a function to return data that will become parameters for the event handler
+ * array returned means more than 1 parameter. Any other value will be added to an array as a single param
+ */
+
+const createLifePack = creator => {
+  const lp = {
+    resolve: () => [].concat(creator())
+  };
+  Object.defineProperty(lp, _consts__WEBPACK_IMPORTED_MODULE_0__.LE_PACK_SYM, {
+    value: true,
+    configurable: false
+  });
+  return lp;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createLifePack);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/life-events/lib/esm/utils.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@rpldy/life-events/lib/esm/utils.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isUndefined": () => (/* binding */ isUndefined),
+/* harmony export */   "validateFunction": () => (/* binding */ validateFunction)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+
+
+const validateFunction = (f, name) => {
+  if (!(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isFunction)(f)) {
+    throw new Error(`'${name}' is not a valid function`);
+  }
+};
+
+const isUndefined = val => typeof val === "undefined";
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/sender/lib/esm/MissingUrlError.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@rpldy/sender/lib/esm/MissingUrlError.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MissingUrlError)
+/* harmony export */ });
+class MissingUrlError extends Error {
+  constructor(senderType) {
+    super(`${senderType} didn't receive upload URL`);
+    this.name = "MissingUrlError";
+  }
+
+}
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/sender/lib/esm/consts.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@rpldy/sender/lib/esm/consts.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "XHR_SENDER_TYPE": () => (/* binding */ XHR_SENDER_TYPE)
+/* harmony export */ });
+const XHR_SENDER_TYPE = "rpldy-sender";
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/sender/lib/esm/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@rpldy/sender/lib/esm/index.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MissingUrlError": () => (/* reexport safe */ _MissingUrlError__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "XHR_SENDER_TYPE": () => (/* reexport safe */ _consts__WEBPACK_IMPORTED_MODULE_1__.XHR_SENDER_TYPE),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "getXhrSend": () => (/* reexport safe */ _xhrSender_xhrSender__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "send": () => (/* binding */ send)
+/* harmony export */ });
+/* harmony import */ var _xhrSender_xhrSender__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./xhrSender/xhrSender */ "./node_modules/@rpldy/sender/lib/esm/xhrSender/xhrSender.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/sender/lib/esm/consts.js");
+/* harmony import */ var _MissingUrlError__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MissingUrlError */ "./node_modules/@rpldy/sender/lib/esm/MissingUrlError.js");
+
+
+const send = (0,_xhrSender_xhrSender__WEBPACK_IMPORTED_MODULE_0__["default"])();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (send);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/sender/lib/esm/xhrSender/prepareFormData.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@rpldy/sender/lib/esm/xhrSender/prepareFormData.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+
+
+/**
+ * mimics FormData.set() when its not available (react-native)
+ * in case FormData.delete() isnt available, will append only (unlike set)
+ */
+const addToFormData = function (fd, name) {
+  for (var _len = arguments.length, rest = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    rest[_key - 2] = arguments[_key];
+  }
+
+  //rest = [value, fileName = undefined]
+  if ("set" in fd) {
+    //$FlowExpectedError[speculation-ambiguous] - ignore flow for not allowing FileLike here
+    fd.set(name, ...rest);
+  } else {
+    if ("delete" in fd) {
+      fd.delete(name);
+    } //$FlowExpectedError[speculation-ambiguous] - ignore flow for not allowing FileLike here
+
+
+    fd.append(name, ...rest);
+  }
+};
+
+const getFormFileField = (fd, items, options) => {
+  const single = items.length === 1;
+  items.forEach((item, i) => {
+    const name = single ? options.paramName : (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isFunction)(options.formatGroupParamName) ? options.formatGroupParamName(i, options.paramName) : `${options.paramName}[${i}]`;
+
+    if (item.file) {
+      addToFormData(fd, name, item.file, item.file.name);
+    } else if (item.url) {
+      addToFormData(fd, name, item.url);
+    }
+  });
+};
+
+const prepareFormData = (items, options) => {
+  const fd = new FormData();
+
+  if (options.params) {
+    Object.entries(options.params).forEach(_ref => {
+      let [key, val] = _ref;
+
+      if (options.formDataAllowUndefined || val !== undefined) {
+        addToFormData(fd, key, val);
+      }
+    });
+  }
+
+  getFormFileField(fd, items, options);
+  return fd;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (prepareFormData);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/sender/lib/esm/xhrSender/xhrSender.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@rpldy/sender/lib/esm/xhrSender/xhrSender.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SUCCESS_CODES": () => (/* binding */ SUCCESS_CODES),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../consts */ "./node_modules/@rpldy/sender/lib/esm/consts.js");
+/* harmony import */ var _MissingUrlError__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../MissingUrlError */ "./node_modules/@rpldy/sender/lib/esm/MissingUrlError.js");
+/* harmony import */ var _prepareFormData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./prepareFormData */ "./node_modules/@rpldy/sender/lib/esm/xhrSender/prepareFormData.js");
+
+
+
+
+const SUCCESS_CODES = [200, 201, 202, 203, 204];
+
+const getRequestData = (items, options) => {
+  let data;
+
+  if (options.sendWithFormData) {
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploady.sender: sending ${items.length} item(s) as form data`);
+    data = (0,_prepareFormData__WEBPACK_IMPORTED_MODULE_3__["default"])(items, options);
+  } else {
+    if (items.length > 1) {
+      throw new Error(`XHR Sender - Request without form data can only contain 1 item. received ${items.length}`);
+    }
+
+    const item = items[0];
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploady.sender: sending item ${item.id} as request body`);
+    data = item.file || item.url;
+  }
+
+  return data;
+};
+
+const makeRequest = (items, url, options, onProgress, config) => {
+  let xhr;
+  const data = config !== null && config !== void 0 && config.getRequestData ? config.getRequestData(items, options) : getRequestData(items, options);
+
+  const issueRequest = function () {
+    let requestUrl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : url;
+    let requestData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : data;
+    let requestOptions = arguments.length > 2 ? arguments[2] : undefined;
+    requestOptions = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.merge)({ ...(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.pick)(options, ["method", "headers", "withCredentials"]),
+      preSend: req => {
+        req.upload.onprogress = e => {
+          if (e.lengthComputable && onProgress) {
+            onProgress(e, items.slice());
+          }
+        };
+      }
+    }, requestOptions);
+    const realPXhr = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.request)(requestUrl, requestData, requestOptions); // $FlowFixMe -
+
+    xhr = realPXhr.xhr;
+    return realPXhr;
+  }; //pXhr is a promise that resolves to the upload XHR
+
+
+  const pXhr = config !== null && config !== void 0 && config.preRequestHandler ? config.preRequestHandler(issueRequest, items, url, options, onProgress, config) : issueRequest();
+  return {
+    url,
+    count: items.length,
+    pXhr,
+    getXhr: () => xhr,
+    aborted: false
+  };
+};
+
+const parseResponseJson = (response, headers, options) => {
+  let parsed = response;
+  const ct = headers === null || headers === void 0 ? void 0 : headers["content-type"];
+
+  if (options.forceJsonResponse || ct !== null && ct !== void 0 && ct.includes("json")) {
+    try {
+      parsed = JSON.parse(response);
+    } catch {//silent fail
+    }
+  }
+
+  return parsed;
+};
+
+const checkIsResponseSuccessful = (xhr, options) => {
+  const isSuccess = options.isSuccessfulCall ? options.isSuccessfulCall(xhr) : SUCCESS_CODES.includes(xhr.status);
+  return (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isPromise)(isSuccess) ? isSuccess : Promise.resolve(isSuccess);
+};
+
+const processResponse = (sendRequest, options) => sendRequest.pXhr.then(xhr => {
+  _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploady.sender: received upload response ", xhr);
+  return checkIsResponseSuccessful(xhr, options).then(isSuccess => {
+    var _options$formatServer, _options$formatServer2;
+
+    const state = isSuccess ? _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.FINISHED : _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ERROR;
+    const status = xhr.status;
+    const resHeaders = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.parseResponseHeaders)(xhr);
+    const response = {
+      data: (_options$formatServer = (_options$formatServer2 = options.formatServerResponse) === null || _options$formatServer2 === void 0 ? void 0 : _options$formatServer2.call(options, xhr.response, status, resHeaders)) !== null && _options$formatServer !== void 0 ? _options$formatServer : parseResponseJson(xhr.response, resHeaders, options),
+      headers: resHeaders
+    };
+    return {
+      status,
+      state,
+      response
+    };
+  });
+}).catch(error => {
+  let state, response;
+
+  if (sendRequest.aborted) {
+    state = _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ABORTED;
+    response = "aborted";
+  } else {
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploady.sender: upload failed: ", error);
+    state = _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ERROR;
+    response = error;
+  }
+
+  return {
+    error: true,
+    state,
+    response,
+    status: 0
+  };
+});
+
+const abortRequest = sendRequest => {
+  let abortCalled = false;
+  const {
+    aborted,
+    getXhr
+  } = sendRequest;
+  const xhr = getXhr();
+
+  if (!aborted && xhr && xhr.readyState && xhr.readyState !== 4) {
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploady.sender: cancelling request with ${sendRequest.count} items to: ${sendRequest.url}`);
+    xhr.abort();
+    sendRequest.aborted = true;
+    abortCalled = true;
+  }
+
+  return abortCalled;
+};
+
+const getXhrSend = config => (items, url, options, onProgress) => {
+  if (!url) {
+    throw new _MissingUrlError__WEBPACK_IMPORTED_MODULE_2__["default"](_consts__WEBPACK_IMPORTED_MODULE_1__.XHR_SENDER_TYPE);
+  }
+
+  _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploady.sender: sending file: ", {
+    items,
+    url,
+    options
+  });
+  const sendRequest = makeRequest(items, url, options, onProgress, config);
+  return {
+    request: processResponse(sendRequest, options),
+    abort: () => abortRequest(sendRequest),
+    senderType: _consts__WEBPACK_IMPORTED_MODULE_1__.XHR_SENDER_TYPE
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getXhrSend);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/batchItem.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/batchItem.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/shared/lib/esm/consts.js");
+
+const BISYM = Symbol.for("__rpldy-bi__");
+let iCounter = 0;
+
+const getBatchItemWithUrl = (batchItem, url) => {
+  batchItem.url = url;
+  return batchItem;
+};
+
+const getBatchItemWithFile = (batchItem, file) => {
+  batchItem.file = file;
+  return batchItem;
+};
+
+const isLikeFile = f => f && (f instanceof File || f instanceof Blob || typeof f === "object" && f.name && f.type);
+
+const createBatchItem = function (f, batchId) {
+  let isPending = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  iCounter += f.id && f.batchId ? 0 : 1; //keep existing id for recycled items
+
+  const id = f.id && f.batchId ? f.id : `${batchId}.item-${iCounter}`,
+        state = isPending ? _consts__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.PENDING : _consts__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ADDED;
+  let batchItem = {
+    id,
+    batchId,
+    state,
+    uploadStatus: 0,
+    completed: 0,
+    loaded: 0,
+    recycled: false,
+    previousBatch: null
+  };
+  Object.defineProperty(batchItem, BISYM, {
+    value: true,
+    //need writable to be able to keep prop when unwrapped from simple-state
+    writable: true
+  });
+
+  if (typeof f === "object" && f[BISYM] === true) {
+    //recycling existing batch item
+    batchItem.recycled = true;
+    batchItem.previousBatch = f.batchId;
+    f = f.file || f.url;
+  }
+
+  if (typeof f === "string") {
+    batchItem = getBatchItemWithUrl(batchItem, f);
+  } else if (isLikeFile(f)) {
+    batchItem = getBatchItemWithFile(batchItem, f);
+  } else {
+    throw new Error(`Unknown type of file added: ${typeof f}`);
+  }
+
+  return batchItem;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createBatchItem);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/consts.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/consts.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BATCH_STATES": () => (/* binding */ BATCH_STATES),
+/* harmony export */   "DEBUG_LOG_KEY": () => (/* binding */ DEBUG_LOG_KEY),
+/* harmony export */   "FILE_STATES": () => (/* binding */ FILE_STATES)
+/* harmony export */ });
+const DEBUG_LOG_KEY = "__rpldy-logger-debug__";
+const BATCH_STATES = {
+  PENDING: "pending",
+  ADDED: "added",
+  PROCESSING: "processing",
+  UPLOADING: "uploading",
+  CANCELLED: "cancelled",
+  FINISHED: "finished",
+  ABORTED: "aborted",
+  ERROR: "error"
+};
+const FILE_STATES = {
+  PENDING: "pending",
+  ADDED: "added",
+  UPLOADING: "uploading",
+  CANCELLED: "cancelled",
+  FINISHED: "finished",
+  ERROR: "error",
+  ABORTED: "aborted"
+};
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/index.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BATCH_STATES": () => (/* reexport safe */ _consts__WEBPACK_IMPORTED_MODULE_2__.BATCH_STATES),
+/* harmony export */   "FILE_STATES": () => (/* reexport safe */ _consts__WEBPACK_IMPORTED_MODULE_2__.FILE_STATES),
+/* harmony export */   "clone": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.clone),
+/* harmony export */   "createBatchItem": () => (/* reexport safe */ _batchItem__WEBPACK_IMPORTED_MODULE_6__["default"]),
+/* harmony export */   "devFreeze": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.devFreeze),
+/* harmony export */   "getMerge": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.getMerge),
+/* harmony export */   "hasWindow": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.hasWindow),
+/* harmony export */   "invariant": () => (/* reexport default from dynamic */ invariant__WEBPACK_IMPORTED_MODULE_0___default.a),
+/* harmony export */   "isFunction": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.isFunction),
+/* harmony export */   "isPlainObject": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.isPlainObject),
+/* harmony export */   "isProduction": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.isProduction),
+/* harmony export */   "isPromise": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.isPromise),
+/* harmony export */   "isSamePropInArrays": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.isSamePropInArrays),
+/* harmony export */   "logger": () => (/* reexport module object */ _logger__WEBPACK_IMPORTED_MODULE_3__),
+/* harmony export */   "merge": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.merge),
+/* harmony export */   "parseResponseHeaders": () => (/* reexport safe */ _request__WEBPACK_IMPORTED_MODULE_7__.parseResponseHeaders),
+/* harmony export */   "pick": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.pick),
+/* harmony export */   "request": () => (/* reexport safe */ _request__WEBPACK_IMPORTED_MODULE_7__["default"]),
+/* harmony export */   "scheduleIdleWork": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_8__.scheduleIdleWork),
+/* harmony export */   "throttle": () => (/* reexport default from dynamic */ just_throttle__WEBPACK_IMPORTED_MODULE_1___default.a),
+/* harmony export */   "triggerCancellable": () => (/* reexport safe */ _triggerCancellable__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "triggerUpdater": () => (/* reexport safe */ _triggerUpdater__WEBPACK_IMPORTED_MODULE_5__["default"])
+/* harmony export */ });
+/* harmony import */ var invariant__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
+/* harmony import */ var invariant__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(invariant__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var just_throttle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! just-throttle */ "./node_modules/just-throttle/index.js");
+/* harmony import */ var just_throttle__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(just_throttle__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/shared/lib/esm/consts.js");
+/* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./logger */ "./node_modules/@rpldy/shared/lib/esm/logger.js");
+/* harmony import */ var _triggerCancellable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./triggerCancellable */ "./node_modules/@rpldy/shared/lib/esm/triggerCancellable.js");
+/* harmony import */ var _triggerUpdater__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./triggerUpdater */ "./node_modules/@rpldy/shared/lib/esm/triggerUpdater.js");
+/* harmony import */ var _batchItem__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./batchItem */ "./node_modules/@rpldy/shared/lib/esm/batchItem.js");
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./request */ "./node_modules/@rpldy/shared/lib/esm/request/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./utils */ "./node_modules/@rpldy/shared/lib/esm/utils/index.js");
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/logger.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/logger.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "debugLog": () => (/* binding */ debugLog),
+/* harmony export */   "isDebugOn": () => (/* binding */ isDebugOn),
+/* harmony export */   "setDebug": () => (/* binding */ setDebug)
+/* harmony export */ });
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/shared/lib/esm/consts.js");
+/* harmony import */ var _utils_hasWindow__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/hasWindow */ "./node_modules/@rpldy/shared/lib/esm/utils/hasWindow.js");
+
+
+let isDebug;
+
+const isDebugOn = () => {
+  if (typeof isDebug !== "boolean") {
+    isDebug = (0,_utils_hasWindow__WEBPACK_IMPORTED_MODULE_1__["default"])() && ("location" in window && !!~window.location.search.indexOf("rpldy_debug=true") || window[_consts__WEBPACK_IMPORTED_MODULE_0__.DEBUG_LOG_KEY] === true);
+  }
+
+  return !!isDebug;
+};
+
+const setDebug = debugOn => {
+  if ((0,_utils_hasWindow__WEBPACK_IMPORTED_MODULE_1__["default"])()) {
+    window[_consts__WEBPACK_IMPORTED_MODULE_0__.DEBUG_LOG_KEY] = debugOn;
+  }
+
+  isDebug = debugOn ? true : null;
+};
+
+const debugLog = function () {
+  if (isDebugOn()) {
+    // eslint-disable-next-line no-console
+    console.log(...arguments);
+  }
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/request/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/request/index.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "parseResponseHeaders": () => (/* reexport safe */ _parseResponseHeaders__WEBPACK_IMPORTED_MODULE_1__["default"])
+/* harmony export */ });
+/* harmony import */ var _request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./request */ "./node_modules/@rpldy/shared/lib/esm/request/request.js");
+/* harmony import */ var _parseResponseHeaders__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parseResponseHeaders */ "./node_modules/@rpldy/shared/lib/esm/request/parseResponseHeaders.js");
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_request__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/request/parseResponseHeaders.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/request/parseResponseHeaders.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../logger */ "./node_modules/@rpldy/shared/lib/esm/logger.js");
+
+
+const parseResponseHeaders = xhr => {
+  let resHeaders;
+
+  try {
+    resHeaders = xhr.getAllResponseHeaders().trim().split(/[\r\n]+/).reduce((res, line) => {
+      const [key, val] = line.split(": ");
+      res[key] = val;
+      return res;
+    }, {});
+  } catch (ex) {
+    (0,_logger__WEBPACK_IMPORTED_MODULE_0__.debugLog)("uploady.request: failed to read response headers", xhr);
+  }
+
+  return resHeaders;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (parseResponseHeaders);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/request/request.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/request/request.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const setHeaders = (req, headers) => {
+  if (headers) {
+    Object.keys(headers).forEach(name => {
+      if (headers[name] !== undefined) {
+        req.setRequestHeader(name, headers[name]);
+      }
+    });
+  }
+};
+
+const request = function (url, data) {
+  let options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  const req = new XMLHttpRequest();
+  const pXhr = new Promise((resolve, reject) => {
+    req.onerror = () => reject(req);
+
+    req.ontimeout = () => reject(req);
+
+    req.onabort = () => reject(req);
+
+    req.onload = () => resolve(req);
+
+    req.open(options.method || "GET", url);
+    setHeaders(req, options.headers);
+    req.withCredentials = !!options.withCredentials;
+
+    if (options.preSend) {
+      options.preSend(req);
+    }
+
+    req.send(data);
+  }); // $FlowFixMe - adding xhr to Promise
+
+  pXhr.xhr = req;
+  return pXhr;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (request);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/triggerCancellable.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/triggerCancellable.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const triggerCancellable = function (trigger, event) {
+  const doTrigger = function (event) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
+    }
+
+    return new Promise((resolve, reject) => {
+      const results = trigger(event, ...args);
+
+      if (results && results.length) {
+        Promise.all(results).catch(reject).then(resolvedResults => resolvedResults && resolve(!!~resolvedResults.findIndex(r => r === false)));
+      } else {
+        resolve(false);
+      }
+    });
+  };
+
+  for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    args[_key - 2] = arguments[_key];
+  }
+
+  return event ? doTrigger(event, ...args) : doTrigger;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (triggerCancellable);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/triggerUpdater.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/triggerUpdater.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const isEmpty = val => val === null || val === undefined;
+
+const triggerUpdater = function (trigger, event) {
+  const doTrigger = function (event) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
+    }
+
+    return new Promise((resolve, reject) => {
+      const results = trigger(event, ...args);
+
+      if (results && results.length) {
+        Promise.all(results).catch(reject).then(resolvedResults => {
+          let result;
+
+          if (resolvedResults) {
+            while (isEmpty(result) && resolvedResults.length) {
+              result = resolvedResults.pop();
+            }
+          }
+
+          resolve(isEmpty(result) ? undefined : result);
+        });
+      } else {
+        resolve();
+      }
+    });
+  };
+
+  for (var _len = arguments.length, args = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    args[_key - 2] = arguments[_key];
+  }
+
+  return event ? doTrigger(event, ...args) : doTrigger;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (triggerUpdater);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/clone.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/clone.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./merge */ "./node_modules/@rpldy/shared/lib/esm/utils/merge.js");
+
+
+/**
+ * does deep clone to the passed object, returning a new object
+ * @param obj
+ * @param mergeFn the merge function to use (default: utils/merge)
+ * @returns {Object}
+ */
+const clone = function (obj) {
+  let mergeFn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _merge__WEBPACK_IMPORTED_MODULE_0__["default"];
+  return (0,_merge__WEBPACK_IMPORTED_MODULE_0__.isMergeObj)(obj) ? mergeFn(Array.isArray(obj) ? [] : {}, obj) : obj;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (clone);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/devFreeze.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/devFreeze.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _isProduction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isProduction */ "./node_modules/@rpldy/shared/lib/esm/utils/isProduction.js");
+/* harmony import */ var _isProduction__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_isProduction__WEBPACK_IMPORTED_MODULE_0__);
+
+
+const devFreeze = obj => _isProduction__WEBPACK_IMPORTED_MODULE_0___default()() ? obj : Object.freeze(obj);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (devFreeze);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/hasWindow.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/hasWindow.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const hasWindow = () => typeof window === "object" && !!window.document;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (hasWindow);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "clone": () => (/* reexport safe */ _clone__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "devFreeze": () => (/* reexport safe */ _devFreeze__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "getMerge": () => (/* reexport safe */ _merge__WEBPACK_IMPORTED_MODULE_3__.getMerge),
+/* harmony export */   "hasWindow": () => (/* reexport safe */ _hasWindow__WEBPACK_IMPORTED_MODULE_7__["default"]),
+/* harmony export */   "isFunction": () => (/* reexport default from dynamic */ _isFunction__WEBPACK_IMPORTED_MODULE_0___default.a),
+/* harmony export */   "isPlainObject": () => (/* reexport safe */ _isPlainObject__WEBPACK_IMPORTED_MODULE_6__["default"]),
+/* harmony export */   "isProduction": () => (/* reexport default from dynamic */ _isProduction__WEBPACK_IMPORTED_MODULE_8___default.a),
+/* harmony export */   "isPromise": () => (/* reexport safe */ _isPromise__WEBPACK_IMPORTED_MODULE_9__["default"]),
+/* harmony export */   "isSamePropInArrays": () => (/* reexport safe */ _isSamePropInArrays__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "merge": () => (/* reexport safe */ _merge__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "pick": () => (/* reexport safe */ _pick__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "scheduleIdleWork": () => (/* reexport safe */ _scheduleIdleWork__WEBPACK_IMPORTED_MODULE_10__["default"])
+/* harmony export */ });
+/* harmony import */ var _isFunction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isFunction */ "./node_modules/@rpldy/shared/lib/esm/utils/isFunction.js");
+/* harmony import */ var _isFunction__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_isFunction__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _isSamePropInArrays__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./isSamePropInArrays */ "./node_modules/@rpldy/shared/lib/esm/utils/isSamePropInArrays.js");
+/* harmony import */ var _devFreeze__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./devFreeze */ "./node_modules/@rpldy/shared/lib/esm/utils/devFreeze.js");
+/* harmony import */ var _merge__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./merge */ "./node_modules/@rpldy/shared/lib/esm/utils/merge.js");
+/* harmony import */ var _clone__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./clone */ "./node_modules/@rpldy/shared/lib/esm/utils/clone.js");
+/* harmony import */ var _pick__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pick */ "./node_modules/@rpldy/shared/lib/esm/utils/pick.js");
+/* harmony import */ var _isPlainObject__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./isPlainObject */ "./node_modules/@rpldy/shared/lib/esm/utils/isPlainObject.js");
+/* harmony import */ var _hasWindow__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./hasWindow */ "./node_modules/@rpldy/shared/lib/esm/utils/hasWindow.js");
+/* harmony import */ var _isProduction__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./isProduction */ "./node_modules/@rpldy/shared/lib/esm/utils/isProduction.js");
+/* harmony import */ var _isProduction__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_isProduction__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _isPromise__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./isPromise */ "./node_modules/@rpldy/shared/lib/esm/utils/isPromise.js");
+/* harmony import */ var _scheduleIdleWork__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./scheduleIdleWork */ "./node_modules/@rpldy/shared/lib/esm/utils/scheduleIdleWork.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/isFunction.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/isFunction.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+//defined as function for flow's sake... (https://github.com/facebook/flow/issues/3635)
+function isFunction(f) {
+  return typeof f === "function";
+}
+
+module.exports = isFunction;
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/isPlainObject.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/isPlainObject.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const isPlainObject = obj => {
+  var _Object$getPrototypeO;
+
+  return !!obj && typeof obj === "object" && (((_Object$getPrototypeO = Object.getPrototypeOf(obj)) === null || _Object$getPrototypeO === void 0 ? void 0 : _Object$getPrototypeO.constructor.name) === "Object" || Object.getPrototypeOf(obj) === null);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isPlainObject);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/isProduction.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/isProduction.js ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+function isProduction() {
+  return "development" === "production";
+}
+
+module.exports = isProduction;
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/isPromise.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/isPromise.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const isPromise = p => //$FlowExpectedError[method-unbinding]  !!!
+!!p && typeof p === "object" && typeof p.then === "function";
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isPromise);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/isSamePropInArrays.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/isSamePropInArrays.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const getPropsExtractor = prop => {
+  const props = [].concat(prop);
+  return arr => arr.map(i => props.map(p => i[p]).join());
+};
+/*
+stringifies props together - will return true for same type of value (ex: function)
+even if refs are different
+ */
+
+
+const isSamePropInArrays = (arr1, arr2, prop) => {
+  let diff = true;
+  const propsExtractor = getPropsExtractor(prop);
+
+  if (arr1 && arr2 && arr1.length === arr2.length) {
+    const props1 = propsExtractor(arr1),
+          props2 = propsExtractor(arr2);
+    diff = !!props1.find((p, i) => p !== props2[i]);
+  }
+
+  return !diff;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (isSamePropInArrays);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/merge.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/merge.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "getMerge": () => (/* binding */ getMerge),
+/* harmony export */   "isMergeObj": () => (/* binding */ isMergeObj)
+/* harmony export */ });
+/* harmony import */ var _isPlainObject__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isPlainObject */ "./node_modules/@rpldy/shared/lib/esm/utils/isPlainObject.js");
+
+const isMergeObj = obj => (0,_isPlainObject__WEBPACK_IMPORTED_MODULE_0__["default"])(obj) || Array.isArray(obj);
+
+const getKeys = (obj, options) => {
+  const keys = Object.keys(obj);
+  return options.withSymbols ? keys.concat(Object.getOwnPropertySymbols(obj)) : keys;
+};
+
+const getMerge = function () {
+  let options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  const merge = function (target) {
+    for (var _len = arguments.length, sources = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      sources[_key - 1] = arguments[_key];
+    }
+
+    if (target && sources.length) {
+      sources.forEach(source => {
+        if (source) {
+          getKeys(source, options).forEach(key => {
+            const prop = source[key];
+
+            if (!options.predicate || options.predicate(key, prop)) {
+              if (typeof prop !== "undefined" || options.undefinedOverwrites) {
+                //object/array - go deeper
+                if (isMergeObj(prop)) {
+                  if (typeof target[key] === "undefined" || !(0,_isPlainObject__WEBPACK_IMPORTED_MODULE_0__["default"])(target[key])) {
+                    //recreate target prop if doesnt exist or not an object
+                    target[key] = Array.isArray(prop) ? [] : {};
+                  }
+
+                  merge(target[key], prop);
+                } else {
+                  target[key] = prop;
+                }
+              }
+            }
+          });
+        }
+      });
+    }
+
+    return target;
+  };
+
+  return merge;
+};
+/**
+ * Does deep merge of simple objects and arrays (only)
+ *
+ * The first parameter is the target
+ * Will only merge objects passed as arguments to this method
+ * Any property in a later object will simply override the one in a previous one
+ * Undefined properties from sources will be ignored
+ *
+ * No recursion protection
+ */
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getMerge());
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/pick.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/pick.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const pick = (obj, props) => obj && Object.keys(obj).reduce((res, key) => {
+  if (~props.indexOf(key)) {
+    res[key] = obj[key];
+  }
+
+  return res;
+}, {});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (pick);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/shared/lib/esm/utils/scheduleIdleWork.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@rpldy/shared/lib/esm/utils/scheduleIdleWork.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _hasWindow__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasWindow */ "./node_modules/@rpldy/shared/lib/esm/utils/hasWindow.js");
+
+const supportsIdle = (0,_hasWindow__WEBPACK_IMPORTED_MODULE_0__["default"])() && window.requestIdleCallback;
+const scheduler = supportsIdle ? window.requestIdleCallback : setTimeout;
+const clear = supportsIdle ? window.cancelIdleCallback : clearTimeout;
+
+const scheduleIdleWork = function (fn) {
+  let timeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  //$FlowIssue[incompatible-call] flow doesnt understand we only pass object to requestIdle...
+  const handler = scheduler(fn, supportsIdle ? {
+    timeout
+  } : timeout);
+  return () => clear(handler);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (scheduleIdleWork);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/simple-state/lib/esm/consts.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@rpldy/simple-state/lib/esm/consts.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "PROXY_SYM": () => (/* binding */ PROXY_SYM),
+/* harmony export */   "STATE_SYM": () => (/* binding */ STATE_SYM)
+/* harmony export */ });
+const PROXY_SYM = Symbol.for("__rpldy-sstt-proxy__");
+const STATE_SYM = Symbol.for("__rpldy-sstt-state__");
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/simple-state/lib/esm/createState.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@rpldy/simple-state/lib/esm/createState.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "isProxy": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_2__.isProxy),
+/* harmony export */   "unwrap": () => (/* binding */ unwrapProxy)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/simple-state/lib/esm/consts.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "./node_modules/@rpldy/simple-state/lib/esm/utils.js");
+
+
+
+const mergeWithSymbols = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.getMerge)({
+  withSymbols: true,
+  predicate: key => key !== _consts__WEBPACK_IMPORTED_MODULE_1__.PROXY_SYM && key !== _consts__WEBPACK_IMPORTED_MODULE_1__.STATE_SYM
+});
+
+const getIsUpdateable = proxy => (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isProduction)() ? true : proxy[_consts__WEBPACK_IMPORTED_MODULE_1__.STATE_SYM].isUpdateable;
+
+const setIsUpdateable = (proxy, value) => {
+  if (!(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isProduction)()) {
+    proxy[_consts__WEBPACK_IMPORTED_MODULE_1__.STATE_SYM].isUpdateable = value;
+  }
+};
+
+const deepProxy = (obj, traps) => {
+  let proxy;
+
+  if ((0,_utils__WEBPACK_IMPORTED_MODULE_2__.isProxiable)(obj)) {
+    if (!(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isProxy)(obj)) {
+      obj[_consts__WEBPACK_IMPORTED_MODULE_1__.PROXY_SYM] = true;
+      proxy = new Proxy(obj, traps);
+    }
+
+    Object.keys(obj).forEach(key => {
+      obj[key] = deepProxy(obj[key], traps);
+    });
+  }
+
+  return proxy || obj;
+};
+
+const unwrapProxy = proxy => (0,_utils__WEBPACK_IMPORTED_MODULE_2__.isProxy)(proxy) ? (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.clone)(proxy, mergeWithSymbols) : proxy;
+/**
+ * deep proxies an object so it is only updateable through an update callback.
+ * outside an updater, it is impossible to make changes
+ *
+ * This a very (very) basic and naive replacement for Immer
+ *
+ * It only proxies simple objects (not maps or sets) and arrays
+ * It doesnt create new references and doesnt copy over anything
+ *
+ * Original object is changed!
+ *
+ * DOESNT support updating state (wrapped seperately) that is set as a child of another state
+ * @param obj
+ * @returns {{state, update, unwrap}}
+ */
+
+
+const createState = obj => {
+  const traps = {
+    set: (obj, key, value) => {
+      if (getIsUpdateable(proxy)) {
+        obj[key] = deepProxy(value, traps);
+      }
+
+      return true;
+    },
+    get: (obj, key) => {
+      return key === _consts__WEBPACK_IMPORTED_MODULE_1__.PROXY_SYM ? unwrapProxy(obj) : obj[key];
+    },
+    defineProperty: () => {
+      throw new Error("Simple State doesnt support defining property");
+    },
+    setPrototypeOf: () => {
+      throw new Error("Simple State doesnt support setting prototype");
+    },
+    deleteProperty: (obj, key) => {
+      if (getIsUpdateable(proxy)) {
+        delete obj[key];
+      }
+
+      return true;
+    }
+  };
+
+  if (!(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isProduction)() && !(0,_utils__WEBPACK_IMPORTED_MODULE_2__.isProxy)(obj)) {
+    Object.defineProperty(obj, _consts__WEBPACK_IMPORTED_MODULE_1__.STATE_SYM, {
+      value: {
+        isUpdateable: false
+      },
+      configurable: true
+    });
+  }
+
+  const proxy = !(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isProduction)() ? deepProxy(obj, traps) : obj;
+  return {
+    state: proxy,
+    update: fn => {
+      if (!(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isProduction)() && getIsUpdateable(proxy)) {
+        throw new Error("Can't call update on State already being updated!");
+      }
+
+      try {
+        setIsUpdateable(proxy, true);
+        fn(proxy);
+      } finally {
+        setIsUpdateable(proxy, false);
+      }
+
+      return proxy;
+    },
+    unwrap: entry => entry ? //simply clone the provided object (if its a proxy)
+    unwrapProxy(entry) : //unwrap entire proxy state
+    (0,_utils__WEBPACK_IMPORTED_MODULE_2__.isProxy)(proxy) ? unwrapProxy(proxy) : proxy
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createState);
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/simple-state/lib/esm/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@rpldy/simple-state/lib/esm/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createState": () => (/* reexport safe */ _createState__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "default": () => (/* reexport safe */ _createState__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "isProxiable": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_1__.isProxiable),
+/* harmony export */   "isProxy": () => (/* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_1__.isProxy),
+/* harmony export */   "unwrap": () => (/* reexport safe */ _createState__WEBPACK_IMPORTED_MODULE_0__.unwrap)
+/* harmony export */ });
+/* harmony import */ var _createState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createState */ "./node_modules/@rpldy/simple-state/lib/esm/createState.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ "./node_modules/@rpldy/simple-state/lib/esm/utils.js");
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/simple-state/lib/esm/utils.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@rpldy/simple-state/lib/esm/utils.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isProxiable": () => (/* binding */ isProxiable),
+/* harmony export */   "isProxy": () => (/* binding */ isProxy)
+/* harmony export */ });
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/simple-state/lib/esm/consts.js");
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+
+
+
+const isProxy = obj => !(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.isProduction)() && !!obj && !!~Object.getOwnPropertySymbols(obj).indexOf(_consts__WEBPACK_IMPORTED_MODULE_0__.PROXY_SYM); //check if object is File or react-native file object (it wont by instanceof File in react-native)
+
+
+const isNativeFile = obj => (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.hasWindow)() && obj instanceof File || obj.name && obj.size && obj.uri;
+
+const isProxiable = obj => Array.isArray(obj) || (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.isPlainObject)(obj) && !isNativeFile(obj);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/batch.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/batch.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _defaults__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./defaults */ "./node_modules/@rpldy/uploader/lib/esm/defaults.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils */ "./node_modules/@rpldy/uploader/lib/esm/utils.js");
+
+
+
+let bCounter = 0;
+
+const processFiles = (batchId, files, isPending, fileFilter) => {
+  return Promise.all(Array.prototype //$FlowExpectedError[method-unbinding] flow 0.153 !!!
+  .map.call(files, f => {
+    const filterResult = (fileFilter || _defaults__WEBPACK_IMPORTED_MODULE_1__.DEFAULT_FILTER)(f);
+    return (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isPromise)(filterResult) ? filterResult.then(result => !!result && f) : !!filterResult && f;
+  })).then(filtered => filtered.filter(Boolean).map(f => (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.createBatchItem)(f, batchId, isPending)));
+};
+
+const createBatch = (files, uploaderId, options) => {
+  bCounter += 1;
+  const id = `batch-${bCounter}`;
+  const isFileList = (0,_utils__WEBPACK_IMPORTED_MODULE_2__.getIsFileList)(files);
+  files = Array.isArray(files) || isFileList ? files : [files];
+  const isPending = !options.autoUpload;
+  return processFiles(id, files, isPending, options.fileFilter).then(items => {
+    return {
+      id,
+      uploaderId,
+      items,
+      state: isPending ? _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.PENDING : _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.ADDED,
+      completed: 0,
+      loaded: 0,
+      orgItemCount: items.length,
+      additionalInfo: null
+    };
+  });
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createBatch);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/batchItemsSender.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/batchItemsSender.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _rpldy_life_events__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @rpldy/life-events */ "./node_modules/@rpldy/life-events/lib/esm/index.js");
+/* harmony import */ var _rpldy_sender__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @rpldy/sender */ "./node_modules/@rpldy/sender/lib/esm/index.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/uploader/lib/esm/consts.js");
+/* harmony import */ var _defaults__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./defaults */ "./node_modules/@rpldy/uploader/lib/esm/defaults.js");
+
+ //TODO (v2): Load using enhancer to allow using uploader (tree-shake) that doesnt import the defualt sender if not needed
+
+
+
+
+
+const reportItemsProgress = (items, completed, loaded, trigger) => {
+  items.forEach(item => {
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploady.uploader.processor: file: ${item.id} progress event: loaded(${loaded}) - completed(${completed})`);
+    trigger(_consts__WEBPACK_IMPORTED_MODULE_3__.SENDER_EVENTS.ITEM_PROGRESS, item, completed, loaded);
+  });
+};
+
+const onItemUploadProgress = (items, batch, e, trigger) => {
+  const completed = Math.min(e.loaded / e.total * 100, 100),
+        completedPerItem = completed / items.length,
+        loadedAverage = e.loaded / items.length;
+  reportItemsProgress(items, completedPerItem, loadedAverage, trigger);
+  trigger(_consts__WEBPACK_IMPORTED_MODULE_3__.SENDER_EVENTS.BATCH_PROGRESS, batch);
+};
+
+const createBatchItemsSender = () => {
+  const {
+    trigger,
+    target: sender
+  } = (0,_rpldy_life_events__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    send: (items, batch, batchOptions) => {
+      const destination = batchOptions.destination,
+            url = destination === null || destination === void 0 ? void 0 : destination.url;
+      const throttledProgress = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.throttle)(e => onItemUploadProgress(items, batch, e, trigger), _consts__WEBPACK_IMPORTED_MODULE_3__.PROGRESS_DELAY, true);
+      const send = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isFunction)(batchOptions.send) ? batchOptions.send : _rpldy_sender__WEBPACK_IMPORTED_MODULE_2__["default"];
+      return send(items, url, {
+        method: (destination === null || destination === void 0 ? void 0 : destination.method) || batchOptions.method || _defaults__WEBPACK_IMPORTED_MODULE_4__.DEFAULT_OPTIONS.method,
+        paramName: (destination === null || destination === void 0 ? void 0 : destination.filesParamName) || batchOptions.inputFieldName || _defaults__WEBPACK_IMPORTED_MODULE_4__.DEFAULT_PARAM_NAME,
+        params: { //TODO: might need to rethink the order here:
+          ...batchOptions.params,
+          ...(destination === null || destination === void 0 ? void 0 : destination.params)
+        },
+        forceJsonResponse: batchOptions.forceJsonResponse,
+        withCredentials: batchOptions.withCredentials,
+        formatGroupParamName: batchOptions.formatGroupParamName,
+        headers: destination === null || destination === void 0 ? void 0 : destination.headers,
+        sendWithFormData: batchOptions.sendWithFormData,
+        formatServerResponse: batchOptions.formatServerResponse,
+        formDataAllowUndefined: batchOptions.formDataAllowUndefined,
+        isSuccessfulCall: batchOptions.isSuccessfulCall
+      }, throttledProgress);
+    }
+  }, Object.values(_consts__WEBPACK_IMPORTED_MODULE_3__.SENDER_EVENTS));
+  return sender;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createBatchItemsSender);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/composeEnhancers.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/composeEnhancers.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const composeEnhancers = function () {
+  for (var _len = arguments.length, enhancers = new Array(_len), _key = 0; _key < _len; _key++) {
+    enhancers[_key] = arguments[_key];
+  }
+
+  return function (uploader) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
+    }
+
+    return enhancers.reduce((enhanced, e) => e(enhanced, ...args) || enhanced, uploader);
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (composeEnhancers);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/consts.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/consts.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ITEM_FINALIZE_STATES": () => (/* binding */ ITEM_FINALIZE_STATES),
+/* harmony export */   "PROGRESS_DELAY": () => (/* binding */ PROGRESS_DELAY),
+/* harmony export */   "SENDER_EVENTS": () => (/* binding */ SENDER_EVENTS),
+/* harmony export */   "UPLOADER_EVENTS": () => (/* binding */ UPLOADER_EVENTS)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+
+const UPLOADER_EVENTS = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.devFreeze)({
+  BATCH_ADD: "BATCH-ADD",
+  BATCH_START: "BATCH-START",
+  BATCH_PROGRESS: "BATCH_PROGRESS",
+  BATCH_FINISH: "BATCH-FINISH",
+  BATCH_ABORT: "BATCH-ABORT",
+  BATCH_CANCEL: "BATCH-CANCEL",
+  BATCH_ERROR: "BATCH-ERROR",
+  BATCH_FINALIZE: "BATCH-FINALIZE",
+  ITEM_START: "FILE-START",
+  ITEM_CANCEL: "FILE-CANCEL",
+  ITEM_PROGRESS: "FILE-PROGRESS",
+  ITEM_FINISH: "FILE-FINISH",
+  ITEM_ABORT: "FILE-ABORT",
+  ITEM_ERROR: "FILE-ERROR",
+  ITEM_FINALIZE: "FILE-FINALIZE",
+  REQUEST_PRE_SEND: "REQUEST_PRE_SEND",
+  ALL_ABORT: "ALL_ABORT"
+});
+const PROGRESS_DELAY = 50;
+const SENDER_EVENTS = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.devFreeze)({
+  ITEM_PROGRESS: "ITEM_PROGRESS",
+  BATCH_PROGRESS: "BATCH_PROGRESS"
+});
+const ITEM_FINALIZE_STATES = [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.FINISHED, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ERROR, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.CANCELLED, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ABORTED];
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/defaults.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/defaults.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DEFAULT_FILTER": () => (/* binding */ DEFAULT_FILTER),
+/* harmony export */   "DEFAULT_OPTIONS": () => (/* binding */ DEFAULT_OPTIONS),
+/* harmony export */   "DEFAULT_PARAM_NAME": () => (/* binding */ DEFAULT_PARAM_NAME)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+
+const DEFAULT_PARAM_NAME = "file";
+const DEFAULT_FILTER = () => true;
+const DEFAULT_OPTIONS = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.devFreeze)({
+  autoUpload: true,
+  clearPendingOnAdd: false,
+  inputFieldName: "file",
+  concurrent: false,
+  maxConcurrent: 2,
+  grouped: false,
+  maxGroupSize: 5,
+  method: "POST",
+  params: {},
+  fileFilter: DEFAULT_FILTER,
+  forceJsonResponse: false,
+  withCredentials: false,
+  destination: {},
+  send: null,
+  sendWithFormData: true,
+  formDataAllowUndefined: false,
+  fastAbortThreshold: 100
+});
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/index.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/index.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "BATCH_STATES": () => (/* reexport safe */ _rpldy_shared__WEBPACK_IMPORTED_MODULE_5__.BATCH_STATES),
+/* harmony export */   "DEFAULT_OPTIONS": () => (/* reexport safe */ _defaults__WEBPACK_IMPORTED_MODULE_3__.DEFAULT_OPTIONS),
+/* harmony export */   "FILE_STATES": () => (/* reexport safe */ _rpldy_shared__WEBPACK_IMPORTED_MODULE_5__.FILE_STATES),
+/* harmony export */   "MissingUrlError": () => (/* reexport safe */ _rpldy_sender__WEBPACK_IMPORTED_MODULE_4__.MissingUrlError),
+/* harmony export */   "UPLOADER_EVENTS": () => (/* reexport safe */ _consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS),
+/* harmony export */   "XHR_SENDER_TYPE": () => (/* reexport safe */ _rpldy_sender__WEBPACK_IMPORTED_MODULE_4__.XHR_SENDER_TYPE),
+/* harmony export */   "composeEnhancers": () => (/* reexport safe */ _composeEnhancers__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "createUploader": () => (/* reexport safe */ _uploader__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "getXhrSend": () => (/* reexport safe */ _rpldy_sender__WEBPACK_IMPORTED_MODULE_4__.getXhrSend),
+/* harmony export */   "send": () => (/* reexport safe */ _rpldy_sender__WEBPACK_IMPORTED_MODULE_4__.send)
+/* harmony export */ });
+/* harmony import */ var _uploader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uploader */ "./node_modules/@rpldy/uploader/lib/esm/uploader.js");
+/* harmony import */ var _composeEnhancers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./composeEnhancers */ "./node_modules/@rpldy/uploader/lib/esm/composeEnhancers.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/uploader/lib/esm/consts.js");
+/* harmony import */ var _defaults__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./defaults */ "./node_modules/@rpldy/uploader/lib/esm/defaults.js");
+/* harmony import */ var _rpldy_sender__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @rpldy/sender */ "./node_modules/@rpldy/sender/lib/esm/index.js");
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_uploader__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/processor.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/processor.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _queue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./queue */ "./node_modules/@rpldy/uploader/lib/esm/queue/index.js");
+/* harmony import */ var _batchItemsSender__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./batchItemsSender */ "./node_modules/@rpldy/uploader/lib/esm/batchItemsSender.js");
+/* harmony import */ var _batch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./batch */ "./node_modules/@rpldy/uploader/lib/esm/batch.js");
+
+
+
+
+const createProcessor = (trigger, cancellable, options, uploaderId) => {
+  const sender = (0,_batchItemsSender__WEBPACK_IMPORTED_MODULE_1__["default"])(),
+        queue = (0,_queue__WEBPACK_IMPORTED_MODULE_0__["default"])(options, trigger, cancellable, sender, uploaderId);
+  const runCancellable = queue.runCancellable;
+  return {
+    process: (batch, batchOptions) => {
+      queue.uploadBatch(batch, batchOptions);
+    },
+    abortBatch: batchId => {
+      queue.abortBatch(batchId);
+    },
+    abort: id => {
+      if (id) {
+        queue.abortItem(id);
+      } else {
+        queue.abortAll();
+      }
+    },
+    addNewBatch: (files, uploaderId, processOptions) => {
+      return (0,_batch__WEBPACK_IMPORTED_MODULE_2__["default"])(files, uploaderId, processOptions).then(batch => {
+        return queue.addBatch(batch, processOptions);
+      });
+    },
+    runCancellable,
+    clearPendingBatches: () => {
+      queue.clearPendingBatches();
+    },
+    processPendingBatches: uploadOptions => {
+      queue.uploadPendingBatches(uploadOptions);
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createProcessor);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/batchHelpers.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/batchHelpers.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cancelBatchForItem": () => (/* binding */ cancelBatchForItem),
+/* harmony export */   "cleanUpFinishedBatches": () => (/* binding */ cleanUpFinishedBatches),
+/* harmony export */   "clearBatchData": () => (/* binding */ clearBatchData),
+/* harmony export */   "detachRecycledFromPreviousBatch": () => (/* binding */ detachRecycledFromPreviousBatch),
+/* harmony export */   "failBatchForItem": () => (/* binding */ failBatchForItem),
+/* harmony export */   "finalizeBatch": () => (/* binding */ finalizeBatch),
+/* harmony export */   "getBatchDataFromItemId": () => (/* binding */ getBatchDataFromItemId),
+/* harmony export */   "getBatchFromItemId": () => (/* binding */ getBatchFromItemId),
+/* harmony export */   "getBatchFromState": () => (/* binding */ getBatchFromState),
+/* harmony export */   "getIsBatchFinalized": () => (/* binding */ getIsBatchFinalized),
+/* harmony export */   "getIsBatchReady": () => (/* binding */ getIsBatchReady),
+/* harmony export */   "incrementBatchFinishedCounter": () => (/* binding */ incrementBatchFinishedCounter),
+/* harmony export */   "isNewBatchStarting": () => (/* binding */ isNewBatchStarting),
+/* harmony export */   "loadNewBatchForItem": () => (/* binding */ loadNewBatchForItem),
+/* harmony export */   "preparePendingForUpload": () => (/* binding */ preparePendingForUpload),
+/* harmony export */   "removeBatchItems": () => (/* binding */ removeBatchItems),
+/* harmony export */   "removePendingBatches": () => (/* binding */ removePendingBatches),
+/* harmony export */   "triggerUploaderBatchEvent": () => (/* binding */ triggerUploaderBatchEvent)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @rpldy/simple-state */ "./node_modules/@rpldy/simple-state/lib/esm/index.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../consts */ "./node_modules/@rpldy/uploader/lib/esm/consts.js");
+/* harmony import */ var _preSendPrepare__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./preSendPrepare */ "./node_modules/@rpldy/uploader/lib/esm/queue/preSendPrepare.js");
+/* harmony import */ var _itemHelpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./itemHelpers */ "./node_modules/@rpldy/uploader/lib/esm/queue/itemHelpers.js");
+
+
+
+
+
+const prepareBatchStartItems = (0,_preSendPrepare__WEBPACK_IMPORTED_MODULE_3__.getItemsPrepareUpdater)(_consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS.BATCH_START, batch => batch.items, null, function () {
+  let {
+    batch
+  } = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  if (batch) {
+    throw new Error(`BATCH_START event handlers cannot update batch data. Only items & options`);
+  }
+});
+const BATCH_READY_STATES = [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.ADDED, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.PROCESSING, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.UPLOADING];
+const BATCH_FINISHED_STATES = [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.ABORTED, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.CANCELLED, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.FINISHED, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.ERROR];
+
+const getBatchFromState = (state, id) => state.batches[id].batch;
+
+const getBatch = (queue, id) => {
+  return getBatchFromState(queue.getState(), id);
+};
+
+const getBatchDataFromItemId = (queue, itemId) => {
+  const state = queue.getState();
+  const item = state.items[itemId];
+  return state.batches[item.batchId];
+};
+
+const getBatchFromItemId = (queue, itemId) => {
+  return getBatchDataFromItemId(queue, itemId).batch;
+};
+
+const removeBatchItems = (queue, batchId) => {
+  const batch = getBatch(queue, batchId);
+  batch.items.forEach(_ref => {
+    let {
+      id
+    } = _ref;
+    return (0,_itemHelpers__WEBPACK_IMPORTED_MODULE_4__.finalizeItem)(queue, id, true);
+  });
+};
+
+const removeBatch = (queue, batchId) => {
+  queue.updateState(state => {
+    delete state.batches[batchId];
+    delete state.itemQueue[batchId];
+    const batchQueueIndex = state.batchQueue.indexOf(batchId);
+
+    if (~batchQueueIndex) {
+      state.batchQueue.splice(batchQueueIndex, 1);
+    }
+  });
+};
+
+const finalizeBatch = function (queue, batchId, eventType) {
+  let finalState = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.FINISHED;
+  let additionalInfo = arguments.length > 4 ? arguments[4] : undefined;
+  queue.updateState(state => {
+    const batch = getBatchFromState(state, batchId);
+    batch.state = finalState;
+
+    if (additionalInfo) {
+      batch.additionalInfo = additionalInfo;
+    }
+  });
+  triggerUploaderBatchEvent(queue, batchId, eventType);
+  triggerUploaderBatchEvent(queue, batchId, _consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS.BATCH_FINALIZE);
+};
+
+const cancelBatchForItem = (queue, itemId) => {
+  if ((0,_itemHelpers__WEBPACK_IMPORTED_MODULE_4__.getIsItemExists)(queue, itemId)) {
+    const data = getBatchDataFromItemId(queue, itemId),
+          batchId = data === null || data === void 0 ? void 0 : data.batch.id; //in case batch is aborted while async batch-start is pending we can reach here after batch was already removed
+
+    if (batchId) {
+      _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploady.uploader.batchHelpers: cancelling batch: ", batchId);
+      finalizeBatch(queue, batchId, _consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS.BATCH_CANCEL, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.CANCELLED);
+      removeBatchItems(queue, batchId);
+      removeBatch(queue, batchId);
+    } else {
+      _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploady.uploader.batchHelpers: cancel batch called for batch already removed (item id = ${itemId})`);
+    }
+  }
+};
+
+const failBatchForItem = (queue, itemId, err) => {
+  const batch = getBatchFromItemId(queue, itemId),
+        batchId = batch.id;
+  _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploady.uploader.batchHelpers: failing batch: ", {
+    batch
+  });
+  finalizeBatch(queue, batchId, _consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS.BATCH_ERROR, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.ERROR, err.message);
+  removeBatchItems(queue, batchId);
+  removeBatch(queue, batchId);
+};
+
+const isNewBatchStarting = (queue, itemId) => {
+  const batch = getBatchFromItemId(queue, itemId);
+  return queue.getState().currentBatch !== batch.id;
+};
+
+const loadNewBatchForItem = (queue, itemId) => {
+  const batch = getBatchFromItemId(queue, itemId);
+  return prepareBatchStartItems(queue, batch).then(_ref2 => {
+    let {
+      cancelled
+    } = _ref2;
+    let alreadyFinished = false;
+
+    if (!cancelled) {
+      //in case of async batch start, its possible that when batch is aborted, items are already removed from queue
+      alreadyFinished = !(0,_itemHelpers__WEBPACK_IMPORTED_MODULE_4__.getIsItemExists)(queue, itemId);
+
+      if (!alreadyFinished) {
+        queue.updateState(state => {
+          state.currentBatch = batch.id;
+        });
+      }
+    }
+
+    return !cancelled && !alreadyFinished;
+  });
+};
+
+const cleanUpFinishedBatches = queue => {
+  (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.scheduleIdleWork)(() => {
+    const state = queue.getState();
+    Object.keys(state.batches).forEach(batchId => {
+      const {
+        batch,
+        finishedCounter
+      } = state.batches[batchId];
+      const {
+        orgItemCount
+      } = batch; //shouldnt be the case, but if wasnt cleaned before, it will now
+
+      const alreadyFinalized = getIsBatchFinalized(batch);
+
+      if (orgItemCount === finishedCounter) {
+        //batch may not be updated with completed/loaded with 100% values
+        if (!alreadyFinalized && batch.completed !== 100) {
+          queue.updateState(state => {
+            const batch = getBatchFromState(state, batchId);
+            batch.completed = 100;
+            batch.loaded = batch.items.reduce((res, _ref3) => {
+              let {
+                loaded
+              } = _ref3;
+              return res + loaded;
+            }, 0);
+          }); //ensure we trigger progress event with completed = 100 for all items
+
+          triggerUploaderBatchEvent(queue, batchId, _consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS.BATCH_PROGRESS);
+        }
+
+        queue.updateState(state => {
+          if (state.currentBatch === batchId) {
+            state.currentBatch = null;
+          }
+        });
+        _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploady.uploader.batchHelpers: cleaning up batch: ${batch.id}`);
+
+        if (!alreadyFinalized) {
+          finalizeBatch(queue, batchId, _consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS.BATCH_FINISH);
+        }
+
+        removeBatchItems(queue, batchId);
+        removeBatch(queue, batchId);
+      }
+    });
+  });
+};
+
+const triggerUploaderBatchEvent = (queue, batchId, event) => {
+  const state = queue.getState(),
+        batch = getBatchFromState(state, batchId),
+        //get the most uptodate batch data
+  stateItems = state.items;
+  const eventBatch = { ...(0,_rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__.unwrap)(batch),
+    items: batch.items.map(_ref4 => {
+      let {
+        id
+      } = _ref4;
+      return (0,_rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__.unwrap)(stateItems[id]);
+    })
+  };
+  queue.trigger(event, eventBatch);
+};
+
+const getIsBatchReady = (queue, batchId) => {
+  const batch = getBatchFromState(queue.getState(), batchId);
+  return BATCH_READY_STATES.includes(batch.state);
+};
+
+const detachRecycledFromPreviousBatch = (queue, item) => {
+  const {
+    previousBatch
+  } = item;
+
+  if (item.recycled && previousBatch && queue.getState().batches[previousBatch]) {
+    const {
+      id: batchId
+    } = getBatchFromItemId(queue, item.id);
+
+    if (batchId === previousBatch) {
+      queue.updateState(state => {
+        const batch = getBatchFromState(state, batchId);
+        const index = batch.items.findIndex(_ref5 => {
+          let {
+            id
+          } = _ref5;
+          return id === item.id;
+        });
+
+        if (~index) {
+          batch.items.splice(index, 1);
+        }
+      });
+    }
+  }
+};
+
+const preparePendingForUpload = (queue, uploadOptions) => {
+  queue.updateState(state => {
+    //remove pending state from pending batches
+    Object.keys(state.batches).forEach(batchId => {
+      const batchData = state.batches[batchId];
+      const {
+        batch,
+        batchOptions
+      } = batchData;
+
+      if (batch.state === _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.PENDING) {
+        batch.items.forEach(item => {
+          item.state = _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ADDED;
+        });
+        batch.state = _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.ADDED;
+        batchData.batchOptions = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.merge)({}, batchOptions, uploadOptions);
+      }
+    });
+  });
+};
+
+const removePendingBatches = queue => {
+  const batches = queue.getState().batches;
+  Object.keys(batches).filter(batchId => batches[batchId].batch.state === _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.PENDING).forEach(batchId => {
+    removeBatchItems(queue, batchId);
+    removeBatch(queue, batchId);
+  });
+};
+
+const incrementBatchFinishedCounter = (queue, batchId) => {
+  queue.updateState(state => {
+    state.batches[batchId].finishedCounter += 1;
+  });
+};
+
+const getIsBatchFinalized = batch => BATCH_FINISHED_STATES.includes(batch.state);
+/**
+ * As this is a data-destructive method it is meant
+ * to be used with fast-abort ONLY. Not for any regular operation
+ */
+
+
+const clearBatchData = (queue, batchId) => {
+  queue.updateState(state => {
+    const {
+      items
+    } = getBatchFromState(state, batchId);
+    delete state.batches[batchId];
+    delete state.itemQueue[batchId];
+    const indx = state.batchQueue.indexOf(batchId);
+
+    if (~indx) {
+      state.batchQueue.splice(indx, 1);
+    }
+
+    if (state.currentBatch === batchId) {
+      state.currentBatch = null;
+    }
+
+    items.forEach(_ref6 => {
+      let {
+        id
+      } = _ref6;
+      delete state.items[id];
+      const activeIndex = state.activeIds.indexOf(id);
+
+      if (~activeIndex) {
+        state.activeIds.splice(activeIndex, 1);
+      }
+    });
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/index.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _uploaderQueue__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _uploaderQueue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./uploaderQueue */ "./node_modules/@rpldy/uploader/lib/esm/queue/uploaderQueue.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/itemHelpers.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/itemHelpers.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "finalizeItem": () => (/* binding */ finalizeItem),
+/* harmony export */   "getIsItemExists": () => (/* binding */ getIsItemExists)
+/* harmony export */ });
+const finalizeItem = function (queue, id) {
+  let delItem = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  queue.updateState(state => {
+    const {
+      batchId
+    } = state.items[id] || {};
+
+    if (delItem) {
+      delete state.items[id];
+    }
+
+    const index = batchId ? state.itemQueue[batchId].indexOf(id) : -1;
+
+    if (~index) {
+      state.itemQueue[batchId].splice(index, 1);
+    }
+
+    const activeIndex = state.activeIds.indexOf(id);
+
+    if (~activeIndex) {
+      state.activeIds.splice(activeIndex, 1);
+    }
+  });
+};
+
+const getIsItemExists = (queue, itemId) => !!queue.getState().items[itemId];
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/preSendPrepare.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/preSendPrepare.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getItemsPrepareUpdater": () => (/* binding */ getItemsPrepareUpdater)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+
+const mergeWithUndefined = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.getMerge)({
+  undefinedOverwrites: true
+});
+
+const processPrepareResponse = (eventType, items, options, updated) => {
+  if (updated) {
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploader.queue: REQUEST_PRE_SEND(${eventType}) event returned updated items/options`, updated);
+
+    if (updated.items) {
+      //can't change items count at this point.
+      if (updated.items.length !== items.length || !(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isSamePropInArrays)(updated.items, items, ["id", "batchId", "recycled"])) {
+        throw new Error(`REQUEST_PRE_SEND(${eventType}) event handlers must return same items with same ids`);
+      }
+
+      items = updated.items;
+    }
+
+    if (updated.options) {
+      options = mergeWithUndefined({}, options, updated.options);
+    }
+  }
+
+  return {
+    items,
+    options,
+    cancelled: updated === false
+  };
+};
+
+const triggerItemsPrepareEvent = (queue, eventSubject, items, options, eventType, validateResponse) => (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.triggerUpdater)(queue.trigger, eventType, eventSubject, options) // $FlowIssue - https://github.com/facebook/flow/issues/8215
+.then(updated => {
+  validateResponse === null || validateResponse === void 0 ? void 0 : validateResponse(updated);
+  return processPrepareResponse(eventType, items, options, updated);
+});
+
+const persistPrepareResponse = (queue, prepared) => {
+  //for async prepare, items could already be cancelled before we reach here
+  if (prepared.items[0] && queue.getState().batches[prepared.items[0].batchId]) {
+    queue.updateState(state => {
+      //update potentially changed data back into queue state
+      prepared.items.forEach(i => {
+        state.items[i.id] = i;
+      });
+      state.batches[prepared.items[0].batchId].batchOptions = prepared.options;
+    }); //use objects from internal state(proxies) - not objects from user-land!
+
+    const updatedState = queue.getState();
+    prepared.items = prepared.items.map(item => updatedState.items[item.id]);
+    prepared.options = updatedState.batches[prepared.items[0].batchId].batchOptions;
+  }
+};
+
+const prepareItems = (queue, subject, retrieveItemsFromSubject, createEventSubject, validateResponse, eventType) => {
+  const items = retrieveItemsFromSubject(subject);
+  const batchOptions = queue.getState().batches[items[0].batchId].batchOptions;
+  const eventSubject = (createEventSubject === null || createEventSubject === void 0 ? void 0 : createEventSubject(subject, batchOptions)) || subject;
+  return triggerItemsPrepareEvent(queue, eventSubject, items, batchOptions, eventType, validateResponse).then(prepared => {
+    if (!prepared.cancelled) {
+      persistPrepareResponse(queue, prepared);
+    }
+
+    return prepared;
+  });
+};
+
+const getItemsPrepareUpdater = function (eventType, retrieveItemsFromSubject) {
+  let createEventSubject = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+  let validateResponse = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+  return (queue, subject) => prepareItems(queue, subject, retrieveItemsFromSubject, createEventSubject, validateResponse, eventType);
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/processAbort.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/processAbort.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "processAbortAll": () => (/* binding */ processAbortAll),
+/* harmony export */   "processAbortBatch": () => (/* binding */ processAbortBatch),
+/* harmony export */   "processAbortItem": () => (/* binding */ processAbortItem)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../consts */ "./node_modules/@rpldy/uploader/lib/esm/consts.js");
+/* harmony import */ var _processFinishedRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./processFinishedRequest */ "./node_modules/@rpldy/uploader/lib/esm/queue/processFinishedRequest.js");
+/* harmony import */ var _processQueueNext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./processQueueNext */ "./node_modules/@rpldy/uploader/lib/esm/queue/processQueueNext.js");
+/* harmony import */ var _batchHelpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./batchHelpers */ "./node_modules/@rpldy/uploader/lib/esm/queue/batchHelpers.js");
+
+
+
+
+
+
+const getFinalizeAbortedItem = queue => (id, data) => (0,_processFinishedRequest__WEBPACK_IMPORTED_MODULE_2__["default"])(queue, [{
+  id,
+  info: data
+}], _processQueueNext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+
+const processAbortItem = (queue, id) => {
+  const abortItemMethod = queue.getOptions().abortItem;
+  (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.invariant)(!!abortItemMethod, "Abort Item method not provided yet abortItem was called");
+  const state = queue.getState();
+  return abortItemMethod(id, state.items, state.aborts, getFinalizeAbortedItem(queue));
+};
+
+const processAbortBatch = (queue, id) => {
+  const abortBatchMethod = queue.getOptions().abortBatch;
+  (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.invariant)(!!abortBatchMethod, "Abort Batch method not provided yet abortItem was called");
+  const state = queue.getState(),
+        batchData = state.batches[id],
+        batch = batchData === null || batchData === void 0 ? void 0 : batchData.batch;
+
+  if (batch && !(0,_batchHelpers__WEBPACK_IMPORTED_MODULE_4__.getIsBatchFinalized)(batch)) {
+    (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_4__.finalizeBatch)(queue, id, _consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.BATCH_ABORT, _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.BATCH_STATES.ABORTED);
+    const {
+      isFast
+    } = abortBatchMethod(batch, batchData.batchOptions, state.aborts, state.itemQueue, getFinalizeAbortedItem(queue), queue.getOptions());
+
+    if (isFast) {
+      queue.clearBatchUploads(batch.id);
+    }
+  }
+};
+
+const processAbortAll = queue => {
+  const abortAllMethod = queue.getOptions().abortAll;
+  (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.invariant)(!!abortAllMethod, "Abort All method not provided yet abortAll was called");
+  queue.trigger(_consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ALL_ABORT);
+  const state = queue.getState();
+  const {
+    isFast
+  } = abortAllMethod(state.items, state.aborts, state.itemQueue, getFinalizeAbortedItem(queue), queue.getOptions());
+
+  if (isFast) {
+    queue.clearAllUploads();
+  }
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/processBatchItems.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/processBatchItems.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../consts */ "./node_modules/@rpldy/uploader/lib/esm/consts.js");
+/* harmony import */ var _processFinishedRequest__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./processFinishedRequest */ "./node_modules/@rpldy/uploader/lib/esm/queue/processFinishedRequest.js");
+/* harmony import */ var _preSendPrepare__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./preSendPrepare */ "./node_modules/@rpldy/uploader/lib/esm/queue/preSendPrepare.js");
+
+
+
+
+const preparePreRequestItems = (0,_preSendPrepare__WEBPACK_IMPORTED_MODULE_3__.getItemsPrepareUpdater)(_consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.REQUEST_PRE_SEND, items => items, (items, options) => ({
+  items,
+  options
+}));
+
+const updateUploadingState = (queue, items, sendResult) => {
+  queue.updateState(state => {
+    items.forEach(bi => {
+      const item = state.items[bi.id];
+      item.state = _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.UPLOADING;
+      state.aborts[bi.id] = sendResult.abort;
+    });
+  });
+};
+
+const sendAllowedItems = (queue, itemsSendData, next) => {
+  var _queue$getState$batch;
+
+  const {
+    items,
+    options
+  } = itemsSendData;
+  const batch = (_queue$getState$batch = queue.getState().batches[items[0].batchId]) === null || _queue$getState$batch === void 0 ? void 0 : _queue$getState$batch.batch;
+
+  if (batch) {
+    //batch can be removed when using async pre-send/batch-start returning after user abort
+    let sendResult;
+
+    try {
+      sendResult = queue.sender.send(items, batch, options);
+    } catch (ex) {
+      _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploader.queue: sender failed with unexpected error`, ex); //provide error result so file(s) are marked as failed
+
+      sendResult = {
+        request: Promise.resolve({
+          status: 0,
+          state: _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ERROR,
+          response: ex.message
+        }),
+        abort: () => false,
+        senderType: "exception-handler"
+      };
+    }
+
+    const {
+      request
+    } = sendResult;
+    updateUploadingState(queue, items, sendResult);
+    request //wait for server request to return
+    .then(requestInfo => {
+      const finishedData = items.map(item => ({
+        id: item.id,
+        info: requestInfo
+      }));
+      (0,_processFinishedRequest__WEBPACK_IMPORTED_MODULE_2__["default"])(queue, finishedData, next);
+    });
+  }
+};
+
+const reportCancelledItems = (queue, items, cancelledResults, next) => {
+  const cancelledItemsIds = cancelledResults.map((isCancelled, index) => isCancelled ? items[index].id : null).filter(Boolean);
+
+  if (cancelledItemsIds.length) {
+    const finishedData = cancelledItemsIds.map(id => ({
+      id,
+      info: {
+        status: 0,
+        state: _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.CANCELLED,
+        response: "cancel"
+      }
+    }));
+    (0,_processFinishedRequest__WEBPACK_IMPORTED_MODULE_2__["default"])(queue, finishedData, next); //report about cancelled items
+  }
+
+  return !!cancelledItemsIds.length;
+};
+
+const reportPreparedError = (error, queue, items, next) => {
+  const finishedData = items.map(_ref => {
+    let {
+      id
+    } = _ref;
+    return {
+      id,
+      info: {
+        status: 0,
+        state: _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ERROR,
+        response: error
+      }
+    };
+  });
+  (0,_processFinishedRequest__WEBPACK_IMPORTED_MODULE_2__["default"])(queue, finishedData, next); //report about failed items
+}; //make sure item is still pending. Something might have changed while waiting for ITEM_START handling. Maybe someone called abort...
+
+
+const getAllowedItem = (id, queue) => {
+  const item = queue.getState().items[id];
+  return item && !_consts__WEBPACK_IMPORTED_MODULE_1__.ITEM_FINALIZE_STATES.includes(item.state) ? item : undefined;
+};
+
+const processAllowedItems = _ref2 => {
+  let {
+    allowedItems,
+    cancelledResults,
+    queue,
+    items,
+    ids,
+    next
+  } = _ref2;
+  const afterPreparePromise = allowedItems.length ? preparePreRequestItems(queue, allowedItems) : Promise.resolve();
+  return afterPreparePromise.catch(err => {
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploader.queue: encountered error while preparing items for request", err);
+    reportPreparedError(err, queue, items, next);
+  }).then(itemsSendData => {
+    let nextP;
+
+    if (itemsSendData) {
+      if (itemsSendData.cancelled) {
+        cancelledResults = ids.map(() => true);
+      } else {
+        //make sure files aren't aborted while async prepare was waiting
+        const hasAborted = itemsSendData.items.some(item => _consts__WEBPACK_IMPORTED_MODULE_1__.ITEM_FINALIZE_STATES.includes(item.state));
+
+        if (!hasAborted) {
+          //we dont need to wait for the response here
+          sendAllowedItems(queue, {
+            items: itemsSendData.items,
+            options: itemsSendData.options
+          }, next);
+        } else {
+          _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploader.queue: send data contains aborted items - not sending");
+        }
+      }
+    } //if not cancelled we can go to process more items immediately (and not wait for upload responses)
+
+
+    if (!reportCancelledItems(queue, items, cancelledResults, next)) {
+      nextP = next(queue); //when concurrent is allowed, we can go ahead and process more
+    } //returning promise for testing purposes
+
+
+    return nextP;
+  });
+}; //send group of items to be uploaded
+
+
+const processBatchItems = (queue, ids, next) => {
+  const state = queue.getState(); //ids will have more than one when grouping is allowed
+
+  let items = Object.values(state.items);
+  items = items.filter(item => !!~ids.indexOf(item.id)); //allow user code cancel items from start event handler(s)
+  //returning promise for testing purposes
+
+  return Promise.all(items.map(i => queue.runCancellable(_consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ITEM_START, i))).then(cancelledResults => {
+    let allowedItems = cancelledResults.map((isCancelled, index) => isCancelled ? null : getAllowedItem(items[index].id, queue)).filter(Boolean);
+    return {
+      allowedItems,
+      cancelledResults,
+      queue,
+      items,
+      ids,
+      next
+    };
+  }).then(processAllowedItems);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (processBatchItems);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/processFinishedRequest.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/processFinishedRequest.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FILE_STATE_TO_EVENT_MAP": () => (/* binding */ FILE_STATE_TO_EVENT_MAP),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../consts */ "./node_modules/@rpldy/uploader/lib/esm/consts.js");
+/* harmony import */ var _batchHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./batchHelpers */ "./node_modules/@rpldy/uploader/lib/esm/queue/batchHelpers.js");
+/* harmony import */ var _itemHelpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./itemHelpers */ "./node_modules/@rpldy/uploader/lib/esm/queue/itemHelpers.js");
+
+
+
+
+const FILE_STATE_TO_EVENT_MAP = {
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.PENDING]: null,
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ADDED]: _consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ITEM_START,
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.FINISHED]: _consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ITEM_FINISH,
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ERROR]: _consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ITEM_ERROR,
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.CANCELLED]: _consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ITEM_CANCEL,
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ABORTED]: _consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ITEM_ABORT,
+  [_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.UPLOADING]: _consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ITEM_PROGRESS
+};
+
+const getIsFinalized = item => !!~_consts__WEBPACK_IMPORTED_MODULE_1__.ITEM_FINALIZE_STATES.indexOf(item.state);
+
+const processFinishedRequest = (queue, finishedData, next) => {
+  finishedData.forEach(itemData => {
+    const state = queue.getState();
+    const {
+      id,
+      info
+    } = itemData;
+    _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploader.processor.queue: request finished for item - ", {
+      id,
+      info
+    });
+
+    if (state.items[id]) {
+      queue.updateState(state => {
+        const item = state.items[id];
+        item.state = info.state;
+        item.uploadResponse = info.response;
+        item.uploadStatus = info.status;
+
+        if (getIsFinalized(item)) {
+          delete state.aborts[id];
+        }
+      }); //get most up-to-date item data
+
+      const item = queue.getState().items[id];
+
+      if (info.state === _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.FINISHED && item.completed < 100) {
+        //ensure we trigger progress event with completed = 100 for all items
+        queue.handleItemProgress(item, 100, item.file ? item.file.size : 0);
+      }
+
+      if (FILE_STATE_TO_EVENT_MAP[item.state]) {
+        //trigger UPLOADER EVENT for item based on its state
+        queue.trigger(FILE_STATE_TO_EVENT_MAP[item.state], item);
+      }
+
+      if (getIsFinalized(item)) {
+        (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_2__.incrementBatchFinishedCounter)(queue, item.batchId); //trigger FINALIZE event
+
+        queue.trigger(_consts__WEBPACK_IMPORTED_MODULE_1__.UPLOADER_EVENTS.ITEM_FINALIZE, item);
+      }
+    }
+
+    (0,_itemHelpers__WEBPACK_IMPORTED_MODULE_3__.finalizeItem)(queue, id);
+  }); //ensure finished batches are remove from state
+
+  (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_2__.cleanUpFinishedBatches)(queue);
+  next(queue);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (processFinishedRequest);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/processQueueNext.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/processQueueNext.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "findNextItemIndex": () => (/* binding */ findNextItemIndex),
+/* harmony export */   "getNextIdGroup": () => (/* binding */ getNextIdGroup)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _processBatchItems__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./processBatchItems */ "./node_modules/@rpldy/uploader/lib/esm/queue/processBatchItems.js");
+/* harmony import */ var _batchHelpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./batchHelpers */ "./node_modules/@rpldy/uploader/lib/esm/queue/batchHelpers.js");
+
+
+
+
+const getIsItemInActiveRequest = (queue, itemId) => {
+  return queue.getState().activeIds // $FlowIssue - no flat
+  .flat().includes(itemId);
+};
+
+const getIsItemReady = item => item.state === _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.FILE_STATES.ADDED;
+
+const findNextItemIndex = queue => {
+  const state = queue.getState(),
+        itemQueue = state.itemQueue,
+        items = state.items;
+  let nextItemId = null,
+      batchIndex = 0,
+      itemIndex = 0,
+      batchId = state.batchQueue[batchIndex];
+
+  while (batchId && !nextItemId) {
+    if ((0,_batchHelpers__WEBPACK_IMPORTED_MODULE_2__.getIsBatchReady)(queue, batchId)) {
+      nextItemId = itemQueue[batchId][itemIndex];
+
+      while (nextItemId && (getIsItemInActiveRequest(queue, nextItemId) || !getIsItemReady(items[nextItemId]))) {
+        itemIndex += 1;
+        nextItemId = itemQueue[batchId][itemIndex];
+      }
+    }
+
+    if (!nextItemId) {
+      batchIndex += 1;
+      batchId = state.batchQueue[batchIndex];
+      itemIndex = 0;
+    }
+  }
+
+  return nextItemId ? [batchId, itemIndex] : null;
+};
+const getNextIdGroup = queue => {
+  const state = queue.getState(),
+        itemQueue = state.itemQueue,
+        [nextBatchId, nextItemIndex] = findNextItemIndex(queue) || [];
+  let nextId = nextBatchId && ~nextItemIndex ? itemQueue[nextBatchId][nextItemIndex] : null,
+      nextGroup;
+
+  if (nextId) {
+    const {
+      batchOptions
+    } = state.batches[nextBatchId],
+          groupMax = batchOptions.maxGroupSize || 0;
+
+    if (batchOptions.grouped && groupMax > 1) {
+      const batchItems = state.itemQueue[nextBatchId]; //get ids for the batch with max of configured group size (never mix items from different batches)
+
+      nextGroup = batchItems.slice(nextItemIndex, nextItemIndex + groupMax);
+    } else {
+      nextGroup = [nextId];
+    }
+  }
+
+  return nextGroup;
+};
+
+const updateItemsAsActive = (queue, ids) => {
+  queue.updateState(state => {
+    //immediately mark items as active to support concurrent uploads without getting into infinite loops
+    state.activeIds = state.activeIds.concat(ids);
+  });
+};
+
+const processNextWithBatch = (queue, ids) => {
+  let newBatchP;
+  updateItemsAsActive(queue, ids);
+
+  if ((0,_batchHelpers__WEBPACK_IMPORTED_MODULE_2__.isNewBatchStarting)(queue, ids[0])) {
+    newBatchP = (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_2__.loadNewBatchForItem)(queue, ids[0]).then(allowBatch => {
+      let cancelled = !allowBatch;
+
+      if (cancelled) {
+        (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_2__.cancelBatchForItem)(queue, ids[0]);
+        processNext(queue);
+      }
+
+      return cancelled;
+    }).catch(err => {
+      _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploader.processor: encountered error while preparing batch for request", err);
+      (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_2__.failBatchForItem)(queue, ids[0], err);
+      processNext(queue);
+      return true;
+    });
+  } else {
+    newBatchP = Promise.resolve(false);
+  }
+
+  return newBatchP;
+};
+
+const processNext = queue => {
+  //using promise only for testing purposes, actual code doesnt require awaiting on this method
+  let processPromise;
+  const ids = getNextIdGroup(queue);
+
+  if (ids) {
+    const currentCount = queue.getCurrentActiveCount(),
+          {
+      concurrent = 0,
+      maxConcurrent = 0
+    } = queue.getOptions();
+
+    if (!currentCount || concurrent && currentCount < maxConcurrent) {
+      _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog("uploader.processor: Processing next upload - ", {
+        ids,
+        currentCount
+      });
+      processPromise = processNextWithBatch(queue, ids).then(failedOrCancelled => {
+        if (!failedOrCancelled) {
+          (0,_processBatchItems__WEBPACK_IMPORTED_MODULE_1__["default"])(queue, ids, processNext);
+
+          if (concurrent) {
+            //concurrent process next immediately (otherwise async event callbacks will hang processing next until they complete)
+            processNext(queue);
+          }
+        }
+      });
+    }
+  }
+
+  return processPromise;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (processNext);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/queue/uploaderQueue.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/queue/uploaderQueue.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @rpldy/simple-state */ "./node_modules/@rpldy/simple-state/lib/esm/index.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../consts */ "./node_modules/@rpldy/uploader/lib/esm/consts.js");
+/* harmony import */ var _processQueueNext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./processQueueNext */ "./node_modules/@rpldy/uploader/lib/esm/queue/processQueueNext.js");
+/* harmony import */ var _processAbort__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./processAbort */ "./node_modules/@rpldy/uploader/lib/esm/queue/processAbort.js");
+/* harmony import */ var _batchHelpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./batchHelpers */ "./node_modules/@rpldy/uploader/lib/esm/queue/batchHelpers.js");
+
+
+
+
+
+
+
+const createUploaderQueue = (options, trigger, cancellable, sender, uploaderId) => {
+  const {
+    state,
+    update
+  } = (0,_rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    itemQueue: {},
+    batchQueue: [],
+    currentBatch: null,
+    batches: {},
+    items: {},
+    activeIds: [],
+    aborts: {}
+  });
+
+  const getState = () => state;
+
+  const updateState = updater => {
+    update(updater);
+  };
+
+  const add = item => {
+    if (state.items[item.id] && !item.recycled) {
+      throw new Error(`Uploader queue conflict - item ${item.id} already exists`);
+    }
+
+    if (item.recycled) {
+      (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_5__.detachRecycledFromPreviousBatch)(queueState, item);
+    }
+
+    updateState(state => {
+      state.items[item.id] = item;
+    });
+  };
+
+  const handleItemProgress = (item, completed, loaded) => {
+    if (state.items[item.id]) {
+      updateState(state => {
+        const stateItem = state.items[item.id];
+        stateItem.loaded = loaded;
+        stateItem.completed = completed;
+      }); //trigger item progress event for the outside
+
+      trigger(_consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS.ITEM_PROGRESS, getState().items[item.id]);
+    }
+  };
+
+  sender.on(_consts__WEBPACK_IMPORTED_MODULE_2__.SENDER_EVENTS.ITEM_PROGRESS, handleItemProgress);
+  sender.on(_consts__WEBPACK_IMPORTED_MODULE_2__.SENDER_EVENTS.BATCH_PROGRESS, batch => {
+    var _state$batches$batch$;
+
+    const batchItems = (_state$batches$batch$ = state.batches[batch.id]) === null || _state$batches$batch$ === void 0 ? void 0 : _state$batches$batch$.batch.items;
+
+    if (batchItems) {
+      const [completed, loaded] = batchItems.reduce((res, _ref2) => {
+        let {
+          id
+        } = _ref2;
+        //getting data from state.items since in dev the wrapped state.batch.items and state.items aren't the same objects
+        const {
+          completed,
+          loaded
+        } = state.items[id];
+        res[0] += completed;
+        res[1] += loaded;
+        return res;
+      }, [0, 0]);
+      updateState(state => {
+        const stateBatch = state.batches[batch.id].batch; //average of completed percentage for batch items
+
+        stateBatch.completed = completed / batchItems.length; //sum of loaded bytes for batch items
+
+        stateBatch.loaded = loaded;
+      });
+      trigger(_consts__WEBPACK_IMPORTED_MODULE_2__.UPLOADER_EVENTS.BATCH_PROGRESS, state.batches[batch.id].batch);
+    }
+  });
+  const queueState = {
+    uploaderId,
+    getOptions: () => options,
+    getCurrentActiveCount: () => state.activeIds.length,
+    getState,
+    updateState,
+    trigger,
+    runCancellable: function (name) {
+      if (!(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isFunction)(cancellable)) {
+        //for flow :(
+        throw new Error("Uploader queue - cancellable is of wrong type");
+      }
+
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      return cancellable(name, ...args);
+    },
+    sender,
+    handleItemProgress,
+    clearAllUploads: () => {
+      queueState.updateState(state => {
+        state.itemQueue = {};
+        state.batchQueue = [];
+        state.currentBatch = null;
+        state.batches = {};
+        state.items = {};
+        state.activeIds = [];
+      });
+    },
+    clearBatchUploads: batchId => {
+      (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.scheduleIdleWork)(() => {
+        _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.debugLog(`uploader.queue: started scheduled work to clear batch uploads (${batchId})`);
+
+        if (getState().batches[batchId]) {
+          (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_5__.clearBatchData)(queueState, batchId);
+        }
+      });
+    }
+  };
+
+  if ((0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.hasWindow)() && _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.logger.isDebugOn()) {
+    window[`__rpldy_${uploaderId}_queue_state`] = queueState;
+  }
+
+  return {
+    updateState,
+    getState: queueState.getState,
+    runCancellable: queueState.runCancellable,
+    uploadBatch: (batch, batchOptions) => {
+      if (batchOptions) {
+        updateState(state => {
+          state.batches[batch.id].batchOptions = batchOptions;
+        });
+      }
+
+      (0,_processQueueNext__WEBPACK_IMPORTED_MODULE_3__["default"])(queueState);
+    },
+    addBatch: (batch, batchOptions) => {
+      updateState(state => {
+        state.batches[batch.id] = {
+          batch,
+          batchOptions,
+          finishedCounter: 0
+        };
+        state.batchQueue.push(batch.id);
+        state.itemQueue[batch.id] = batch.items.map(_ref => {
+          let {
+            id
+          } = _ref;
+          return id;
+        });
+      });
+      batch.items.forEach(add);
+      return (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_5__.getBatchFromState)(state, batch.id);
+    },
+    abortItem: function () {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      return (0,_processAbort__WEBPACK_IMPORTED_MODULE_4__.processAbortItem)(queueState, ...args);
+    },
+    abortBatch: function () {
+      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+      }
+
+      return (0,_processAbort__WEBPACK_IMPORTED_MODULE_4__.processAbortBatch)(queueState, ...args);
+    },
+    abortAll: function () {
+      for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        args[_key4] = arguments[_key4];
+      }
+
+      return (0,_processAbort__WEBPACK_IMPORTED_MODULE_4__.processAbortAll)(queueState, ...args);
+    },
+    clearPendingBatches: () => {
+      (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_5__.removePendingBatches)(queueState);
+    },
+    uploadPendingBatches: uploadOptions => {
+      (0,_batchHelpers__WEBPACK_IMPORTED_MODULE_5__.preparePendingForUpload)(queueState, uploadOptions);
+      (0,_processQueueNext__WEBPACK_IMPORTED_MODULE_3__["default"])(queueState);
+    }
+  };
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createUploaderQueue);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/uploader.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/uploader.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _rpldy_life_events__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/life-events */ "./node_modules/@rpldy/life-events/lib/esm/index.js");
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _rpldy_abort__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @rpldy/abort */ "./node_modules/@rpldy/abort/lib/esm/index.js");
+/* harmony import */ var _processor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./processor */ "./node_modules/@rpldy/uploader/lib/esm/processor.js");
+/* harmony import */ var _consts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./consts */ "./node_modules/@rpldy/uploader/lib/esm/consts.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils */ "./node_modules/@rpldy/uploader/lib/esm/utils.js");
+/* harmony import */ var _composeEnhancers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./composeEnhancers */ "./node_modules/@rpldy/uploader/lib/esm/composeEnhancers.js");
+
+
+
+
+
+
+
+const EVENT_NAMES = Object.values(_consts__WEBPACK_IMPORTED_MODULE_4__.UPLOADER_EVENTS);
+const EXT_OUTSIDE_ENHANCER_TIME = "Uploady - uploader extensions can only be registered by enhancers",
+      EXT_ALREADY_EXISTS = "Uploady - uploader extension by this name [%s] already exists";
+let counter = 0;
+
+const getComposedEnhancer = extEnhancer => (0,_composeEnhancers__WEBPACK_IMPORTED_MODULE_6__["default"])((0,_rpldy_abort__WEBPACK_IMPORTED_MODULE_2__["default"])(), extEnhancer);
+
+const getEnhancedUploader = (uploader, options, triggerWithUnwrap, setEnhancerTime) => {
+  //TODO: create raw-uploader without internal enhancers (while default-uploader will use abort & xhr-sender enhancers)
+  //TODO need new mechanism for registering and using internal methods (abort, send)
+  //that will use enhancers but also allow overrides without having to expose the method in the options (ie: send)
+  const enhancer = options.enhancer ? getComposedEnhancer(options.enhancer) : (0,_rpldy_abort__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  setEnhancerTime(true);
+  const enhanced = enhancer(uploader, triggerWithUnwrap);
+  setEnhancerTime(false); //graceful handling for enhancer forgetting to return uploader
+
+  return enhanced || uploader;
+};
+
+const createUploader = options => {
+  counter += 1;
+  const uploaderId = `uploader-${counter}`;
+  let enhancerTime = false;
+  const extensions = {};
+  _rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.logger.debugLog(`uploady.uploader: creating new instance (${uploaderId})`, {
+    options,
+    counter
+  });
+  let uploaderOptions = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.getMandatoryOptions)(options);
+
+  const clearPending = () => {
+    processor.clearPendingBatches();
+  };
+  /**
+   * process batches that weren't auto-uploaded
+   */
+
+
+  const getOptions = () => {
+    return (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.clone)(uploaderOptions);
+  };
+
+  let {
+    trigger,
+    target: uploader
+  } = (0,_rpldy_life_events__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    id: uploaderId,
+    update: updateOptions => {
+      //TODO: updating concurrent and maxConcurrent means we need to update the processor - not supported yet!
+      uploaderOptions = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.merge)({}, uploaderOptions, updateOptions); //need deep merge for destination
+
+      return uploader;
+    },
+    add: (files, addOptions) => {
+      const processOptions = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.merge)({}, uploaderOptions, addOptions);
+
+      if (processOptions.clearPendingOnAdd) {
+        clearPending();
+      }
+
+      return processor.addNewBatch(files, uploader.id, processOptions).then(batch => {
+        let resultP;
+
+        if (batch.items.length) {
+          resultP = processor.runCancellable(_consts__WEBPACK_IMPORTED_MODULE_4__.UPLOADER_EVENTS.BATCH_ADD, batch, processOptions).then(isCancelled => {
+            if (!isCancelled) {
+              _rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.logger.debugLog(`uploady.uploader [${uploader.id}]: new items added - auto upload =
+                        ${String(processOptions.autoUpload)}`, batch.items);
+
+              if (processOptions.autoUpload) {
+                processor.process(batch);
+              }
+            } else {
+              batch.state = _rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.BATCH_STATES.CANCELLED;
+              triggerWithUnwrap(_consts__WEBPACK_IMPORTED_MODULE_4__.UPLOADER_EVENTS.BATCH_CANCEL, batch);
+            }
+          });
+        } else {
+          _rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.logger.debugLog(`uploady.uploader: no items to add. batch ${batch.id} is empty. check fileFilter if this isn't intended`);
+        }
+
+        return resultP;
+      });
+    },
+    upload: uploadOptions => {
+      processor.processPendingBatches(uploadOptions);
+    },
+    abort: id => {
+      processor.abort(id);
+    },
+    abortBatch: id => {
+      processor.abortBatch(id);
+    },
+    getOptions,
+    clearPending,
+    registerExtension: (name, methods) => {
+      (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.invariant)(enhancerTime, EXT_OUTSIDE_ENHANCER_TIME);
+      (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.invariant)(!extensions[name], EXT_ALREADY_EXISTS, name);
+      _rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.logger.debugLog(`uploady.uploader: registering extension: ${name.toString()}`, methods);
+      extensions[name] = methods;
+    },
+    getExtension: name => {
+      return extensions[name];
+    }
+  }, EVENT_NAMES, {
+    canAddEvents: false,
+    canRemoveEvents: false
+  });
+  /**
+   * ensures that data being exposed to client-land isnt a proxy, only pojos
+   */
+
+  const triggerWithUnwrap = function (name) {
+    for (var _len = arguments.length, data = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      data[_key - 1] = arguments[_key];
+    }
+
+    //delays unwrap to the very last time on trigger. Will only unwrap if there are listeners
+    const lp = (0,_rpldy_life_events__WEBPACK_IMPORTED_MODULE_0__.createLifePack)(() => data.map(_utils__WEBPACK_IMPORTED_MODULE_5__.deepProxyUnwrap));
+    return trigger(name, lp);
+  };
+
+  const cancellable = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.triggerCancellable)(triggerWithUnwrap);
+  const enhancedUploader = getEnhancedUploader(uploader, uploaderOptions, triggerWithUnwrap, state => {
+    enhancerTime = state;
+  });
+  const processor = (0,_processor__WEBPACK_IMPORTED_MODULE_3__["default"])(triggerWithUnwrap, cancellable, uploaderOptions, enhancedUploader.id);
+  return (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_1__.devFreeze)(enhancedUploader);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createUploader);
+
+/***/ }),
+
+/***/ "./node_modules/@rpldy/uploader/lib/esm/utils.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@rpldy/uploader/lib/esm/utils.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "deepProxyUnwrap": () => (/* binding */ deepProxyUnwrap),
+/* harmony export */   "getIsFileList": () => (/* binding */ getIsFileList),
+/* harmony export */   "getMandatoryOptions": () => (/* binding */ getMandatoryOptions)
+/* harmony export */ });
+/* harmony import */ var _rpldy_shared__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/shared */ "./node_modules/@rpldy/shared/lib/esm/index.js");
+/* harmony import */ var _rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @rpldy/simple-state */ "./node_modules/@rpldy/simple-state/lib/esm/index.js");
+/* harmony import */ var _defaults__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./defaults */ "./node_modules/@rpldy/uploader/lib/esm/defaults.js");
+
+
+
+const FILE_LIST_SUPPORT = (0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.hasWindow)() && "FileList" in window;
+
+const getMandatoryDestination = dest => {
+  return {
+    params: {},
+    ...dest
+  };
+};
+
+const getMandatoryOptions = options => {
+  return { ..._defaults__WEBPACK_IMPORTED_MODULE_2__.DEFAULT_OPTIONS,
+    ...options,
+    destination: options && options.destination ? getMandatoryDestination(options.destination) : null
+  };
+};
+
+const getIsFileList = files => //in case files list was created in a different context(window) need to check toString
+FILE_LIST_SUPPORT && files instanceof FileList || files.toString() === "[object FileList]";
+/***
+ * will unwrap object from proxy
+ * if obj itself isnt a proxy, will look for a proxy max 2 levels deep
+ */
+
+
+const deepProxyUnwrap = function (obj) {
+  let level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  let result = obj;
+
+  if (!(0,_rpldy_shared__WEBPACK_IMPORTED_MODULE_0__.isProduction)()) {
+    if (level < 3 && (0,_rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__.isProxy)(obj)) {
+      result = (0,_rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__.unwrap)(obj);
+    } else if (level < 3 && (0,_rpldy_simple_state__WEBPACK_IMPORTED_MODULE_1__.isProxiable)(obj)) {
+      result = Array.isArray(obj) ? obj.map(sub => deepProxyUnwrap(sub, level + 1)) : Object.keys(obj).reduce((res, key) => {
+        res[key] = deepProxyUnwrap(obj[key], level + 1);
+        return res;
+      }, {});
+    }
+  }
+
+  return result;
+};
+
+
+
+/***/ }),
+
+/***/ "./node_modules/aria-hidden/dist/es2015/index.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/aria-hidden/dist/es2015/index.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "hideOthers": () => (/* binding */ hideOthers),
+/* harmony export */   "inertOthers": () => (/* binding */ inertOthers),
+/* harmony export */   "supportsInert": () => (/* binding */ supportsInert),
+/* harmony export */   "suppressOthers": () => (/* binding */ suppressOthers)
+/* harmony export */ });
+var getDefaultParent = function (originalTarget) {
+    if (typeof document === 'undefined') {
+        return null;
+    }
+    var sampleTarget = Array.isArray(originalTarget) ? originalTarget[0] : originalTarget;
+    return sampleTarget.ownerDocument.body;
+};
+var counterMap = new WeakMap();
+var uncontrolledNodes = new WeakMap();
+var markerMap = {};
+var lockCount = 0;
+/**
+ * Marks everything except given node(or nodes) as aria-hidden
+ * @param {Element | Element[]} originalTarget - elements to keep on the page
+ * @param [parentNode] - top element, defaults to document.body
+ * @param {String} [markerName] - a special attribute to mark every node
+ * @param {String} [controlAttribute] - html Attribute to control
+ * @return {Undo} undo command
+ */
+var applyAttributeToOthers = function (originalTarget, parentNode, markerName, controlAttribute) {
+    var targets = Array.isArray(originalTarget) ? originalTarget : [originalTarget];
+    if (!markerMap[markerName]) {
+        markerMap[markerName] = new WeakMap();
+    }
+    var markerCounter = markerMap[markerName];
+    var hiddenNodes = [];
+    var elementsToKeep = new Set();
+    var elementsToStop = new Set(targets);
+    var keep = function (el) {
+        if (!el || elementsToKeep.has(el)) {
+            return;
+        }
+        elementsToKeep.add(el);
+        keep(el.parentNode);
+    };
+    targets.forEach(keep);
+    var deep = function (parent) {
+        if (!parent || elementsToStop.has(parent)) {
+            return;
+        }
+        Array.prototype.forEach.call(parent.children, function (node) {
+            if (elementsToKeep.has(node)) {
+                deep(node);
+            }
+            else {
+                var attr = node.getAttribute(controlAttribute);
+                var alreadyHidden = attr !== null && attr !== 'false';
+                var counterValue = (counterMap.get(node) || 0) + 1;
+                var markerValue = (markerCounter.get(node) || 0) + 1;
+                counterMap.set(node, counterValue);
+                markerCounter.set(node, markerValue);
+                hiddenNodes.push(node);
+                if (counterValue === 1 && alreadyHidden) {
+                    uncontrolledNodes.set(node, true);
+                }
+                if (markerValue === 1) {
+                    node.setAttribute(markerName, 'true');
+                }
+                if (!alreadyHidden) {
+                    node.setAttribute(controlAttribute, 'true');
+                }
+            }
+        });
+    };
+    deep(parentNode);
+    elementsToKeep.clear();
+    lockCount++;
+    return function () {
+        hiddenNodes.forEach(function (node) {
+            var counterValue = counterMap.get(node) - 1;
+            var markerValue = markerCounter.get(node) - 1;
+            counterMap.set(node, counterValue);
+            markerCounter.set(node, markerValue);
+            if (!counterValue) {
+                if (!uncontrolledNodes.has(node)) {
+                    node.removeAttribute(controlAttribute);
+                }
+                uncontrolledNodes.delete(node);
+            }
+            if (!markerValue) {
+                node.removeAttribute(markerName);
+            }
+        });
+        lockCount--;
+        if (!lockCount) {
+            // clear
+            counterMap = new WeakMap();
+            counterMap = new WeakMap();
+            uncontrolledNodes = new WeakMap();
+            markerMap = {};
+        }
+    };
+};
+/**
+ * Marks everything except given node(or nodes) as aria-hidden
+ * @param {Element | Element[]} originalTarget - elements to keep on the page
+ * @param [parentNode] - top element, defaults to document.body
+ * @param {String} [markerName] - a special attribute to mark every node
+ * @return {Undo} undo command
+ */
+var hideOthers = function (originalTarget, parentNode, markerName) {
+    if (markerName === void 0) { markerName = 'data-aria-hidden'; }
+    var targets = Array.from(Array.isArray(originalTarget) ? originalTarget : [originalTarget]);
+    var activeParentNode = parentNode || getDefaultParent(originalTarget);
+    if (!activeParentNode) {
+        return function () { return null; };
+    }
+    // we should not hide ariaLive elements - https://github.com/theKashey/aria-hidden/issues/10
+    targets.push.apply(targets, Array.from(activeParentNode.querySelectorAll('[aria-live]')));
+    return applyAttributeToOthers(targets, activeParentNode, markerName, 'aria-hidden');
+};
+/**
+ * Marks everything except given node(or nodes) as inert
+ * @param {Element | Element[]} originalTarget - elements to keep on the page
+ * @param [parentNode] - top element, defaults to document.body
+ * @param {String} [markerName] - a special attribute to mark every node
+ * @return {Undo} undo command
+ */
+var inertOthers = function (originalTarget, parentNode, markerName) {
+    if (markerName === void 0) { markerName = 'data-inert-ed'; }
+    var activeParentNode = parentNode || getDefaultParent(originalTarget);
+    if (!activeParentNode) {
+        return function () { return null; };
+    }
+    return applyAttributeToOthers(originalTarget, activeParentNode, markerName, 'inert');
+};
+/**
+ * @returns if current browser supports inert
+ */
+var supportsInert = function () {
+    return typeof HTMLElement !== 'undefined' && HTMLElement.prototype.hasOwnProperty('inert');
+};
+/**
+ * Automatic function to "suppress" DOM elements - _hide_ or _inert_ in the best possible way
+ * @param {Element | Element[]} originalTarget - elements to keep on the page
+ * @param [parentNode] - top element, defaults to document.body
+ * @param {String} [markerName] - a special attribute to mark every node
+ * @return {Undo} undo command
+ */
+var suppressOthers = function (originalTarget, parentNode, markerName) {
+    if (markerName === void 0) { markerName = 'data-suppressed'; }
+    return (supportsInert() ? inertOthers : hideOthers)(originalTarget, parentNode, markerName);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/attr-accept/dist/es/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/attr-accept/dist/es/index.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+exports["default"] = function (file, acceptedFiles) {
+  if (file && acceptedFiles) {
+    var acceptedFilesArray = Array.isArray(acceptedFiles) ? acceptedFiles : acceptedFiles.split(',');
+    var fileName = file.name || '';
+    var mimeType = (file.type || '').toLowerCase();
+    var baseMimeType = mimeType.replace(/\/.*$/, '');
+    return acceptedFilesArray.some(function (type) {
+      var validType = type.trim().toLowerCase();
+
+      if (validType.charAt(0) === '.') {
+        return fileName.toLowerCase().endsWith(validType);
+      } else if (validType.endsWith('/*')) {
+        // This is something like a image/* mime type
+        return baseMimeType === validType.replace(/\/.*$/, '');
+      }
+
+      return mimeType === validType;
+    });
+  }
+
+  return true;
+};
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -17188,6 +27705,12 @@ var IconGenerator = function IconGenerator(_ref) {
         size: size
       });
 
+    case "application/x-rar":
+    case "application/zip":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_1__.FcSafe, {
+        size: size
+      });
+
     default:
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_1__.FcQuestions, {
         size: size
@@ -17229,33 +27752,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Paper/Paper.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/NavLink/NavLink.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Modal/Modal.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Stack/Stack.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/TextInput/TextInput.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Group/Group.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Button/Button.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Box/Box.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Text/Text.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Image/Image.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Avatar/Avatar.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Breadcrumbs/Breadcrumbs.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Anchor/Anchor.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Divider/Divider.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/LoadingOverlay/LoadingOverlay.js");
-/* harmony import */ var _mantine_notifications__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @mantine/notifications */ "./node_modules/@mantine/notifications/esm/events.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_icons_fc__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-icons/fc */ "./node_modules/react-icons/fc/index.esm.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var tabler_icons_react__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! tabler-icons-react */ "./node_modules/tabler-icons-react/dist/icons/x.js");
-/* harmony import */ var _components_IconGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/IconGenerator */ "./resources/js/components/IconGenerator.js");
-/* harmony import */ var _constant_api_url__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../constant/api_url */ "./resources/js/constant/api_url.js");
-/* harmony import */ var _images_logohimti_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../images/logohimti.png */ "./resources/js/images/logohimti.png");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Paper/Paper.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/NavLink/NavLink.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Modal/Modal.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Text/Text.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Stack/Stack.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/TextInput/TextInput.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Group/Group.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Button/Button.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Box/Box.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Dialog/Dialog.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Checkbox/Checkbox.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Image/Image.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Avatar/Avatar.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Breadcrumbs/Breadcrumbs.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Anchor/Anchor.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Menu/Menu.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/ActionIcon/ActionIcon.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Divider/Divider.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/LoadingOverlay/LoadingOverlay.js");
+/* harmony import */ var _mantine_form__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @mantine/form */ "./node_modules/@mantine/form/esm/use-form.js");
+/* harmony import */ var _mantine_notifications__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mantine/notifications */ "./node_modules/@mantine/notifications/esm/events.js");
+/* harmony import */ var _rpldy_uploader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/uploader */ "./node_modules/@rpldy/uploader/lib/esm/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_dropzone__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-dropzone */ "./node_modules/react-dropzone/dist/es/index.js");
+/* harmony import */ var react_icons_fc__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-icons/fc */ "./node_modules/react-icons/fc/index.esm.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! tabler-icons-react */ "./node_modules/tabler-icons-react/dist/icons/x.js");
+/* harmony import */ var _components_IconGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/IconGenerator */ "./resources/js/components/IconGenerator.js");
+/* harmony import */ var _constant_api_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constant/api_url */ "./resources/js/constant/api_url.js");
+/* harmony import */ var _images_logohimti_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../images/logohimti.png */ "./resources/js/images/logohimti.png");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -17267,6 +27797,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
 
 
 
@@ -17289,15 +27828,15 @@ var ContextMenu = function ContextMenu(_ref) {
       pageY = _ref.pageY,
       setPosition = _ref.setPosition,
       show = _ref.show;
-  var ref = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)();
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+  var ref = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     var handleClickOutside = function handleClickOutside(event) {
       var _ref$current;
 
       if (!((_ref$current = ref.current) !== null && _ref$current !== void 0 && _ref$current.contains(event.target))) {
         setPosition({
-          pageX: 0,
-          pageY: 0,
+          pageX: "-1000px",
+          pageY: "-1000px",
           show: false
         });
       }
@@ -17305,41 +27844,132 @@ var ContextMenu = function ContextMenu(_ref) {
 
     document.addEventListener("mousedown", handleClickOutside);
   }, [ref]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_6__.Paper, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_7__.Paper, {
     ref: ref,
     sx: {
       width: 240,
-      top: !show ? -100 : pageY,
-      left: !show ? -100 : pageX,
+      top: pageY,
+      left: pageX,
       position: "absolute",
       zIndex: 2
     },
     withBorder: true,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_7__.NavLink, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
       onClick: function onClick() {
         return console.log("wow");
       },
-      label: "info",
-      icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_8__.FcInfo, {})
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_7__.NavLink, {
-      label: "download",
-      icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_8__.FcDownload, {})
+      label: "Info",
+      icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcInfo, {})
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
+      label: "Download",
+      icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcDownload, {})
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
+      label: "Delete",
+      icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcFullTrash, {})
     })]
   });
 };
 
-var ModalPassword = function ModalPassword(_ref2) {
-  var data = _ref2.data,
-      open = _ref2.open,
+var ModalUploader = function ModalUploader(_ref2) {
+  var open = _ref2.open,
       setOpen = _ref2.setOpen,
-      submit = _ref2.submit;
+      jwt = _ref2.jwt,
+      parentId = _ref2.parentId,
+      refreshCurrentFolder = _ref2.refreshCurrentFolder;
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+  var _useDropzone = (0,react_dropzone__WEBPACK_IMPORTED_MODULE_10__.useDropzone)(),
+      acceptedFiles = _useDropzone.acceptedFiles,
+      getInputProps = _useDropzone.getInputProps,
+      getRootProps = _useDropzone.getRootProps;
+
+  var uploader = (0,_rpldy_uploader__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    autoUpload: true,
+    inputFieldName: "multifiles[]",
+    grouped: false,
+    concurrent: true,
+    destination: {
+      url: "".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files"),
+      headers: {
+        "Authorization": "Bearer ".concat(jwt, " ")
+      },
+      params: {
+        "parent_id": parentId !== null && parentId !== void 0 ? parentId : ""
+      },
+      method: 'post'
+    }
+  });
+  uploader.on(_rpldy_uploader__WEBPACK_IMPORTED_MODULE_0__.UPLOADER_EVENTS.ITEM_START, function (item) {
+    (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
+      id: item.id,
+      title: "Uploading ".concat(item.file.name),
+      message: "Upload started...",
+      autoClose: false,
+      disallowClose: true
+    });
+    console.log("item started uploading", item);
+  });
+  uploader.on(_rpldy_uploader__WEBPACK_IMPORTED_MODULE_0__.UPLOADER_EVENTS.ITEM_PROGRESS, function (item) {
+    (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.updateNotification)({
+      id: item.id,
+      title: "Uploading ".concat(item.file.name),
+      message: "Progress ".concat(item.completed.toFixed(0), "%"),
+      autoClose: false,
+      disallowClose: true
+    });
+    console.log("progress", item);
+  });
+  uploader.on(_rpldy_uploader__WEBPACK_IMPORTED_MODULE_0__.UPLOADER_EVENTS.ITEM_FINISH, function (item) {
+    (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.updateNotification)({
+      id: item.id,
+      title: "Uploading ".concat(item.file.name),
+      message: "Success upload",
+      autoClose: 2000,
+      color: 'green'
+    });
+    refreshCurrentFolder();
+  }); // uploader.on(UPLOADER_EVENTS.BATCH_PROGRESS, (item) => {
+  //     console.log("progress batch", item);
+  // })
+
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {}, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    console.log(acceptedFiles);
+    uploader.add(acceptedFiles);
+  }, [acceptedFiles]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_12__.Modal, {
+    opened: open,
+    onClose: function onClose() {
+      return setOpen(!open);
+    },
+    closeOnClickOutside: false,
+    title: "Upload File",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_7__.Paper, _objectSpread(_objectSpread({
+      p: "md",
+      m: "md",
+      withBorder: true,
+      radius: "lg"
+    }, getRootProps({
+      className: 'dropzone'
+    })), {}, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", _objectSpread({}, getInputProps())), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
+        children: "Upload Here"
+      })]
+    }))
+  });
+};
+
+var ModalPassword = function ModalPassword(_ref3) {
+  var data = _ref3.data,
+      open = _ref3.open,
+      setOpen = _ref3.setOpen,
+      submit = _ref3.submit;
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       pass = _useState2[0],
       setPass = _useState2[1];
 
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     if (!open) return;
     console.log(data);
   }, [open]);
@@ -17348,22 +27978,22 @@ var ModalPassword = function ModalPassword(_ref2) {
     submit(data, pass);
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_9__.Modal, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_12__.Modal, {
     opened: open,
     onClose: function onClose() {
       return setOpen(!open);
     },
     title: "Protected Folder",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_10__.Stack, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_11__.TextInput, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Stack, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.TextInput, {
         value: pass,
         onChange: function onChange(ev) {
           return setPass(ev.target.value);
         },
         label: "Password"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_12__.Group, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
         position: "right",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Button, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_17__.Button, {
           onClick: onSubmit,
           children: "Submit"
         })
@@ -17372,16 +28002,16 @@ var ModalPassword = function ModalPassword(_ref2) {
   });
 };
 
-var FilesBox = function FilesBox(_ref3) {
-  var mime_type = _ref3.mime_type,
-      filename = _ref3.filename,
-      focus = _ref3.focus,
-      onClick = _ref3.onClick,
-      onDoubleClick = _ref3.onDoubleClick,
-      isPrivate = _ref3.isPrivate,
-      isRootFolder = _ref3.isRootFolder,
-      isFromMe = _ref3.isFromMe,
-      setPosition = _ref3.setPosition;
+var FilesBox = function FilesBox(_ref4) {
+  var mime_type = _ref4.mime_type,
+      filename = _ref4.filename,
+      focus = _ref4.focus,
+      onClick = _ref4.onClick,
+      onDoubleClick = _ref4.onDoubleClick,
+      isPrivate = _ref4.isPrivate,
+      isRootFolder = _ref4.isRootFolder,
+      isFromMe = _ref4.isFromMe,
+      setPosition = _ref4.setPosition;
 
   var onContextMenuClick = function onContextMenuClick(e) {
     e.preventDefault();
@@ -17393,14 +28023,7 @@ var FilesBox = function FilesBox(_ref3) {
   };
 
   if (isRootFolder && isFromMe) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Box, {
-      onBlur: function onBlur() {
-        return setPosition({
-          pageX: 0,
-          pageY: 0,
-          show: false
-        });
-      },
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
       onContextMenu: onContextMenuClick,
       p: "sm",
       onClick: onClick,
@@ -17411,17 +28034,17 @@ var FilesBox = function FilesBox(_ref3) {
         border: focus ? '1px dashed black' : '',
         borderRadius: '10px'
       },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_10__.Stack, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Stack, {
         spacing: 0,
         align: "center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_IconGenerator__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_IconGenerator__WEBPACK_IMPORTED_MODULE_3__["default"], {
             mime_type: mime_type,
             size: 70
-          }), isPrivate == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_8__.FcLock, {})
+          }), isPrivate == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcLock, {})
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.Text, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
           align: "center",
           children: "\"Your Private Folder\""
         })]
@@ -17430,10 +28053,7 @@ var FilesBox = function FilesBox(_ref3) {
   }
 
   if (!isRootFolder && (!isPrivate || isPrivate)) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Box, {
-      onFocus: function onFocus() {
-        return console.log("cheeck");
-      },
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
       onContextMenu: onContextMenuClick,
       p: "sm",
       onClick: onClick,
@@ -17444,17 +28064,17 @@ var FilesBox = function FilesBox(_ref3) {
         border: focus ? '1px dashed black' : '',
         borderRadius: '10px'
       },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_10__.Stack, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Stack, {
         spacing: 0,
         align: "center",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_IconGenerator__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_IconGenerator__WEBPACK_IMPORTED_MODULE_3__["default"], {
             mime_type: mime_type,
             size: 70
-          }), isPrivate == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_8__.FcLock, {})
+          }), isPrivate == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcLock, {})
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.Text, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
           align: "center",
           children: filename
         })]
@@ -17463,67 +28083,160 @@ var FilesBox = function FilesBox(_ref3) {
   }
 };
 
-var FileManager = function FileManager() {
-  var _profile$profile;
+var DialogFolder = function DialogFolder(_ref5) {
+  var open = _ref5.open,
+      setOpen = _ref5.setOpen,
+      fileId = _ref5.fileId,
+      jwt = _ref5.jwt,
+      refreshCurrentFolder = _ref5.refreshCurrentFolder;
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
-      token = _useState4[0],
-      setToken = _useState4[1];
+      loading = _useState4[0],
+      setLoading = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+  var form = (0,_mantine_form__WEBPACK_IMPORTED_MODULE_19__.useForm)({
+    initialValues: {
+      'parent_id': fileId,
+      'folder_name': '',
+      'is_private': false,
+      'password': ''
+    }
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    form.setFieldValue('parent_id', fileId);
+  }, [fileId]);
+
+  var onSubmit = function onSubmit() {
+    console.log(form.values);
+    setLoading(true);
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files"), form.values, {
+      headers: {
+        "Authorization": "Bearer ".concat(jwt)
+      }
+    }).then(function (res) {
+      setOpen(!open);
+      form.reset();
+      setLoading(false);
+      console.log(res.data);
+      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
+        title: 'Success created folder'
+      });
+    })["catch"](function (err) {
+      setLoading(false);
+      console.log(err);
+      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
+        title: 'failed create folder',
+        color: 'red'
+      });
+    })["finally"](function () {
+      refreshCurrentFolder();
+    });
+  };
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_20__.Dialog, {
+    opened: open,
+    withCloseButton: true,
+    onClose: function onClose() {
+      return setOpen(!open);
+    },
+    size: "lg",
+    radius: "md",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Stack, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
+        align: "flex-end",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.TextInput, _objectSpread(_objectSpread({
+          label: "Folder Name"
+        }, form.getInputProps('folder_name')), {}, {
+          style: {
+            flex: 1
+          }
+        })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_17__.Button, {
+          onClick: onSubmit,
+          loading: loading,
+          children: "Save"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_21__.Checkbox, _objectSpread({
+        label: "Is private?"
+      }, form.getInputProps('is_private'))), form.values.is_private && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.TextInput, _objectSpread({
+        label: "Password",
+        type: "password"
+      }, form.getInputProps('password')))]
+    })
+  });
+};
+
+var FileManager = function FileManager() {
+  var _historyPath2, _historyPath3, _historyPath4, _historyPath5, _profile$profile;
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
       _useState6 = _slicedToArray(_useState5, 2),
-      files = _useState6[0],
-      setFiles = _useState6[1];
+      token = _useState6[0],
+      setToken = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
       _useState8 = _slicedToArray(_useState7, 2),
-      loading = _useState8[0],
-      setLoading = _useState8[1];
+      files = _useState8[0],
+      setFiles = _useState8[1];
 
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(-1),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState10 = _slicedToArray(_useState9, 2),
-      selectedFile = _useState10[0],
-      setSelectedFile = _useState10[1];
+      loading = _useState10[0],
+      setLoading = _useState10[1];
 
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(-1),
       _useState12 = _slicedToArray(_useState11, 2),
-      modalOpen = _useState12[0],
-      setModalOpen = _useState12[1];
+      selectedFile = _useState12[0],
+      setSelectedFile = _useState12[1];
 
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState14 = _slicedToArray(_useState13, 2),
-      profile = _useState14[0],
-      setProfile = _useState14[1];
+      modalOpen = _useState14[0],
+      setModalOpen = _useState14[1];
 
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
-    pageX: 0,
-    pageY: 0,
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+      _useState16 = _slicedToArray(_useState15, 2),
+      dialogOpen = _useState16[0],
+      setDialogOpen = _useState16[1];
+
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
+      _useState18 = _slicedToArray(_useState17, 2),
+      uploadOpen = _useState18[0],
+      setUploadOpen = _useState18[1];
+
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({}),
+      _useState20 = _slicedToArray(_useState19, 2),
+      profile = _useState20[0],
+      setProfile = _useState20[1];
+
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+    pageX: "-1000px",
+    pageY: "-1000px",
     show: false
   }),
-      _useState16 = _slicedToArray(_useState15, 2),
-      position = _useState16[0],
-      setPosition = _useState16[1];
+      _useState22 = _slicedToArray(_useState21, 2),
+      position = _useState22[0],
+      setPosition = _useState22[1];
 
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([{
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([{
     path: '/',
     name: 'Home',
     pass: ''
   }]),
-      _useState18 = _slicedToArray(_useState17, 2),
-      historyPath = _useState18[0],
-      setHistoryPath = _useState18[1];
+      _useState24 = _slicedToArray(_useState23, 2),
+      historyPath = _useState24[0],
+      setHistoryPath = _useState24[1];
 
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_16__.useNavigate)(); // useEffect(()=>{
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_22__.useNavigate)(); // useEffect(()=>{
   //     console.log(historyPath)
   // }, [historyPath])
 
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     // document.addEventListener('contextmenu', (ev) =>{
     //     ev.preventDefault()
     //     console.log(ev.pageX, ev.pageY)
     // })
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_3__.base_url, "/getJwt")).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.base_url, "/getJwt")).then(function (res) {
       var _res$data;
 
       if (!res.data.token) {
@@ -17536,10 +28249,10 @@ var FileManager = function FileManager() {
       console.log(err.response);
     });
   }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     if (!token) return;
     setLoading(true);
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_3__.api_url, "/files"), {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files"), {
       headers: {
         "Authorization": "Bearer ".concat(token)
       }
@@ -17551,12 +28264,12 @@ var FileManager = function FileManager() {
       var _err$response;
 
       if ((err === null || err === void 0 ? void 0 : (_err$response = err.response) === null || _err$response === void 0 ? void 0 : _err$response.status) == 401) {
-        return window.location = _constant_api_url__WEBPACK_IMPORTED_MODULE_3__.base_url + "/logout";
+        return window.location = _constant_api_url__WEBPACK_IMPORTED_MODULE_4__.base_url + "/logout";
       }
 
       console.log(err.response);
     });
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_3__.api_url, "/profile"), {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/profile"), {
       headers: {
         "Authorization": "Bearer ".concat(token)
       }
@@ -17576,7 +28289,7 @@ var FileManager = function FileManager() {
     setLoading(true);
 
     if (historyPath[pos].path == "/") {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_3__.api_url, "/files"), {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files"), {
         headers: {
           "Authorization": "Bearer ".concat(token)
         }
@@ -17590,7 +28303,7 @@ var FileManager = function FileManager() {
         console.log(err.response);
       });
     } else {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_3__.api_url, "/files/").concat(historyPath[pos].path), {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files/").concat(historyPath[pos].path), {
         params: {
           "password": historyPath[pos].pass
         },
@@ -17609,11 +28322,11 @@ var FileManager = function FileManager() {
         var _err$response2, _err$response2$data;
 
         console.log(err.response);
-        (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_17__.showNotification)({
+        (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
           title: 'Unauthorized',
           message: (_err$response2 = err.response) === null || _err$response2 === void 0 ? void 0 : (_err$response2$data = _err$response2.data) === null || _err$response2$data === void 0 ? void 0 : _err$response2$data.message,
           color: 'red',
-          icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_18__["default"], {})
+          icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__["default"], {})
         });
       });
     }
@@ -17622,7 +28335,7 @@ var FileManager = function FileManager() {
   var onOpenFolderProtected = function onOpenFolderProtected(data, password) {
     setModalOpen(false);
     setLoading(true);
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_3__.api_url, "/files/").concat(data.id), {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files/").concat(data.id), {
       params: {
         "password": password
       },
@@ -17646,13 +28359,61 @@ var FileManager = function FileManager() {
 
       setLoading(false);
       console.log(err);
-      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_17__.showNotification)({
+      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
         title: 'Unauthorized',
         message: (_err$response3 = err.response) === null || _err$response3 === void 0 ? void 0 : (_err$response3$data = _err$response3.data) === null || _err$response3$data === void 0 ? void 0 : _err$response3$data.message,
         color: 'red',
-        icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_18__["default"], {})
+        icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__["default"], {})
       });
     });
+  };
+
+  var refreshCurrentFolder = function refreshCurrentFolder() {
+    setLoading(true);
+    console.log;
+
+    if (historyPath[historyPath.length - 1].path == "/") {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files"), {
+        headers: {
+          "Authorization": "Bearer ".concat(token)
+        }
+      }).then(function (res) {
+        console.log(res.data);
+        setFiles(res.data);
+        setLoading(false);
+        var newHistoryPath = historyPath.slice(0, pos + 1);
+        setHistoryPath(newHistoryPath);
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    } else {
+      var _historyPath$pass, _historyPath;
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files/").concat(historyPath[historyPath.length - 1].path), {
+        params: {
+          "password": (_historyPath$pass = (_historyPath = historyPath[historyPath.length - 1]) === null || _historyPath === void 0 ? void 0 : _historyPath.pass) !== null && _historyPath$pass !== void 0 ? _historyPath$pass : ''
+        },
+        headers: {
+          "Authorization": "Bearer ".concat(token)
+        }
+      }).then(function (res) {
+        var _res$data4;
+
+        setFiles((_res$data4 = res.data) === null || _res$data4 === void 0 ? void 0 : _res$data4.children);
+        setLoading(false);
+      })["catch"](function (err) {
+        var _err$response4, _err$response4$data;
+
+        setLoading(false);
+        console.log(err);
+        (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
+          title: 'Unauthorized',
+          message: (_err$response4 = err.response) === null || _err$response4 === void 0 ? void 0 : (_err$response4$data = _err$response4.data) === null || _err$response4$data === void 0 ? void 0 : _err$response4$data.message,
+          color: 'red',
+          icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__["default"], {})
+        });
+      });
+    }
   };
 
   var onOpenFolder = function onOpenFolder(data) {
@@ -17662,7 +28423,7 @@ var FileManager = function FileManager() {
     }
 
     setLoading(true);
-    axios__WEBPACK_IMPORTED_MODULE_0___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_3__.api_url, "/files/").concat(data.id), {
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files/").concat(data.id), {
       params: {
         "password": data.parent_have_password ? historyPath[historyPath.length - 1].pass : ''
       },
@@ -17670,10 +28431,10 @@ var FileManager = function FileManager() {
         "Authorization": "Bearer ".concat(token)
       }
     }).then(function (res) {
-      var _res$data4;
+      var _res$data5;
 
       console.log(res.data);
-      setFiles((_res$data4 = res.data) === null || _res$data4 === void 0 ? void 0 : _res$data4.children);
+      setFiles((_res$data5 = res.data) === null || _res$data5 === void 0 ? void 0 : _res$data5.children);
       var newPath = historyPath.slice();
       newPath.push({
         path: data.id,
@@ -17683,84 +28444,119 @@ var FileManager = function FileManager() {
       setLoading(false);
       setHistoryPath(newPath);
     })["catch"](function (err) {
-      var _err$response4, _err$response4$data;
+      var _err$response5, _err$response5$data;
 
       setLoading(false);
       console.log(err.response);
-      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_17__.showNotification)({
+      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
         title: 'Unauthorized',
-        message: (_err$response4 = err.response) === null || _err$response4 === void 0 ? void 0 : (_err$response4$data = _err$response4.data) === null || _err$response4$data === void 0 ? void 0 : _err$response4$data.message,
+        message: (_err$response5 = err.response) === null || _err$response5 === void 0 ? void 0 : (_err$response5$data = _err$response5.data) === null || _err$response5$data === void 0 ? void 0 : _err$response5$data.message,
         color: 'red',
-        icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_18__["default"], {})
+        icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__["default"], {})
       });
     });
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Box, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(ContextMenu, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ModalUploader, {
+      open: uploadOpen,
+      setOpen: setUploadOpen,
+      jwt: token,
+      parentId: ((_historyPath2 = historyPath[historyPath.length - 1]) === null || _historyPath2 === void 0 ? void 0 : _historyPath2.path) == "/" ? null : (_historyPath3 = historyPath[historyPath.length - 1]) === null || _historyPath3 === void 0 ? void 0 : _historyPath3.path,
+      refreshCurrentFolder: refreshCurrentFolder
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(DialogFolder, {
+      open: dialogOpen,
+      setOpen: setDialogOpen,
+      jwt: token,
+      fileId: ((_historyPath4 = historyPath[historyPath.length - 1]) === null || _historyPath4 === void 0 ? void 0 : _historyPath4.path) == "/" ? null : (_historyPath5 = historyPath[historyPath.length - 1]) === null || _historyPath5 === void 0 ? void 0 : _historyPath5.path,
+      refreshCurrentFolder: refreshCurrentFolder
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ContextMenu, {
       pageX: position.pageX,
       pageY: position.pageY,
       setPosition: setPosition,
       show: position.show
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(ModalPassword, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ModalPassword, {
       data: files[selectedFile],
       setOpen: setModalOpen,
       open: modalOpen,
       submit: onOpenFolderProtected
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_10__.Stack, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Stack, {
       spacing: 0,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Box, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
         px: "lg",
         py: "md",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_12__.Group, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
           position: "apart",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_12__.Group, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_19__.Image, {
-              src: _images_logohimti_png__WEBPACK_IMPORTED_MODULE_4__["default"],
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_24__.Image, {
+              src: _images_logohimti_png__WEBPACK_IMPORTED_MODULE_5__["default"],
               style: {
                 width: '100px'
               }
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.Text, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
               weight: "500",
               size: 24,
               children: "File Manager"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_20__.Avatar, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_25__.Avatar, {
             src: profile === null || profile === void 0 ? void 0 : (_profile$profile = profile.profile) === null || _profile$profile === void 0 ? void 0 : _profile$profile.avatar,
             radius: "xl"
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_6__.Paper, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_7__.Paper, {
         p: "lg",
         mx: "lg",
         style: {
           position: 'relative'
         },
         withBorder: true,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_12__.Group, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
             position: "apart",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_21__.Breadcrumbs, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_26__.Breadcrumbs, {
               children: historyPath.map(function (data, key) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_22__.Anchor, {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_27__.Anchor, {
                   onClick: function onClick() {
                     return onClickAnchor(key);
                   },
                   children: data.name
                 }, key);
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Button, {
-              children: "Upload"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu, {
+              position: "left-end",
+              shadow: "md",
+              width: 200,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu.Target, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_29__.ActionIcon, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcPlus, {
+                    size: 30
+                  })
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu.Dropdown, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu.Item, {
+                  onClick: function onClick() {
+                    return setDialogOpen(true);
+                  },
+                  icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcFolder, {}),
+                  children: "New Folder"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu.Item, {
+                  onClick: function onClick() {
+                    return setUploadOpen(true);
+                  },
+                  icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcFile, {}),
+                  children: "Upload File"
+                })]
+              })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_23__.Divider, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_30__.Divider, {
             my: "sm",
             variant: "dashed"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_24__.LoadingOverlay, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_31__.LoadingOverlay, {
           visible: loading
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_12__.Group, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
           children: files.map(function (data, key) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(FilesBox, {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(FilesBox, {
               onClick: function onClick() {
                 return onClickFile(key);
               },
@@ -17964,6 +28760,63 @@ function toVal(mix) {
 
 /***/ }),
 
+/***/ "./node_modules/fast-deep-equal/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/fast-deep-equal/index.js ***!
+  \***********************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+// do not edit .js files directly - edit src/index.jst
+
+
+
+module.exports = function equal(a, b) {
+  if (a === b) return true;
+
+  if (a && b && typeof a == 'object' && typeof b == 'object') {
+    if (a.constructor !== b.constructor) return false;
+
+    var length, i, keys;
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length != b.length) return false;
+      for (i = length; i-- !== 0;)
+        if (!equal(a[i], b[i])) return false;
+      return true;
+    }
+
+
+
+    if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
+    if (a.valueOf !== Object.prototype.valueOf) return a.valueOf() === b.valueOf();
+    if (a.toString !== Object.prototype.toString) return a.toString() === b.toString();
+
+    keys = Object.keys(a);
+    length = keys.length;
+    if (length !== Object.keys(b).length) return false;
+
+    for (i = length; i-- !== 0;)
+      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+
+    for (i = length; i-- !== 0;) {
+      var key = keys[i];
+
+      if (!equal(a[key], b[key])) return false;
+    }
+
+    return true;
+  }
+
+  // true if both NaN, false otherwise
+  return a!==a && b!==b;
+};
+
+
+/***/ }),
+
 /***/ "./resources/js/images/logohimti.png":
 /*!*******************************************!*\
   !*** ./resources/js/images/logohimti.png ***!
@@ -17976,6 +28829,372 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/logohimti.png?f4973552e480df1bffff8d9e0c5c23cc");
+
+/***/ }),
+
+/***/ "./node_modules/file-selector/dist/es5/file-selector.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/file-selector/dist/es5/file-selector.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fromEvent": () => (/* binding */ fromEvent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _file__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./file */ "./node_modules/file-selector/dist/es5/file.js");
+
+
+var FILES_TO_IGNORE = [
+    // Thumbnail cache files for macOS and Windows
+    '.DS_Store',
+    'Thumbs.db' // Windows
+];
+/**
+ * Convert a DragEvent's DataTrasfer object to a list of File objects
+ * NOTE: If some of the items are folders,
+ * everything will be flattened and placed in the same list but the paths will be kept as a {path} property.
+ *
+ * EXPERIMENTAL: A list of https://developer.mozilla.org/en-US/docs/Web/API/FileSystemHandle objects can also be passed as an arg
+ * and a list of File objects will be returned.
+ *
+ * @param evt
+ */
+function fromEvent(evt) {
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__generator)(this, function (_a) {
+            if (isObject(evt) && isDataTransfer(evt.dataTransfer)) {
+                return [2 /*return*/, getDataTransferFiles(evt.dataTransfer, evt.type)];
+            }
+            else if (isChangeEvt(evt)) {
+                return [2 /*return*/, getInputFiles(evt)];
+            }
+            else if (Array.isArray(evt) && evt.every(function (item) { return 'getFile' in item && typeof item.getFile === 'function'; })) {
+                return [2 /*return*/, getFsHandleFiles(evt)];
+            }
+            return [2 /*return*/, []];
+        });
+    });
+}
+function isDataTransfer(value) {
+    return isObject(value);
+}
+function isChangeEvt(value) {
+    return isObject(value) && isObject(value.target);
+}
+function isObject(v) {
+    return typeof v === 'object' && v !== null;
+}
+function getInputFiles(evt) {
+    return fromList(evt.target.files).map(function (file) { return (0,_file__WEBPACK_IMPORTED_MODULE_0__.toFileWithPath)(file); });
+}
+// Ee expect each handle to be https://developer.mozilla.org/en-US/docs/Web/API/FileSystemFileHandle
+function getFsHandleFiles(handles) {
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function () {
+        var files;
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__generator)(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, Promise.all(handles.map(function (h) { return h.getFile(); }))];
+                case 1:
+                    files = _a.sent();
+                    return [2 /*return*/, files.map(function (file) { return (0,_file__WEBPACK_IMPORTED_MODULE_0__.toFileWithPath)(file); })];
+            }
+        });
+    });
+}
+function getDataTransferFiles(dt, type) {
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function () {
+        var items, files;
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__generator)(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!dt.items) return [3 /*break*/, 2];
+                    items = fromList(dt.items)
+                        .filter(function (item) { return item.kind === 'file'; });
+                    // According to https://html.spec.whatwg.org/multipage/dnd.html#dndevents,
+                    // only 'dragstart' and 'drop' has access to the data (source node)
+                    if (type !== 'drop') {
+                        return [2 /*return*/, items];
+                    }
+                    return [4 /*yield*/, Promise.all(items.map(toFilePromises))];
+                case 1:
+                    files = _a.sent();
+                    return [2 /*return*/, noIgnoredFiles(flatten(files))];
+                case 2: return [2 /*return*/, noIgnoredFiles(fromList(dt.files)
+                        .map(function (file) { return (0,_file__WEBPACK_IMPORTED_MODULE_0__.toFileWithPath)(file); }))];
+            }
+        });
+    });
+}
+function noIgnoredFiles(files) {
+    return files.filter(function (file) { return FILES_TO_IGNORE.indexOf(file.name) === -1; });
+}
+// IE11 does not support Array.from()
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from#Browser_compatibility
+// https://developer.mozilla.org/en-US/docs/Web/API/FileList
+// https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItemList
+function fromList(items) {
+    if (items === null) {
+        return [];
+    }
+    var files = [];
+    // tslint:disable: prefer-for-of
+    for (var i = 0; i < items.length; i++) {
+        var file = items[i];
+        files.push(file);
+    }
+    return files;
+}
+// https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem
+function toFilePromises(item) {
+    if (typeof item.webkitGetAsEntry !== 'function') {
+        return fromDataTransferItem(item);
+    }
+    var entry = item.webkitGetAsEntry();
+    // Safari supports dropping an image node from a different window and can be retrieved using
+    // the DataTransferItem.getAsFile() API
+    // NOTE: FileSystemEntry.file() throws if trying to get the file
+    if (entry && entry.isDirectory) {
+        return fromDirEntry(entry);
+    }
+    return fromDataTransferItem(item);
+}
+function flatten(items) {
+    return items.reduce(function (acc, files) { return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__spreadArray)((0,tslib__WEBPACK_IMPORTED_MODULE_1__.__spreadArray)([], (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__read)(acc), false), (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__read)((Array.isArray(files) ? flatten(files) : [files])), false); }, []);
+}
+function fromDataTransferItem(item) {
+    var file = item.getAsFile();
+    if (!file) {
+        return Promise.reject("".concat(item, " is not a File"));
+    }
+    var fwp = (0,_file__WEBPACK_IMPORTED_MODULE_0__.toFileWithPath)(file);
+    return Promise.resolve(fwp);
+}
+// https://developer.mozilla.org/en-US/docs/Web/API/FileSystemEntry
+function fromEntry(entry) {
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__generator)(this, function (_a) {
+            return [2 /*return*/, entry.isDirectory ? fromDirEntry(entry) : fromFileEntry(entry)];
+        });
+    });
+}
+// https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry
+function fromDirEntry(entry) {
+    var reader = entry.createReader();
+    return new Promise(function (resolve, reject) {
+        var entries = [];
+        function readEntries() {
+            var _this = this;
+            // https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryEntry/createReader
+            // https://developer.mozilla.org/en-US/docs/Web/API/FileSystemDirectoryReader/readEntries
+            reader.readEntries(function (batch) { return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(_this, void 0, void 0, function () {
+                var files, err_1, items;
+                return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__generator)(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            if (!!batch.length) return [3 /*break*/, 5];
+                            _a.label = 1;
+                        case 1:
+                            _a.trys.push([1, 3, , 4]);
+                            return [4 /*yield*/, Promise.all(entries)];
+                        case 2:
+                            files = _a.sent();
+                            resolve(files);
+                            return [3 /*break*/, 4];
+                        case 3:
+                            err_1 = _a.sent();
+                            reject(err_1);
+                            return [3 /*break*/, 4];
+                        case 4: return [3 /*break*/, 6];
+                        case 5:
+                            items = Promise.all(batch.map(fromEntry));
+                            entries.push(items);
+                            // Continue reading
+                            readEntries();
+                            _a.label = 6;
+                        case 6: return [2 /*return*/];
+                    }
+                });
+            }); }, function (err) {
+                reject(err);
+            });
+        }
+        readEntries();
+    });
+}
+// https://developer.mozilla.org/en-US/docs/Web/API/FileSystemFileEntry
+function fromFileEntry(entry) {
+    return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__awaiter)(this, void 0, void 0, function () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__generator)(this, function (_a) {
+            return [2 /*return*/, new Promise(function (resolve, reject) {
+                    entry.file(function (file) {
+                        var fwp = (0,_file__WEBPACK_IMPORTED_MODULE_0__.toFileWithPath)(file, entry.fullPath);
+                        resolve(fwp);
+                    }, function (err) {
+                        reject(err);
+                    });
+                })];
+        });
+    });
+}
+//# sourceMappingURL=file-selector.js.map
+
+/***/ }),
+
+/***/ "./node_modules/file-selector/dist/es5/file.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/file-selector/dist/es5/file.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "COMMON_MIME_TYPES": () => (/* binding */ COMMON_MIME_TYPES),
+/* harmony export */   "toFileWithPath": () => (/* binding */ toFileWithPath)
+/* harmony export */ });
+var COMMON_MIME_TYPES = new Map([
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+    ['aac', 'audio/aac'],
+    ['abw', 'application/x-abiword'],
+    ['arc', 'application/x-freearc'],
+    ['avif', 'image/avif'],
+    ['avi', 'video/x-msvideo'],
+    ['azw', 'application/vnd.amazon.ebook'],
+    ['bin', 'application/octet-stream'],
+    ['bmp', 'image/bmp'],
+    ['bz', 'application/x-bzip'],
+    ['bz2', 'application/x-bzip2'],
+    ['cda', 'application/x-cdf'],
+    ['csh', 'application/x-csh'],
+    ['css', 'text/css'],
+    ['csv', 'text/csv'],
+    ['doc', 'application/msword'],
+    ['docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+    ['eot', 'application/vnd.ms-fontobject'],
+    ['epub', 'application/epub+zip'],
+    ['gz', 'application/gzip'],
+    ['gif', 'image/gif'],
+    ['heic', 'image/heic'],
+    ['heif', 'image/heif'],
+    ['htm', 'text/html'],
+    ['html', 'text/html'],
+    ['ico', 'image/vnd.microsoft.icon'],
+    ['ics', 'text/calendar'],
+    ['jar', 'application/java-archive'],
+    ['jpeg', 'image/jpeg'],
+    ['jpg', 'image/jpeg'],
+    ['js', 'text/javascript'],
+    ['json', 'application/json'],
+    ['jsonld', 'application/ld+json'],
+    ['mid', 'audio/midi'],
+    ['midi', 'audio/midi'],
+    ['mjs', 'text/javascript'],
+    ['mp3', 'audio/mpeg'],
+    ['mp4', 'video/mp4'],
+    ['mpeg', 'video/mpeg'],
+    ['mpkg', 'application/vnd.apple.installer+xml'],
+    ['odp', 'application/vnd.oasis.opendocument.presentation'],
+    ['ods', 'application/vnd.oasis.opendocument.spreadsheet'],
+    ['odt', 'application/vnd.oasis.opendocument.text'],
+    ['oga', 'audio/ogg'],
+    ['ogv', 'video/ogg'],
+    ['ogx', 'application/ogg'],
+    ['opus', 'audio/opus'],
+    ['otf', 'font/otf'],
+    ['png', 'image/png'],
+    ['pdf', 'application/pdf'],
+    ['php', 'application/x-httpd-php'],
+    ['ppt', 'application/vnd.ms-powerpoint'],
+    ['pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
+    ['rar', 'application/vnd.rar'],
+    ['rtf', 'application/rtf'],
+    ['sh', 'application/x-sh'],
+    ['svg', 'image/svg+xml'],
+    ['swf', 'application/x-shockwave-flash'],
+    ['tar', 'application/x-tar'],
+    ['tif', 'image/tiff'],
+    ['tiff', 'image/tiff'],
+    ['ts', 'video/mp2t'],
+    ['ttf', 'font/ttf'],
+    ['txt', 'text/plain'],
+    ['vsd', 'application/vnd.visio'],
+    ['wav', 'audio/wav'],
+    ['weba', 'audio/webm'],
+    ['webm', 'video/webm'],
+    ['webp', 'image/webp'],
+    ['woff', 'font/woff'],
+    ['woff2', 'font/woff2'],
+    ['xhtml', 'application/xhtml+xml'],
+    ['xls', 'application/vnd.ms-excel'],
+    ['xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'],
+    ['xml', 'application/xml'],
+    ['xul', 'application/vnd.mozilla.xul+xml'],
+    ['zip', 'application/zip'],
+    ['7z', 'application/x-7z-compressed'],
+    // Others
+    ['mkv', 'video/x-matroska'],
+    ['mov', 'video/quicktime'],
+    ['msg', 'application/vnd.ms-outlook']
+]);
+function toFileWithPath(file, path) {
+    var f = withMimeType(file);
+    if (typeof f.path !== 'string') { // on electron, path is already set to the absolute path
+        var webkitRelativePath = file.webkitRelativePath;
+        Object.defineProperty(f, 'path', {
+            value: typeof path === 'string'
+                ? path
+                // If <input webkitdirectory> is set,
+                // the File will have a {webkitRelativePath} property
+                // https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory
+                : typeof webkitRelativePath === 'string' && webkitRelativePath.length > 0
+                    ? webkitRelativePath
+                    : file.name,
+            writable: false,
+            configurable: false,
+            enumerable: true
+        });
+    }
+    return f;
+}
+function withMimeType(file) {
+    var name = file.name;
+    var hasExtension = name && name.lastIndexOf('.') !== -1;
+    if (hasExtension && !file.type) {
+        var ext = name.split('.')
+            .pop().toLowerCase();
+        var type = COMMON_MIME_TYPES.get(ext);
+        if (type) {
+            Object.defineProperty(file, 'type', {
+                value: type,
+                writable: false,
+                configurable: false,
+                enumerable: true
+            });
+        }
+    }
+    return file;
+}
+//# sourceMappingURL=file.js.map
+
+/***/ }),
+
+/***/ "./node_modules/file-selector/dist/es5/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/file-selector/dist/es5/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "fromEvent": () => (/* reexport safe */ _file_selector__WEBPACK_IMPORTED_MODULE_0__.fromEvent)
+/* harmony export */ });
+/* harmony import */ var _file_selector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./file-selector */ "./node_modules/file-selector/dist/es5/file-selector.js");
+
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 
@@ -18089,6 +29308,100 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 }
 
 module.exports = hoistNonReactStatics;
+
+
+/***/ }),
+
+/***/ "./node_modules/invariant/browser.js":
+/*!*******************************************!*\
+  !*** ./node_modules/invariant/browser.js ***!
+  \*******************************************/
+/***/ ((module) => {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
+ */
+
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (true) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  }
+
+  if (!condition) {
+    var error;
+    if (format === undefined) {
+      error = new Error(
+        'Minified exception occurred; use the non-minified dev environment ' +
+        'for the full error message and additional helpful warnings.'
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() { return args[argIndex++]; })
+      );
+      error.name = 'Invariant Violation';
+    }
+
+    error.framesToPop = 1; // we don't care about invariant's own frame
+    throw error;
+  }
+};
+
+module.exports = invariant;
+
+
+/***/ }),
+
+/***/ "./node_modules/just-throttle/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/just-throttle/index.js ***!
+  \*********************************************/
+/***/ ((module) => {
+
+module.exports = throttle;
+
+function throttle(fn, interval, callFirst) {
+  var wait = false;
+  var callNow = false;
+  return function() {
+    callNow = callFirst && !wait;
+    var context = this;
+    var args = arguments;
+    if (!wait) {
+      wait = true;
+      setTimeout(function() {
+        wait = false;
+        if (!callFirst) {
+          return fn.apply(context, args);
+        }
+      }, interval);
+    }
+    if (callNow) {
+      callNow = false;
+      return fn.apply(this, arguments);
+    }
+  };
+}
 
 
 /***/ }),
@@ -49257,6 +60570,1364 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/react-dropzone/dist/es/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/react-dropzone/dist/es/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ErrorCode": () => (/* reexport safe */ _utils_index__WEBPACK_IMPORTED_MODULE_3__.ErrorCode),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "useDropzone": () => (/* binding */ useDropzone)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var file_selector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! file-selector */ "./node_modules/file-selector/dist/es5/index.js");
+/* harmony import */ var _utils_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ "./node_modules/react-dropzone/dist/es/utils/index.js");
+var _excluded = ["children"],
+    _excluded2 = ["open"],
+    _excluded3 = ["refKey", "role", "onKeyDown", "onFocus", "onBlur", "onClick", "onDragEnter", "onDragOver", "onDragLeave", "onDrop"],
+    _excluded4 = ["refKey", "onChange", "onClick"];
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+/* eslint prefer-template: 0 */
+
+
+
+
+/**
+ * Convenience wrapper component for the `useDropzone` hook
+ *
+ * ```jsx
+ * <Dropzone>
+ *   {({getRootProps, getInputProps}) => (
+ *     <div {...getRootProps()}>
+ *       <input {...getInputProps()} />
+ *       <p>Drag 'n' drop some files here, or click to select files</p>
+ *     </div>
+ *   )}
+ * </Dropzone>
+ * ```
+ */
+
+var Dropzone = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (_ref, ref) {
+  var children = _ref.children,
+      params = _objectWithoutProperties(_ref, _excluded);
+
+  var _useDropzone = useDropzone(params),
+      open = _useDropzone.open,
+      props = _objectWithoutProperties(_useDropzone, _excluded2);
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle)(ref, function () {
+    return {
+      open: open
+    };
+  }, [open]); // TODO: Figure out why react-styleguidist cannot create docs if we don't return a jsx element
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, children(_objectSpread(_objectSpread({}, props), {}, {
+    open: open
+  })));
+});
+Dropzone.displayName = "Dropzone"; // Add default props for react-docgen
+
+var defaultProps = {
+  disabled: false,
+  getFilesFromEvent: file_selector__WEBPACK_IMPORTED_MODULE_1__.fromEvent,
+  maxSize: Infinity,
+  minSize: 0,
+  multiple: true,
+  maxFiles: 0,
+  preventDropOnDocument: true,
+  noClick: false,
+  noKeyboard: false,
+  noDrag: false,
+  noDragEventsBubbling: false,
+  validator: null,
+  useFsAccessApi: true,
+  autoFocus: false
+};
+Dropzone.defaultProps = defaultProps;
+Dropzone.propTypes = {
+  /**
+   * Render function that exposes the dropzone state and prop getter fns
+   *
+   * @param {object} params
+   * @param {Function} params.getRootProps Returns the props you should apply to the root drop container you render
+   * @param {Function} params.getInputProps Returns the props you should apply to hidden file input you render
+   * @param {Function} params.open Open the native file selection dialog
+   * @param {boolean} params.isFocused Dropzone area is in focus
+   * @param {boolean} params.isFileDialogActive File dialog is opened
+   * @param {boolean} params.isDragActive Active drag is in progress
+   * @param {boolean} params.isDragAccept Dragged files are accepted
+   * @param {boolean} params.isDragReject Some dragged files are rejected
+   * @param {File[]} params.acceptedFiles Accepted files
+   * @param {FileRejection[]} params.fileRejections Rejected files and why they were rejected
+   */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Set accepted file types.
+   * Checkout https://developer.mozilla.org/en-US/docs/Web/API/window/showOpenFilePicker types option for more information.
+   * Keep in mind that mime type determination is not reliable across platforms. CSV files,
+   * for example, are reported as text/plain under macOS but as application/vnd.ms-excel under
+   * Windows. In some cases there might not be a mime type set at all (https://github.com/react-dropzone/react-dropzone/issues/276).
+   */
+  accept: prop_types__WEBPACK_IMPORTED_MODULE_2___default().objectOf(prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf((prop_types__WEBPACK_IMPORTED_MODULE_2___default().string))),
+
+  /**
+   * Allow drag 'n' drop (or selection from the file dialog) of multiple files
+   */
+  multiple: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * If false, allow dropped items to take over the current browser window
+   */
+  preventDropOnDocument: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * If true, disables click to open the native file selection dialog
+   */
+  noClick: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * If true, disables SPACE/ENTER to open the native file selection dialog.
+   * Note that it also stops tracking the focus state.
+   */
+  noKeyboard: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * If true, disables drag 'n' drop
+   */
+  noDrag: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * If true, stops drag event propagation to parents
+   */
+  noDragEventsBubbling: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * Minimum file size (in bytes)
+   */
+  minSize: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().number),
+
+  /**
+   * Maximum file size (in bytes)
+   */
+  maxSize: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().number),
+
+  /**
+   * Maximum accepted number of files
+   * The default value is 0 which means there is no limitation to how many files are accepted.
+   */
+  maxFiles: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().number),
+
+  /**
+   * Enable/disable the dropzone
+   */
+  disabled: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * Use this to provide a custom file aggregator
+   *
+   * @param {(DragEvent|Event)} event A drag event or input change event (if files were selected via the file dialog)
+   */
+  getFilesFromEvent: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Cb for when closing the file dialog with no selection
+   */
+  onFileDialogCancel: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Cb for when opening the file dialog
+   */
+  onFileDialogOpen: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Set to true to use the https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API
+   * to open the file picker instead of using an `<input type="file">` click event.
+   */
+  useFsAccessApi: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * Set to true to focus the root element on render
+   */
+  autoFocus: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * Cb for when the `dragenter` event occurs.
+   *
+   * @param {DragEvent} event
+   */
+  onDragEnter: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Cb for when the `dragleave` event occurs
+   *
+   * @param {DragEvent} event
+   */
+  onDragLeave: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Cb for when the `dragover` event occurs
+   *
+   * @param {DragEvent} event
+   */
+  onDragOver: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Cb for when the `drop` event occurs.
+   * Note that this callback is invoked after the `getFilesFromEvent` callback is done.
+   *
+   * Files are accepted or rejected based on the `accept`, `multiple`, `minSize` and `maxSize` props.
+   * `accept` must be a valid [MIME type](http://www.iana.org/assignments/media-types/media-types.xhtml) according to [input element specification](https://www.w3.org/wiki/HTML/Elements/input/file) or a valid file extension.
+   * If `multiple` is set to false and additional files are dropped,
+   * all files besides the first will be rejected.
+   * Any file which does not have a size in the [`minSize`, `maxSize`] range, will be rejected as well.
+   *
+   * Note that the `onDrop` callback will always be invoked regardless if the dropped files were accepted or rejected.
+   * If you'd like to react to a specific scenario, use the `onDropAccepted`/`onDropRejected` props.
+   *
+   * `onDrop` will provide you with an array of [File](https://developer.mozilla.org/en-US/docs/Web/API/File) objects which you can then process and send to a server.
+   * For example, with [SuperAgent](https://github.com/visionmedia/superagent) as a http/ajax library:
+   *
+   * ```js
+   * function onDrop(acceptedFiles) {
+   *   const req = request.post('/upload')
+   *   acceptedFiles.forEach(file => {
+   *     req.attach(file.name, file)
+   *   })
+   *   req.end(callback)
+   * }
+   * ```
+   *
+   * @param {File[]} acceptedFiles
+   * @param {FileRejection[]} fileRejections
+   * @param {(DragEvent|Event)} event A drag event or input change event (if files were selected via the file dialog)
+   */
+  onDrop: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Cb for when the `drop` event occurs.
+   * Note that if no files are accepted, this callback is not invoked.
+   *
+   * @param {File[]} files
+   * @param {(DragEvent|Event)} event
+   */
+  onDropAccepted: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Cb for when the `drop` event occurs.
+   * Note that if no files are rejected, this callback is not invoked.
+   *
+   * @param {FileRejection[]} fileRejections
+   * @param {(DragEvent|Event)} event
+   */
+  onDropRejected: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Cb for when there's some error from any of the promises.
+   *
+   * @param {Error} error
+   */
+  onError: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func),
+
+  /**
+   * Custom validation function. It must return null if there's no errors.
+   * @param {File} file
+   * @returns {FileError|FileError[]|null}
+   */
+  validator: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func)
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dropzone);
+/**
+ * A function that is invoked for the `dragenter`,
+ * `dragover` and `dragleave` events.
+ * It is not invoked if the items are not files (such as link, text, etc.).
+ *
+ * @callback dragCb
+ * @param {DragEvent} event
+ */
+
+/**
+ * A function that is invoked for the `drop` or input change event.
+ * It is not invoked if the items are not files (such as link, text, etc.).
+ *
+ * @callback dropCb
+ * @param {File[]} acceptedFiles List of accepted files
+ * @param {FileRejection[]} fileRejections List of rejected files and why they were rejected
+ * @param {(DragEvent|Event)} event A drag event or input change event (if files were selected via the file dialog)
+ */
+
+/**
+ * A function that is invoked for the `drop` or input change event.
+ * It is not invoked if the items are files (such as link, text, etc.).
+ *
+ * @callback dropAcceptedCb
+ * @param {File[]} files List of accepted files that meet the given criteria
+ * (`accept`, `multiple`, `minSize`, `maxSize`)
+ * @param {(DragEvent|Event)} event A drag event or input change event (if files were selected via the file dialog)
+ */
+
+/**
+ * A function that is invoked for the `drop` or input change event.
+ *
+ * @callback dropRejectedCb
+ * @param {File[]} files List of rejected files that do not meet the given criteria
+ * (`accept`, `multiple`, `minSize`, `maxSize`)
+ * @param {(DragEvent|Event)} event A drag event or input change event (if files were selected via the file dialog)
+ */
+
+/**
+ * A function that is used aggregate files,
+ * in a asynchronous fashion, from drag or input change events.
+ *
+ * @callback getFilesFromEvent
+ * @param {(DragEvent|Event)} event A drag event or input change event (if files were selected via the file dialog)
+ * @returns {(File[]|Promise<File[]>)}
+ */
+
+/**
+ * An object with the current dropzone state.
+ *
+ * @typedef {object} DropzoneState
+ * @property {boolean} isFocused Dropzone area is in focus
+ * @property {boolean} isFileDialogActive File dialog is opened
+ * @property {boolean} isDragActive Active drag is in progress
+ * @property {boolean} isDragAccept Dragged files are accepted
+ * @property {boolean} isDragReject Some dragged files are rejected
+ * @property {File[]} acceptedFiles Accepted files
+ * @property {FileRejection[]} fileRejections Rejected files and why they were rejected
+ */
+
+/**
+ * An object with the dropzone methods.
+ *
+ * @typedef {object} DropzoneMethods
+ * @property {Function} getRootProps Returns the props you should apply to the root drop container you render
+ * @property {Function} getInputProps Returns the props you should apply to hidden file input you render
+ * @property {Function} open Open the native file selection dialog
+ */
+
+var initialState = {
+  isFocused: false,
+  isFileDialogActive: false,
+  isDragActive: false,
+  isDragAccept: false,
+  isDragReject: false,
+  acceptedFiles: [],
+  fileRejections: []
+};
+/**
+ * A React hook that creates a drag 'n' drop area.
+ *
+ * ```jsx
+ * function MyDropzone(props) {
+ *   const {getRootProps, getInputProps} = useDropzone({
+ *     onDrop: acceptedFiles => {
+ *       // do something with the File objects, e.g. upload to some server
+ *     }
+ *   });
+ *   return (
+ *     <div {...getRootProps()}>
+ *       <input {...getInputProps()} />
+ *       <p>Drag and drop some files here, or click to select files</p>
+ *     </div>
+ *   )
+ * }
+ * ```
+ *
+ * @function useDropzone
+ *
+ * @param {object} props
+ * @param {import("./utils").AcceptProp} [props.accept] Set accepted file types.
+ * Checkout https://developer.mozilla.org/en-US/docs/Web/API/window/showOpenFilePicker types option for more information.
+ * Keep in mind that mime type determination is not reliable across platforms. CSV files,
+ * for example, are reported as text/plain under macOS but as application/vnd.ms-excel under
+ * Windows. In some cases there might not be a mime type set at all (https://github.com/react-dropzone/react-dropzone/issues/276).
+ * @param {boolean} [props.multiple=true] Allow drag 'n' drop (or selection from the file dialog) of multiple files
+ * @param {boolean} [props.preventDropOnDocument=true] If false, allow dropped items to take over the current browser window
+ * @param {boolean} [props.noClick=false] If true, disables click to open the native file selection dialog
+ * @param {boolean} [props.noKeyboard=false] If true, disables SPACE/ENTER to open the native file selection dialog.
+ * Note that it also stops tracking the focus state.
+ * @param {boolean} [props.noDrag=false] If true, disables drag 'n' drop
+ * @param {boolean} [props.noDragEventsBubbling=false] If true, stops drag event propagation to parents
+ * @param {number} [props.minSize=0] Minimum file size (in bytes)
+ * @param {number} [props.maxSize=Infinity] Maximum file size (in bytes)
+ * @param {boolean} [props.disabled=false] Enable/disable the dropzone
+ * @param {getFilesFromEvent} [props.getFilesFromEvent] Use this to provide a custom file aggregator
+ * @param {Function} [props.onFileDialogCancel] Cb for when closing the file dialog with no selection
+ * @param {boolean} [props.useFsAccessApi] Set to true to use the https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API
+ * to open the file picker instead of using an `<input type="file">` click event.
+ * @param {boolean} autoFocus Set to true to auto focus the root element.
+ * @param {Function} [props.onFileDialogOpen] Cb for when opening the file dialog
+ * @param {dragCb} [props.onDragEnter] Cb for when the `dragenter` event occurs.
+ * @param {dragCb} [props.onDragLeave] Cb for when the `dragleave` event occurs
+ * @param {dragCb} [props.onDragOver] Cb for when the `dragover` event occurs
+ * @param {dropCb} [props.onDrop] Cb for when the `drop` event occurs.
+ * Note that this callback is invoked after the `getFilesFromEvent` callback is done.
+ *
+ * Files are accepted or rejected based on the `accept`, `multiple`, `minSize` and `maxSize` props.
+ * `accept` must be an object with keys as a valid [MIME type](http://www.iana.org/assignments/media-types/media-types.xhtml) according to [input element specification](https://www.w3.org/wiki/HTML/Elements/input/file) and the value an array of file extensions (optional).
+ * If `multiple` is set to false and additional files are dropped,
+ * all files besides the first will be rejected.
+ * Any file which does not have a size in the [`minSize`, `maxSize`] range, will be rejected as well.
+ *
+ * Note that the `onDrop` callback will always be invoked regardless if the dropped files were accepted or rejected.
+ * If you'd like to react to a specific scenario, use the `onDropAccepted`/`onDropRejected` props.
+ *
+ * `onDrop` will provide you with an array of [File](https://developer.mozilla.org/en-US/docs/Web/API/File) objects which you can then process and send to a server.
+ * For example, with [SuperAgent](https://github.com/visionmedia/superagent) as a http/ajax library:
+ *
+ * ```js
+ * function onDrop(acceptedFiles) {
+ *   const req = request.post('/upload')
+ *   acceptedFiles.forEach(file => {
+ *     req.attach(file.name, file)
+ *   })
+ *   req.end(callback)
+ * }
+ * ```
+ * @param {dropAcceptedCb} [props.onDropAccepted]
+ * @param {dropRejectedCb} [props.onDropRejected]
+ * @param {(error: Error) => void} [props.onError]
+ *
+ * @returns {DropzoneState & DropzoneMethods}
+ */
+
+function useDropzone() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  var _defaultProps$props = _objectSpread(_objectSpread({}, defaultProps), props),
+      accept = _defaultProps$props.accept,
+      disabled = _defaultProps$props.disabled,
+      getFilesFromEvent = _defaultProps$props.getFilesFromEvent,
+      maxSize = _defaultProps$props.maxSize,
+      minSize = _defaultProps$props.minSize,
+      multiple = _defaultProps$props.multiple,
+      maxFiles = _defaultProps$props.maxFiles,
+      onDragEnter = _defaultProps$props.onDragEnter,
+      onDragLeave = _defaultProps$props.onDragLeave,
+      onDragOver = _defaultProps$props.onDragOver,
+      onDrop = _defaultProps$props.onDrop,
+      onDropAccepted = _defaultProps$props.onDropAccepted,
+      onDropRejected = _defaultProps$props.onDropRejected,
+      onFileDialogCancel = _defaultProps$props.onFileDialogCancel,
+      onFileDialogOpen = _defaultProps$props.onFileDialogOpen,
+      useFsAccessApi = _defaultProps$props.useFsAccessApi,
+      autoFocus = _defaultProps$props.autoFocus,
+      preventDropOnDocument = _defaultProps$props.preventDropOnDocument,
+      noClick = _defaultProps$props.noClick,
+      noKeyboard = _defaultProps$props.noKeyboard,
+      noDrag = _defaultProps$props.noDrag,
+      noDragEventsBubbling = _defaultProps$props.noDragEventsBubbling,
+      onError = _defaultProps$props.onError,
+      validator = _defaultProps$props.validator;
+
+  var acceptAttr = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return (0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.acceptPropAsAcceptAttr)(accept);
+  }, [accept]);
+  var pickerTypes = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return (0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.pickerOptionsFromAccept)(accept);
+  }, [accept]);
+  var onFileDialogOpenCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return typeof onFileDialogOpen === "function" ? onFileDialogOpen : noop;
+  }, [onFileDialogOpen]);
+  var onFileDialogCancelCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return typeof onFileDialogCancel === "function" ? onFileDialogCancel : noop;
+  }, [onFileDialogCancel]);
+  /**
+   * @constant
+   * @type {React.MutableRefObject<HTMLElement>}
+   */
+
+  var rootRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var inputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+
+  var _useReducer = (0,react__WEBPACK_IMPORTED_MODULE_0__.useReducer)(reducer, initialState),
+      _useReducer2 = _slicedToArray(_useReducer, 2),
+      state = _useReducer2[0],
+      dispatch = _useReducer2[1];
+
+  var isFocused = state.isFocused,
+      isFileDialogActive = state.isFileDialogActive;
+  var fsAccessApiWorksRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(typeof window !== "undefined" && window.isSecureContext && useFsAccessApi && (0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.canUseFileSystemAccessAPI)()); // Update file dialog active state when the window is focused on
+
+  var onWindowFocus = function onWindowFocus() {
+    // Execute the timeout only if the file dialog is opened in the browser
+    if (!fsAccessApiWorksRef.current && isFileDialogActive) {
+      setTimeout(function () {
+        if (inputRef.current) {
+          var files = inputRef.current.files;
+
+          if (!files.length) {
+            dispatch({
+              type: "closeDialog"
+            });
+            onFileDialogCancelCb();
+          }
+        }
+      }, 300);
+    }
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    window.addEventListener("focus", onWindowFocus, false);
+    return function () {
+      window.removeEventListener("focus", onWindowFocus, false);
+    };
+  }, [inputRef, isFileDialogActive, onFileDialogCancelCb, fsAccessApiWorksRef]);
+  var dragTargetsRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)([]);
+
+  var onDocumentDrop = function onDocumentDrop(event) {
+    if (rootRef.current && rootRef.current.contains(event.target)) {
+      // If we intercepted an event for our instance, let it propagate down to the instance's onDrop handler
+      return;
+    }
+
+    event.preventDefault();
+    dragTargetsRef.current = [];
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (preventDropOnDocument) {
+      document.addEventListener("dragover", _utils_index__WEBPACK_IMPORTED_MODULE_3__.onDocumentDragOver, false);
+      document.addEventListener("drop", onDocumentDrop, false);
+    }
+
+    return function () {
+      if (preventDropOnDocument) {
+        document.removeEventListener("dragover", _utils_index__WEBPACK_IMPORTED_MODULE_3__.onDocumentDragOver);
+        document.removeEventListener("drop", onDocumentDrop);
+      }
+    };
+  }, [rootRef, preventDropOnDocument]); // Auto focus the root when autoFocus is true
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!disabled && autoFocus && rootRef.current) {
+      rootRef.current.focus();
+    }
+
+    return function () {};
+  }, [rootRef, autoFocus, disabled]);
+  var onErrCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (e) {
+    if (onError) {
+      onError(e);
+    } else {
+      // Let the user know something's gone wrong if they haven't provided the onError cb.
+      console.error(e);
+    }
+  }, [onError]);
+  var onDragEnterCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (event) {
+    event.preventDefault(); // Persist here because we need the event later after getFilesFromEvent() is done
+
+    event.persist();
+    stopPropagation(event);
+    dragTargetsRef.current = [].concat(_toConsumableArray(dragTargetsRef.current), [event.target]);
+
+    if ((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isEvtWithFiles)(event)) {
+      Promise.resolve(getFilesFromEvent(event)).then(function (files) {
+        if ((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isPropagationStopped)(event) && !noDragEventsBubbling) {
+          return;
+        }
+
+        var fileCount = files.length;
+        var isDragAccept = fileCount > 0 && (0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.allFilesAccepted)({
+          files: files,
+          accept: acceptAttr,
+          minSize: minSize,
+          maxSize: maxSize,
+          multiple: multiple,
+          maxFiles: maxFiles,
+          validator: validator
+        });
+        var isDragReject = fileCount > 0 && !isDragAccept;
+        dispatch({
+          isDragAccept: isDragAccept,
+          isDragReject: isDragReject,
+          isDragActive: true,
+          type: "setDraggedFiles"
+        });
+
+        if (onDragEnter) {
+          onDragEnter(event);
+        }
+      }).catch(function (e) {
+        return onErrCb(e);
+      });
+    }
+  }, [getFilesFromEvent, onDragEnter, onErrCb, noDragEventsBubbling, acceptAttr, minSize, maxSize, multiple, maxFiles, validator]);
+  var onDragOverCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (event) {
+    event.preventDefault();
+    event.persist();
+    stopPropagation(event);
+    var hasFiles = (0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isEvtWithFiles)(event);
+
+    if (hasFiles && event.dataTransfer) {
+      try {
+        event.dataTransfer.dropEffect = "copy";
+      } catch (_unused) {}
+      /* eslint-disable-line no-empty */
+
+    }
+
+    if (hasFiles && onDragOver) {
+      onDragOver(event);
+    }
+
+    return false;
+  }, [onDragOver, noDragEventsBubbling]);
+  var onDragLeaveCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (event) {
+    event.preventDefault();
+    event.persist();
+    stopPropagation(event); // Only deactivate once the dropzone and all children have been left
+
+    var targets = dragTargetsRef.current.filter(function (target) {
+      return rootRef.current && rootRef.current.contains(target);
+    }); // Make sure to remove a target present multiple times only once
+    // (Firefox may fire dragenter/dragleave multiple times on the same element)
+
+    var targetIdx = targets.indexOf(event.target);
+
+    if (targetIdx !== -1) {
+      targets.splice(targetIdx, 1);
+    }
+
+    dragTargetsRef.current = targets;
+
+    if (targets.length > 0) {
+      return;
+    }
+
+    dispatch({
+      type: "setDraggedFiles",
+      isDragActive: false,
+      isDragAccept: false,
+      isDragReject: false
+    });
+
+    if ((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isEvtWithFiles)(event) && onDragLeave) {
+      onDragLeave(event);
+    }
+  }, [rootRef, onDragLeave, noDragEventsBubbling]);
+  var setFiles = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (files, event) {
+    var acceptedFiles = [];
+    var fileRejections = [];
+    files.forEach(function (file) {
+      var _fileAccepted = (0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.fileAccepted)(file, acceptAttr),
+          _fileAccepted2 = _slicedToArray(_fileAccepted, 2),
+          accepted = _fileAccepted2[0],
+          acceptError = _fileAccepted2[1];
+
+      var _fileMatchSize = (0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.fileMatchSize)(file, minSize, maxSize),
+          _fileMatchSize2 = _slicedToArray(_fileMatchSize, 2),
+          sizeMatch = _fileMatchSize2[0],
+          sizeError = _fileMatchSize2[1];
+
+      var customErrors = validator ? validator(file) : null;
+
+      if (accepted && sizeMatch && !customErrors) {
+        acceptedFiles.push(file);
+      } else {
+        var errors = [acceptError, sizeError];
+
+        if (customErrors) {
+          errors = errors.concat(customErrors);
+        }
+
+        fileRejections.push({
+          file: file,
+          errors: errors.filter(function (e) {
+            return e;
+          })
+        });
+      }
+    });
+
+    if (!multiple && acceptedFiles.length > 1 || multiple && maxFiles >= 1 && acceptedFiles.length > maxFiles) {
+      // Reject everything and empty accepted files
+      acceptedFiles.forEach(function (file) {
+        fileRejections.push({
+          file: file,
+          errors: [_utils_index__WEBPACK_IMPORTED_MODULE_3__.TOO_MANY_FILES_REJECTION]
+        });
+      });
+      acceptedFiles.splice(0);
+    }
+
+    dispatch({
+      acceptedFiles: acceptedFiles,
+      fileRejections: fileRejections,
+      type: "setFiles"
+    });
+
+    if (onDrop) {
+      onDrop(acceptedFiles, fileRejections, event);
+    }
+
+    if (fileRejections.length > 0 && onDropRejected) {
+      onDropRejected(fileRejections, event);
+    }
+
+    if (acceptedFiles.length > 0 && onDropAccepted) {
+      onDropAccepted(acceptedFiles, event);
+    }
+  }, [dispatch, multiple, acceptAttr, minSize, maxSize, maxFiles, onDrop, onDropAccepted, onDropRejected, validator]);
+  var onDropCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (event) {
+    event.preventDefault(); // Persist here because we need the event later after getFilesFromEvent() is done
+
+    event.persist();
+    stopPropagation(event);
+    dragTargetsRef.current = [];
+
+    if ((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isEvtWithFiles)(event)) {
+      Promise.resolve(getFilesFromEvent(event)).then(function (files) {
+        if ((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isPropagationStopped)(event) && !noDragEventsBubbling) {
+          return;
+        }
+
+        setFiles(files, event);
+      }).catch(function (e) {
+        return onErrCb(e);
+      });
+    }
+
+    dispatch({
+      type: "reset"
+    });
+  }, [getFilesFromEvent, setFiles, onErrCb, noDragEventsBubbling]); // Fn for opening the file dialog programmatically
+
+  var openFileDialog = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    // No point to use FS access APIs if context is not secure
+    // https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts#feature_detection
+    if (fsAccessApiWorksRef.current) {
+      dispatch({
+        type: "openDialog"
+      });
+      onFileDialogOpenCb(); // https://developer.mozilla.org/en-US/docs/Web/API/window/showOpenFilePicker
+
+      var opts = {
+        multiple: multiple,
+        types: pickerTypes
+      };
+      window.showOpenFilePicker(opts).then(function (handles) {
+        return getFilesFromEvent(handles);
+      }).then(function (files) {
+        setFiles(files, null);
+        dispatch({
+          type: "closeDialog"
+        });
+      }).catch(function (e) {
+        // AbortError means the user canceled
+        if ((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isAbort)(e)) {
+          onFileDialogCancelCb(e);
+          dispatch({
+            type: "closeDialog"
+          });
+        } else if ((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isSecurityError)(e)) {
+          fsAccessApiWorksRef.current = false; // CORS, so cannot use this API
+          // Try using the input
+
+          if (inputRef.current) {
+            inputRef.current.value = null;
+            inputRef.current.click();
+          } else {
+            onErrCb(new Error("Cannot open the file picker because the https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API is not supported and no <input> was provided."));
+          }
+        } else {
+          onErrCb(e);
+        }
+      });
+      return;
+    }
+
+    if (inputRef.current) {
+      dispatch({
+        type: "openDialog"
+      });
+      onFileDialogOpenCb();
+      inputRef.current.value = null;
+      inputRef.current.click();
+    }
+  }, [dispatch, onFileDialogOpenCb, onFileDialogCancelCb, useFsAccessApi, setFiles, onErrCb, pickerTypes, multiple]); // Cb to open the file dialog when SPACE/ENTER occurs on the dropzone
+
+  var onKeyDownCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (event) {
+    // Ignore keyboard events bubbling up the DOM tree
+    if (!rootRef.current || !rootRef.current.isEqualNode(event.target)) {
+      return;
+    }
+
+    if (event.key === " " || event.key === "Enter" || event.keyCode === 32 || event.keyCode === 13) {
+      event.preventDefault();
+      openFileDialog();
+    }
+  }, [rootRef, openFileDialog]); // Update focus state for the dropzone
+
+  var onFocusCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    dispatch({
+      type: "focus"
+    });
+  }, []);
+  var onBlurCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    dispatch({
+      type: "blur"
+    });
+  }, []); // Cb to open the file dialog when click occurs on the dropzone
+
+  var onClickCb = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    if (noClick) {
+      return;
+    } // In IE11/Edge the file-browser dialog is blocking, therefore, use setTimeout()
+    // to ensure React can handle state changes
+    // See: https://github.com/react-dropzone/react-dropzone/issues/450
+
+
+    if ((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.isIeOrEdge)()) {
+      setTimeout(openFileDialog, 0);
+    } else {
+      openFileDialog();
+    }
+  }, [noClick, openFileDialog]);
+
+  var composeHandler = function composeHandler(fn) {
+    return disabled ? null : fn;
+  };
+
+  var composeKeyboardHandler = function composeKeyboardHandler(fn) {
+    return noKeyboard ? null : composeHandler(fn);
+  };
+
+  var composeDragHandler = function composeDragHandler(fn) {
+    return noDrag ? null : composeHandler(fn);
+  };
+
+  var stopPropagation = function stopPropagation(event) {
+    if (noDragEventsBubbling) {
+      event.stopPropagation();
+    }
+  };
+
+  var getRootProps = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return function () {
+      var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref2$refKey = _ref2.refKey,
+          refKey = _ref2$refKey === void 0 ? "ref" : _ref2$refKey,
+          role = _ref2.role,
+          onKeyDown = _ref2.onKeyDown,
+          onFocus = _ref2.onFocus,
+          onBlur = _ref2.onBlur,
+          onClick = _ref2.onClick,
+          onDragEnter = _ref2.onDragEnter,
+          onDragOver = _ref2.onDragOver,
+          onDragLeave = _ref2.onDragLeave,
+          onDrop = _ref2.onDrop,
+          rest = _objectWithoutProperties(_ref2, _excluded3);
+
+      return _objectSpread(_objectSpread(_defineProperty({
+        onKeyDown: composeKeyboardHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onKeyDown, onKeyDownCb)),
+        onFocus: composeKeyboardHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onFocus, onFocusCb)),
+        onBlur: composeKeyboardHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onBlur, onBlurCb)),
+        onClick: composeHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onClick, onClickCb)),
+        onDragEnter: composeDragHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onDragEnter, onDragEnterCb)),
+        onDragOver: composeDragHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onDragOver, onDragOverCb)),
+        onDragLeave: composeDragHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onDragLeave, onDragLeaveCb)),
+        onDrop: composeDragHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onDrop, onDropCb)),
+        role: typeof role === "string" && role !== "" ? role : "presentation"
+      }, refKey, rootRef), !disabled && !noKeyboard ? {
+        tabIndex: 0
+      } : {}), rest);
+    };
+  }, [rootRef, onKeyDownCb, onFocusCb, onBlurCb, onClickCb, onDragEnterCb, onDragOverCb, onDragLeaveCb, onDropCb, noKeyboard, noDrag, disabled]);
+  var onInputElementClick = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (event) {
+    event.stopPropagation();
+  }, []);
+  var getInputProps = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return function () {
+      var _ref3 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+          _ref3$refKey = _ref3.refKey,
+          refKey = _ref3$refKey === void 0 ? "ref" : _ref3$refKey,
+          onChange = _ref3.onChange,
+          onClick = _ref3.onClick,
+          rest = _objectWithoutProperties(_ref3, _excluded4);
+
+      var inputProps = _defineProperty({
+        accept: acceptAttr,
+        multiple: multiple,
+        type: "file",
+        style: {
+          display: "none"
+        },
+        onChange: composeHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onChange, onDropCb)),
+        onClick: composeHandler((0,_utils_index__WEBPACK_IMPORTED_MODULE_3__.composeEventHandlers)(onClick, onInputElementClick)),
+        tabIndex: -1
+      }, refKey, inputRef);
+
+      return _objectSpread(_objectSpread({}, inputProps), rest);
+    };
+  }, [inputRef, accept, multiple, onDropCb, disabled]);
+  return _objectSpread(_objectSpread({}, state), {}, {
+    isFocused: isFocused && !disabled,
+    getRootProps: getRootProps,
+    getInputProps: getInputProps,
+    rootRef: rootRef,
+    inputRef: inputRef,
+    open: composeHandler(openFileDialog)
+  });
+}
+/**
+ * @param {DropzoneState} state
+ * @param {{type: string} & DropzoneState} action
+ * @returns {DropzoneState}
+ */
+
+function reducer(state, action) {
+  /* istanbul ignore next */
+  switch (action.type) {
+    case "focus":
+      return _objectSpread(_objectSpread({}, state), {}, {
+        isFocused: true
+      });
+
+    case "blur":
+      return _objectSpread(_objectSpread({}, state), {}, {
+        isFocused: false
+      });
+
+    case "openDialog":
+      return _objectSpread(_objectSpread({}, initialState), {}, {
+        isFileDialogActive: true
+      });
+
+    case "closeDialog":
+      return _objectSpread(_objectSpread({}, state), {}, {
+        isFileDialogActive: false
+      });
+
+    case "setDraggedFiles":
+      return _objectSpread(_objectSpread({}, state), {}, {
+        isDragActive: action.isDragActive,
+        isDragAccept: action.isDragAccept,
+        isDragReject: action.isDragReject
+      });
+
+    case "setFiles":
+      return _objectSpread(_objectSpread({}, state), {}, {
+        acceptedFiles: action.acceptedFiles,
+        fileRejections: action.fileRejections
+      });
+
+    case "reset":
+      return _objectSpread({}, initialState);
+
+    default:
+      return state;
+  }
+}
+
+function noop() {}
+
+
+
+/***/ }),
+
+/***/ "./node_modules/react-dropzone/dist/es/utils/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/react-dropzone/dist/es/utils/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ErrorCode": () => (/* binding */ ErrorCode),
+/* harmony export */   "FILE_INVALID_TYPE": () => (/* binding */ FILE_INVALID_TYPE),
+/* harmony export */   "FILE_TOO_LARGE": () => (/* binding */ FILE_TOO_LARGE),
+/* harmony export */   "FILE_TOO_SMALL": () => (/* binding */ FILE_TOO_SMALL),
+/* harmony export */   "TOO_MANY_FILES": () => (/* binding */ TOO_MANY_FILES),
+/* harmony export */   "TOO_MANY_FILES_REJECTION": () => (/* binding */ TOO_MANY_FILES_REJECTION),
+/* harmony export */   "acceptPropAsAcceptAttr": () => (/* binding */ acceptPropAsAcceptAttr),
+/* harmony export */   "allFilesAccepted": () => (/* binding */ allFilesAccepted),
+/* harmony export */   "canUseFileSystemAccessAPI": () => (/* binding */ canUseFileSystemAccessAPI),
+/* harmony export */   "composeEventHandlers": () => (/* binding */ composeEventHandlers),
+/* harmony export */   "fileAccepted": () => (/* binding */ fileAccepted),
+/* harmony export */   "fileMatchSize": () => (/* binding */ fileMatchSize),
+/* harmony export */   "getInvalidTypeRejectionErr": () => (/* binding */ getInvalidTypeRejectionErr),
+/* harmony export */   "getTooLargeRejectionErr": () => (/* binding */ getTooLargeRejectionErr),
+/* harmony export */   "getTooSmallRejectionErr": () => (/* binding */ getTooSmallRejectionErr),
+/* harmony export */   "isAbort": () => (/* binding */ isAbort),
+/* harmony export */   "isEvtWithFiles": () => (/* binding */ isEvtWithFiles),
+/* harmony export */   "isExt": () => (/* binding */ isExt),
+/* harmony export */   "isIeOrEdge": () => (/* binding */ isIeOrEdge),
+/* harmony export */   "isKindFile": () => (/* binding */ isKindFile),
+/* harmony export */   "isMIMEType": () => (/* binding */ isMIMEType),
+/* harmony export */   "isPropagationStopped": () => (/* binding */ isPropagationStopped),
+/* harmony export */   "isSecurityError": () => (/* binding */ isSecurityError),
+/* harmony export */   "onDocumentDragOver": () => (/* binding */ onDocumentDragOver),
+/* harmony export */   "pickerOptionsFromAccept": () => (/* binding */ pickerOptionsFromAccept)
+/* harmony export */ });
+/* harmony import */ var attr_accept__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! attr-accept */ "./node_modules/attr-accept/dist/es/index.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+ // Error codes
+
+var FILE_INVALID_TYPE = "file-invalid-type";
+var FILE_TOO_LARGE = "file-too-large";
+var FILE_TOO_SMALL = "file-too-small";
+var TOO_MANY_FILES = "too-many-files";
+var ErrorCode = {
+  FileInvalidType: FILE_INVALID_TYPE,
+  FileTooLarge: FILE_TOO_LARGE,
+  FileTooSmall: FILE_TOO_SMALL,
+  TooManyFiles: TOO_MANY_FILES
+}; // File Errors
+
+var getInvalidTypeRejectionErr = function getInvalidTypeRejectionErr(accept) {
+  accept = Array.isArray(accept) && accept.length === 1 ? accept[0] : accept;
+  var messageSuffix = Array.isArray(accept) ? "one of ".concat(accept.join(", ")) : accept;
+  return {
+    code: FILE_INVALID_TYPE,
+    message: "File type must be ".concat(messageSuffix)
+  };
+};
+var getTooLargeRejectionErr = function getTooLargeRejectionErr(maxSize) {
+  return {
+    code: FILE_TOO_LARGE,
+    message: "File is larger than ".concat(maxSize, " ").concat(maxSize === 1 ? "byte" : "bytes")
+  };
+};
+var getTooSmallRejectionErr = function getTooSmallRejectionErr(minSize) {
+  return {
+    code: FILE_TOO_SMALL,
+    message: "File is smaller than ".concat(minSize, " ").concat(minSize === 1 ? "byte" : "bytes")
+  };
+};
+var TOO_MANY_FILES_REJECTION = {
+  code: TOO_MANY_FILES,
+  message: "Too many files"
+}; // Firefox versions prior to 53 return a bogus MIME type for every file drag, so dragovers with
+// that MIME type will always be accepted
+
+function fileAccepted(file, accept) {
+  var isAcceptable = file.type === "application/x-moz-file" || (0,attr_accept__WEBPACK_IMPORTED_MODULE_0__["default"])(file, accept);
+  return [isAcceptable, isAcceptable ? null : getInvalidTypeRejectionErr(accept)];
+}
+function fileMatchSize(file, minSize, maxSize) {
+  if (isDefined(file.size)) {
+    if (isDefined(minSize) && isDefined(maxSize)) {
+      if (file.size > maxSize) return [false, getTooLargeRejectionErr(maxSize)];
+      if (file.size < minSize) return [false, getTooSmallRejectionErr(minSize)];
+    } else if (isDefined(minSize) && file.size < minSize) return [false, getTooSmallRejectionErr(minSize)];else if (isDefined(maxSize) && file.size > maxSize) return [false, getTooLargeRejectionErr(maxSize)];
+  }
+
+  return [true, null];
+}
+
+function isDefined(value) {
+  return value !== undefined && value !== null;
+}
+/**
+ *
+ * @param {object} options
+ * @param {File[]} options.files
+ * @param {string|string[]} [options.accept]
+ * @param {number} [options.minSize]
+ * @param {number} [options.maxSize]
+ * @param {boolean} [options.multiple]
+ * @param {number} [options.maxFiles]
+ * @param {(f: File) => FileError|FileError[]|null} [options.validator]
+ * @returns
+ */
+
+
+function allFilesAccepted(_ref) {
+  var files = _ref.files,
+      accept = _ref.accept,
+      minSize = _ref.minSize,
+      maxSize = _ref.maxSize,
+      multiple = _ref.multiple,
+      maxFiles = _ref.maxFiles,
+      validator = _ref.validator;
+
+  if (!multiple && files.length > 1 || multiple && maxFiles >= 1 && files.length > maxFiles) {
+    return false;
+  }
+
+  return files.every(function (file) {
+    var _fileAccepted = fileAccepted(file, accept),
+        _fileAccepted2 = _slicedToArray(_fileAccepted, 1),
+        accepted = _fileAccepted2[0];
+
+    var _fileMatchSize = fileMatchSize(file, minSize, maxSize),
+        _fileMatchSize2 = _slicedToArray(_fileMatchSize, 1),
+        sizeMatch = _fileMatchSize2[0];
+
+    var customErrors = validator ? validator(file) : null;
+    return accepted && sizeMatch && !customErrors;
+  });
+} // React's synthetic events has event.isPropagationStopped,
+// but to remain compatibility with other libs (Preact) fall back
+// to check event.cancelBubble
+
+function isPropagationStopped(event) {
+  if (typeof event.isPropagationStopped === "function") {
+    return event.isPropagationStopped();
+  } else if (typeof event.cancelBubble !== "undefined") {
+    return event.cancelBubble;
+  }
+
+  return false;
+}
+function isEvtWithFiles(event) {
+  if (!event.dataTransfer) {
+    return !!event.target && !!event.target.files;
+  } // https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/types
+  // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types#file
+
+
+  return Array.prototype.some.call(event.dataTransfer.types, function (type) {
+    return type === "Files" || type === "application/x-moz-file";
+  });
+}
+function isKindFile(item) {
+  return _typeof(item) === "object" && item !== null && item.kind === "file";
+} // allow the entire document to be a drag target
+
+function onDocumentDragOver(event) {
+  event.preventDefault();
+}
+
+function isIe(userAgent) {
+  return userAgent.indexOf("MSIE") !== -1 || userAgent.indexOf("Trident/") !== -1;
+}
+
+function isEdge(userAgent) {
+  return userAgent.indexOf("Edge/") !== -1;
+}
+
+function isIeOrEdge() {
+  var userAgent = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.navigator.userAgent;
+  return isIe(userAgent) || isEdge(userAgent);
+}
+/**
+ * This is intended to be used to compose event handlers
+ * They are executed in order until one of them calls `event.isPropagationStopped()`.
+ * Note that the check is done on the first invoke too,
+ * meaning that if propagation was stopped before invoking the fns,
+ * no handlers will be executed.
+ *
+ * @param {Function} fns the event hanlder functions
+ * @return {Function} the event handler to add to an element
+ */
+
+function composeEventHandlers() {
+  for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+    fns[_key] = arguments[_key];
+  }
+
+  return function (event) {
+    for (var _len2 = arguments.length, args = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+      args[_key2 - 1] = arguments[_key2];
+    }
+
+    return fns.some(function (fn) {
+      if (!isPropagationStopped(event) && fn) {
+        fn.apply(void 0, [event].concat(args));
+      }
+
+      return isPropagationStopped(event);
+    });
+  };
+}
+/**
+ * canUseFileSystemAccessAPI checks if the [File System Access API](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API)
+ * is supported by the browser.
+ * @returns {boolean}
+ */
+
+function canUseFileSystemAccessAPI() {
+  return "showOpenFilePicker" in window;
+}
+/**
+ * Convert the `{accept}` dropzone prop to the
+ * `{types}` option for https://developer.mozilla.org/en-US/docs/Web/API/window/showOpenFilePicker
+ *
+ * @param {AcceptProp} accept
+ * @returns {{accept: string[]}[]}
+ */
+
+function pickerOptionsFromAccept(accept) {
+  if (isDefined(accept)) {
+    var acceptForPicker = Object.entries(accept).filter(function (_ref2) {
+      var _ref3 = _slicedToArray(_ref2, 2),
+          mimeType = _ref3[0],
+          ext = _ref3[1];
+
+      var ok = true;
+
+      if (!isMIMEType(mimeType)) {
+        console.warn("Skipped \"".concat(mimeType, "\" because it is not a valid MIME type. Check https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types for a list of valid MIME types."));
+        ok = false;
+      }
+
+      if (!Array.isArray(ext) || !ext.every(isExt)) {
+        console.warn("Skipped \"".concat(mimeType, "\" because an invalid file extension was provided."));
+        ok = false;
+      }
+
+      return ok;
+    }).reduce(function (agg, _ref4) {
+      var _ref5 = _slicedToArray(_ref4, 2),
+          mimeType = _ref5[0],
+          ext = _ref5[1];
+
+      return _objectSpread(_objectSpread({}, agg), {}, _defineProperty({}, mimeType, ext));
+    }, {});
+    return [{
+      accept: acceptForPicker
+    }];
+  }
+
+  return accept;
+}
+/**
+ * Convert the `{accept}` dropzone prop to an array of MIME types/extensions.
+ * @param {AcceptProp} accept
+ * @returns {string}
+ */
+
+function acceptPropAsAcceptAttr(accept) {
+  if (isDefined(accept)) {
+    return Object.entries(accept).reduce(function (a, _ref6) {
+      var _ref7 = _slicedToArray(_ref6, 2),
+          mimeType = _ref7[0],
+          ext = _ref7[1];
+
+      return [].concat(_toConsumableArray(a), [mimeType], _toConsumableArray(ext));
+    }, []) // Silently discard invalid entries as pickerOptionsFromAccept warns about these
+    .filter(function (v) {
+      return isMIMEType(v) || isExt(v);
+    }).join(",");
+  }
+
+  return undefined;
+}
+/**
+ * Check if v is an exception caused by aborting a request (e.g window.showOpenFilePicker()).
+ *
+ * See https://developer.mozilla.org/en-US/docs/Web/API/DOMException.
+ * @param {any} v
+ * @returns {boolean} True if v is an abort exception.
+ */
+
+function isAbort(v) {
+  return v instanceof DOMException && (v.name === "AbortError" || v.code === v.ABORT_ERR);
+}
+/**
+ * Check if v is a security error.
+ *
+ * See https://developer.mozilla.org/en-US/docs/Web/API/DOMException.
+ * @param {any} v
+ * @returns {boolean} True if v is a security error.
+ */
+
+function isSecurityError(v) {
+  return v instanceof DOMException && (v.name === "SecurityError" || v.code === v.SECURITY_ERR);
+}
+/**
+ * Check if v is a MIME type string.
+ *
+ * See accepted format: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#unique_file_type_specifiers.
+ *
+ * @param {string} v
+ */
+
+function isMIMEType(v) {
+  return v === "audio/*" || v === "video/*" || v === "image/*" || v === "text/*" || /\w+\/[-+.\w]+/g.test(v);
+}
+/**
+ * Check if v is a file extension.
+ * @param {string} v
+ */
+
+function isExt(v) {
+  return /^.*\.[\w]+$/.test(v);
+}
+/**
+ * @typedef {Object.<string, string[]>} AcceptProp
+ */
+
+/**
+ * @typedef {object} FileError
+ * @property {string} message
+ * @property {ErrorCode|string} code
+ */
+
+/**
+ * @typedef {"file-invalid-type"|"file-too-large"|"file-too-small"|"too-many-files"} ErrorCode
+ */
+
+/***/ }),
+
 /***/ "./node_modules/react-icons/fc/index.esm.js":
 /*!**************************************************!*\
   !*** ./node_modules/react-icons/fc/index.esm.js ***!
@@ -59561,6 +72232,293 @@ function X(_ref) {
 
 /***/ }),
 
+/***/ "./node_modules/tslib/tslib.es6.js":
+/*!*****************************************!*\
+  !*** ./node_modules/tslib/tslib.es6.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "__assign": () => (/* binding */ __assign),
+/* harmony export */   "__asyncDelegator": () => (/* binding */ __asyncDelegator),
+/* harmony export */   "__asyncGenerator": () => (/* binding */ __asyncGenerator),
+/* harmony export */   "__asyncValues": () => (/* binding */ __asyncValues),
+/* harmony export */   "__await": () => (/* binding */ __await),
+/* harmony export */   "__awaiter": () => (/* binding */ __awaiter),
+/* harmony export */   "__classPrivateFieldGet": () => (/* binding */ __classPrivateFieldGet),
+/* harmony export */   "__classPrivateFieldIn": () => (/* binding */ __classPrivateFieldIn),
+/* harmony export */   "__classPrivateFieldSet": () => (/* binding */ __classPrivateFieldSet),
+/* harmony export */   "__createBinding": () => (/* binding */ __createBinding),
+/* harmony export */   "__decorate": () => (/* binding */ __decorate),
+/* harmony export */   "__exportStar": () => (/* binding */ __exportStar),
+/* harmony export */   "__extends": () => (/* binding */ __extends),
+/* harmony export */   "__generator": () => (/* binding */ __generator),
+/* harmony export */   "__importDefault": () => (/* binding */ __importDefault),
+/* harmony export */   "__importStar": () => (/* binding */ __importStar),
+/* harmony export */   "__makeTemplateObject": () => (/* binding */ __makeTemplateObject),
+/* harmony export */   "__metadata": () => (/* binding */ __metadata),
+/* harmony export */   "__param": () => (/* binding */ __param),
+/* harmony export */   "__read": () => (/* binding */ __read),
+/* harmony export */   "__rest": () => (/* binding */ __rest),
+/* harmony export */   "__spread": () => (/* binding */ __spread),
+/* harmony export */   "__spreadArray": () => (/* binding */ __spreadArray),
+/* harmony export */   "__spreadArrays": () => (/* binding */ __spreadArrays),
+/* harmony export */   "__values": () => (/* binding */ __values)
+/* harmony export */ });
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null)
+        throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+        desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+/** @deprecated */
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+/** @deprecated */
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+}
+
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+}
+
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || (typeof receiver !== "object" && typeof receiver !== "function")) throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/universal-cookie/es6/Cookies.js":
 /*!******************************************************!*\
   !*** ./node_modules/universal-cookie/es6/Cookies.js ***!
@@ -60080,6 +73038,1879 @@ function _setPrototypeOf(o, p) {
   };
   return _setPrototypeOf(o, p);
 }
+
+/***/ }),
+
+/***/ "./node_modules/@floating-ui/core/dist/floating-ui.core.browser.mjs":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@floating-ui/core/dist/floating-ui.core.browser.mjs ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "arrow": () => (/* binding */ arrow),
+/* harmony export */   "autoPlacement": () => (/* binding */ autoPlacement),
+/* harmony export */   "computePosition": () => (/* binding */ computePosition),
+/* harmony export */   "detectOverflow": () => (/* binding */ detectOverflow),
+/* harmony export */   "flip": () => (/* binding */ flip),
+/* harmony export */   "hide": () => (/* binding */ hide),
+/* harmony export */   "inline": () => (/* binding */ inline),
+/* harmony export */   "limitShift": () => (/* binding */ limitShift),
+/* harmony export */   "offset": () => (/* binding */ offset),
+/* harmony export */   "rectToClientRect": () => (/* binding */ rectToClientRect),
+/* harmony export */   "shift": () => (/* binding */ shift),
+/* harmony export */   "size": () => (/* binding */ size)
+/* harmony export */ });
+function getSide(placement) {
+  return placement.split('-')[0];
+}
+
+function getAlignment(placement) {
+  return placement.split('-')[1];
+}
+
+function getMainAxisFromPlacement(placement) {
+  return ['top', 'bottom'].includes(getSide(placement)) ? 'x' : 'y';
+}
+
+function getLengthFromAxis(axis) {
+  return axis === 'y' ? 'height' : 'width';
+}
+
+function computeCoordsFromPlacement(_ref, placement, rtl) {
+  let {
+    reference,
+    floating
+  } = _ref;
+  const commonX = reference.x + reference.width / 2 - floating.width / 2;
+  const commonY = reference.y + reference.height / 2 - floating.height / 2;
+  const mainAxis = getMainAxisFromPlacement(placement);
+  const length = getLengthFromAxis(mainAxis);
+  const commonAlign = reference[length] / 2 - floating[length] / 2;
+  const side = getSide(placement);
+  const isVertical = mainAxis === 'x';
+  let coords;
+
+  switch (side) {
+    case 'top':
+      coords = {
+        x: commonX,
+        y: reference.y - floating.height
+      };
+      break;
+
+    case 'bottom':
+      coords = {
+        x: commonX,
+        y: reference.y + reference.height
+      };
+      break;
+
+    case 'right':
+      coords = {
+        x: reference.x + reference.width,
+        y: commonY
+      };
+      break;
+
+    case 'left':
+      coords = {
+        x: reference.x - floating.width,
+        y: commonY
+      };
+      break;
+
+    default:
+      coords = {
+        x: reference.x,
+        y: reference.y
+      };
+  }
+
+  switch (getAlignment(placement)) {
+    case 'start':
+      coords[mainAxis] -= commonAlign * (rtl && isVertical ? -1 : 1);
+      break;
+
+    case 'end':
+      coords[mainAxis] += commonAlign * (rtl && isVertical ? -1 : 1);
+      break;
+  }
+
+  return coords;
+}
+
+/**
+ * Computes the `x` and `y` coordinates that will place the floating element
+ * next to a reference element when it is given a certain positioning strategy.
+ *
+ * This export does not have any `platform` interface logic. You will need to
+ * write one for the platform you are using Floating UI with.
+ */
+
+const computePosition = async (reference, floating, config) => {
+  const {
+    placement = 'bottom',
+    strategy = 'absolute',
+    middleware = [],
+    platform
+  } = config;
+  const rtl = await (platform.isRTL == null ? void 0 : platform.isRTL(floating));
+
+  {
+    if (platform == null) {
+      console.error(['Floating UI: `platform` property was not passed to config. If you', 'want to use Floating UI on the web, install @floating-ui/dom', 'instead of the /core package. Otherwise, you can create your own', '`platform`: https://floating-ui.com/docs/platform'].join(' '));
+    }
+
+    if (middleware.filter(_ref => {
+      let {
+        name
+      } = _ref;
+      return name === 'autoPlacement' || name === 'flip';
+    }).length > 1) {
+      throw new Error(['Floating UI: duplicate `flip` and/or `autoPlacement`', 'middleware detected. This will lead to an infinite loop. Ensure only', 'one of either has been passed to the `middleware` array.'].join(' '));
+    }
+  }
+
+  let rects = await platform.getElementRects({
+    reference,
+    floating,
+    strategy
+  });
+  let {
+    x,
+    y
+  } = computeCoordsFromPlacement(rects, placement, rtl);
+  let statefulPlacement = placement;
+  let middlewareData = {};
+  let resetCount = 0;
+
+  for (let i = 0; i < middleware.length; i++) {
+    const {
+      name,
+      fn
+    } = middleware[i];
+    const {
+      x: nextX,
+      y: nextY,
+      data,
+      reset
+    } = await fn({
+      x,
+      y,
+      initialPlacement: placement,
+      placement: statefulPlacement,
+      strategy,
+      middlewareData,
+      rects,
+      platform,
+      elements: {
+        reference,
+        floating
+      }
+    });
+    x = nextX != null ? nextX : x;
+    y = nextY != null ? nextY : y;
+    middlewareData = { ...middlewareData,
+      [name]: { ...middlewareData[name],
+        ...data
+      }
+    };
+
+    {
+      if (resetCount > 50) {
+        console.warn(['Floating UI: The middleware lifecycle appears to be running in an', 'infinite loop. This is usually caused by a `reset` continually', 'being returned without a break condition.'].join(' '));
+      }
+    }
+
+    if (reset && resetCount <= 50) {
+      resetCount++;
+
+      if (typeof reset === 'object') {
+        if (reset.placement) {
+          statefulPlacement = reset.placement;
+        }
+
+        if (reset.rects) {
+          rects = reset.rects === true ? await platform.getElementRects({
+            reference,
+            floating,
+            strategy
+          }) : reset.rects;
+        }
+
+        ({
+          x,
+          y
+        } = computeCoordsFromPlacement(rects, statefulPlacement, rtl));
+      }
+
+      i = -1;
+      continue;
+    }
+  }
+
+  return {
+    x,
+    y,
+    placement: statefulPlacement,
+    strategy,
+    middlewareData
+  };
+};
+
+function expandPaddingObject(padding) {
+  return {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    ...padding
+  };
+}
+
+function getSideObjectFromPadding(padding) {
+  return typeof padding !== 'number' ? expandPaddingObject(padding) : {
+    top: padding,
+    right: padding,
+    bottom: padding,
+    left: padding
+  };
+}
+
+function rectToClientRect(rect) {
+  return { ...rect,
+    top: rect.y,
+    left: rect.x,
+    right: rect.x + rect.width,
+    bottom: rect.y + rect.height
+  };
+}
+
+/**
+ * Resolves with an object of overflow side offsets that determine how much the
+ * element is overflowing a given clipping boundary.
+ * - positive = overflowing the boundary by that number of pixels
+ * - negative = how many pixels left before it will overflow
+ * - 0 = lies flush with the boundary
+ * @see https://floating-ui.com/docs/detectOverflow
+ */
+async function detectOverflow(middlewareArguments, options) {
+  var _await$platform$isEle;
+
+  if (options === void 0) {
+    options = {};
+  }
+
+  const {
+    x,
+    y,
+    platform,
+    rects,
+    elements,
+    strategy
+  } = middlewareArguments;
+  const {
+    boundary = 'clippingAncestors',
+    rootBoundary = 'viewport',
+    elementContext = 'floating',
+    altBoundary = false,
+    padding = 0
+  } = options;
+  const paddingObject = getSideObjectFromPadding(padding);
+  const altContext = elementContext === 'floating' ? 'reference' : 'floating';
+  const element = elements[altBoundary ? altContext : elementContext];
+  const clippingClientRect = rectToClientRect(await platform.getClippingRect({
+    element: ((_await$platform$isEle = await (platform.isElement == null ? void 0 : platform.isElement(element))) != null ? _await$platform$isEle : true) ? element : element.contextElement || (await (platform.getDocumentElement == null ? void 0 : platform.getDocumentElement(elements.floating))),
+    boundary,
+    rootBoundary,
+    strategy
+  }));
+  const elementClientRect = rectToClientRect(platform.convertOffsetParentRelativeRectToViewportRelativeRect ? await platform.convertOffsetParentRelativeRectToViewportRelativeRect({
+    rect: elementContext === 'floating' ? { ...rects.floating,
+      x,
+      y
+    } : rects.reference,
+    offsetParent: await (platform.getOffsetParent == null ? void 0 : platform.getOffsetParent(elements.floating)),
+    strategy
+  }) : rects[elementContext]);
+  return {
+    top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
+    bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
+    left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
+    right: elementClientRect.right - clippingClientRect.right + paddingObject.right
+  };
+}
+
+const min = Math.min;
+const max = Math.max;
+
+function within(min$1, value, max$1) {
+  return max(min$1, min(value, max$1));
+}
+
+/**
+ * Positions an inner element of the floating element such that it is centered
+ * to the reference element.
+ * @see https://floating-ui.com/docs/arrow
+ */
+const arrow = options => ({
+  name: 'arrow',
+  options,
+
+  async fn(middlewareArguments) {
+    // Since `element` is required, we don't Partial<> the type
+    const {
+      element,
+      padding = 0
+    } = options != null ? options : {};
+    const {
+      x,
+      y,
+      placement,
+      rects,
+      platform
+    } = middlewareArguments;
+
+    if (element == null) {
+      {
+        console.warn('Floating UI: No `element` was passed to the `arrow` middleware.');
+      }
+
+      return {};
+    }
+
+    const paddingObject = getSideObjectFromPadding(padding);
+    const coords = {
+      x,
+      y
+    };
+    const axis = getMainAxisFromPlacement(placement);
+    const alignment = getAlignment(placement);
+    const length = getLengthFromAxis(axis);
+    const arrowDimensions = await platform.getDimensions(element);
+    const minProp = axis === 'y' ? 'top' : 'left';
+    const maxProp = axis === 'y' ? 'bottom' : 'right';
+    const endDiff = rects.reference[length] + rects.reference[axis] - coords[axis] - rects.floating[length];
+    const startDiff = coords[axis] - rects.reference[axis];
+    const arrowOffsetParent = await (platform.getOffsetParent == null ? void 0 : platform.getOffsetParent(element));
+    let clientSize = arrowOffsetParent ? axis === 'y' ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
+
+    if (clientSize === 0) {
+      clientSize = rects.floating[length];
+    }
+
+    const centerToReference = endDiff / 2 - startDiff / 2; // Make sure the arrow doesn't overflow the floating element if the center
+    // point is outside the floating element's bounds
+
+    const min = paddingObject[minProp];
+    const max = clientSize - arrowDimensions[length] - paddingObject[maxProp];
+    const center = clientSize / 2 - arrowDimensions[length] / 2 + centerToReference;
+    const offset = within(min, center, max); // Make sure that arrow points at the reference
+
+    const alignmentPadding = alignment === 'start' ? paddingObject[minProp] : paddingObject[maxProp];
+    const shouldAddOffset = alignmentPadding > 0 && center !== offset && rects.reference[length] <= rects.floating[length];
+    const alignmentOffset = shouldAddOffset ? center < min ? min - center : max - center : 0;
+    return {
+      [axis]: coords[axis] - alignmentOffset,
+      data: {
+        [axis]: offset,
+        centerOffset: center - offset
+      }
+    };
+  }
+
+});
+
+const hash$1 = {
+  left: 'right',
+  right: 'left',
+  bottom: 'top',
+  top: 'bottom'
+};
+function getOppositePlacement(placement) {
+  return placement.replace(/left|right|bottom|top/g, matched => hash$1[matched]);
+}
+
+function getAlignmentSides(placement, rects, rtl) {
+  if (rtl === void 0) {
+    rtl = false;
+  }
+
+  const alignment = getAlignment(placement);
+  const mainAxis = getMainAxisFromPlacement(placement);
+  const length = getLengthFromAxis(mainAxis);
+  let mainAlignmentSide = mainAxis === 'x' ? alignment === (rtl ? 'end' : 'start') ? 'right' : 'left' : alignment === 'start' ? 'bottom' : 'top';
+
+  if (rects.reference[length] > rects.floating[length]) {
+    mainAlignmentSide = getOppositePlacement(mainAlignmentSide);
+  }
+
+  return {
+    main: mainAlignmentSide,
+    cross: getOppositePlacement(mainAlignmentSide)
+  };
+}
+
+const hash = {
+  start: 'end',
+  end: 'start'
+};
+function getOppositeAlignmentPlacement(placement) {
+  return placement.replace(/start|end/g, matched => hash[matched]);
+}
+
+const sides = ['top', 'right', 'bottom', 'left'];
+const allPlacements = /*#__PURE__*/sides.reduce((acc, side) => acc.concat(side, side + "-start", side + "-end"), []);
+
+function getPlacementList(alignment, autoAlignment, allowedPlacements) {
+  const allowedPlacementsSortedByAlignment = alignment ? [...allowedPlacements.filter(placement => getAlignment(placement) === alignment), ...allowedPlacements.filter(placement => getAlignment(placement) !== alignment)] : allowedPlacements.filter(placement => getSide(placement) === placement);
+  return allowedPlacementsSortedByAlignment.filter(placement => {
+    if (alignment) {
+      return getAlignment(placement) === alignment || (autoAlignment ? getOppositeAlignmentPlacement(placement) !== placement : false);
+    }
+
+    return true;
+  });
+}
+
+/**
+ * Automatically chooses the `placement` which has the most space available.
+ * @see https://floating-ui.com/docs/autoPlacement
+ */
+const autoPlacement = function (options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  return {
+    name: 'autoPlacement',
+    options,
+
+    async fn(middlewareArguments) {
+      var _middlewareData$autoP, _middlewareData$autoP2, _middlewareData$autoP3, _middlewareData$autoP4, _placementsSortedByLe;
+
+      const {
+        x,
+        y,
+        rects,
+        middlewareData,
+        placement,
+        platform,
+        elements
+      } = middlewareArguments;
+      const {
+        alignment = null,
+        allowedPlacements = allPlacements,
+        autoAlignment = true,
+        ...detectOverflowOptions
+      } = options;
+      const placements = getPlacementList(alignment, autoAlignment, allowedPlacements);
+      const overflow = await detectOverflow(middlewareArguments, detectOverflowOptions);
+      const currentIndex = (_middlewareData$autoP = (_middlewareData$autoP2 = middlewareData.autoPlacement) == null ? void 0 : _middlewareData$autoP2.index) != null ? _middlewareData$autoP : 0;
+      const currentPlacement = placements[currentIndex];
+
+      if (currentPlacement == null) {
+        return {};
+      }
+
+      const {
+        main,
+        cross
+      } = getAlignmentSides(currentPlacement, rects, await (platform.isRTL == null ? void 0 : platform.isRTL(elements.floating))); // Make `computeCoords` start from the right place
+
+      if (placement !== currentPlacement) {
+        return {
+          x,
+          y,
+          reset: {
+            placement: placements[0]
+          }
+        };
+      }
+
+      const currentOverflows = [overflow[getSide(currentPlacement)], overflow[main], overflow[cross]];
+      const allOverflows = [...((_middlewareData$autoP3 = (_middlewareData$autoP4 = middlewareData.autoPlacement) == null ? void 0 : _middlewareData$autoP4.overflows) != null ? _middlewareData$autoP3 : []), {
+        placement: currentPlacement,
+        overflows: currentOverflows
+      }];
+      const nextPlacement = placements[currentIndex + 1]; // There are more placements to check
+
+      if (nextPlacement) {
+        return {
+          data: {
+            index: currentIndex + 1,
+            overflows: allOverflows
+          },
+          reset: {
+            placement: nextPlacement
+          }
+        };
+      }
+
+      const placementsSortedByLeastOverflow = allOverflows.slice().sort((a, b) => a.overflows[0] - b.overflows[0]);
+      const placementThatFitsOnAllSides = (_placementsSortedByLe = placementsSortedByLeastOverflow.find(_ref => {
+        let {
+          overflows
+        } = _ref;
+        return overflows.every(overflow => overflow <= 0);
+      })) == null ? void 0 : _placementsSortedByLe.placement;
+      const resetPlacement = placementThatFitsOnAllSides != null ? placementThatFitsOnAllSides : placementsSortedByLeastOverflow[0].placement;
+
+      if (resetPlacement !== placement) {
+        return {
+          data: {
+            index: currentIndex + 1,
+            overflows: allOverflows
+          },
+          reset: {
+            placement: resetPlacement
+          }
+        };
+      }
+
+      return {};
+    }
+
+  };
+};
+
+function getExpandedPlacements(placement) {
+  const oppositePlacement = getOppositePlacement(placement);
+  return [getOppositeAlignmentPlacement(placement), oppositePlacement, getOppositeAlignmentPlacement(oppositePlacement)];
+}
+
+/**
+ * Changes the placement of the floating element to one that will fit if the
+ * initially specified `placement` does not.
+ * @see https://floating-ui.com/docs/flip
+ */
+const flip = function (options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  return {
+    name: 'flip',
+    options,
+
+    async fn(middlewareArguments) {
+      var _middlewareData$flip;
+
+      const {
+        placement,
+        middlewareData,
+        rects,
+        initialPlacement,
+        platform,
+        elements
+      } = middlewareArguments;
+      const {
+        mainAxis: checkMainAxis = true,
+        crossAxis: checkCrossAxis = true,
+        fallbackPlacements: specifiedFallbackPlacements,
+        fallbackStrategy = 'bestFit',
+        flipAlignment = true,
+        ...detectOverflowOptions
+      } = options;
+      const side = getSide(placement);
+      const isBasePlacement = side === initialPlacement;
+      const fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipAlignment ? [getOppositePlacement(initialPlacement)] : getExpandedPlacements(initialPlacement));
+      const placements = [initialPlacement, ...fallbackPlacements];
+      const overflow = await detectOverflow(middlewareArguments, detectOverflowOptions);
+      const overflows = [];
+      let overflowsData = ((_middlewareData$flip = middlewareData.flip) == null ? void 0 : _middlewareData$flip.overflows) || [];
+
+      if (checkMainAxis) {
+        overflows.push(overflow[side]);
+      }
+
+      if (checkCrossAxis) {
+        const {
+          main,
+          cross
+        } = getAlignmentSides(placement, rects, await (platform.isRTL == null ? void 0 : platform.isRTL(elements.floating)));
+        overflows.push(overflow[main], overflow[cross]);
+      }
+
+      overflowsData = [...overflowsData, {
+        placement,
+        overflows
+      }]; // One or more sides is overflowing
+
+      if (!overflows.every(side => side <= 0)) {
+        var _middlewareData$flip$, _middlewareData$flip2;
+
+        const nextIndex = ((_middlewareData$flip$ = (_middlewareData$flip2 = middlewareData.flip) == null ? void 0 : _middlewareData$flip2.index) != null ? _middlewareData$flip$ : 0) + 1;
+        const nextPlacement = placements[nextIndex];
+
+        if (nextPlacement) {
+          // Try next placement and re-run the lifecycle
+          return {
+            data: {
+              index: nextIndex,
+              overflows: overflowsData
+            },
+            reset: {
+              placement: nextPlacement
+            }
+          };
+        }
+
+        let resetPlacement = 'bottom';
+
+        switch (fallbackStrategy) {
+          case 'bestFit':
+            {
+              var _overflowsData$map$so;
+
+              const placement = (_overflowsData$map$so = overflowsData.map(d => [d, d.overflows.filter(overflow => overflow > 0).reduce((acc, overflow) => acc + overflow, 0)]).sort((a, b) => a[1] - b[1])[0]) == null ? void 0 : _overflowsData$map$so[0].placement;
+
+              if (placement) {
+                resetPlacement = placement;
+              }
+
+              break;
+            }
+
+          case 'initialPlacement':
+            resetPlacement = initialPlacement;
+            break;
+        }
+
+        if (placement !== resetPlacement) {
+          return {
+            reset: {
+              placement: resetPlacement
+            }
+          };
+        }
+      }
+
+      return {};
+    }
+
+  };
+};
+
+function getSideOffsets(overflow, rect) {
+  return {
+    top: overflow.top - rect.height,
+    right: overflow.right - rect.width,
+    bottom: overflow.bottom - rect.height,
+    left: overflow.left - rect.width
+  };
+}
+
+function isAnySideFullyClipped(overflow) {
+  return sides.some(side => overflow[side] >= 0);
+}
+
+/**
+ * Provides data to hide the floating element in applicable situations, such as
+ * when it is not in the same clipping context as the reference element.
+ * @see https://floating-ui.com/docs/hide
+ */
+const hide = function (_temp) {
+  let {
+    strategy = 'referenceHidden',
+    ...detectOverflowOptions
+  } = _temp === void 0 ? {} : _temp;
+  return {
+    name: 'hide',
+
+    async fn(middlewareArguments) {
+      const {
+        rects
+      } = middlewareArguments;
+
+      switch (strategy) {
+        case 'referenceHidden':
+          {
+            const overflow = await detectOverflow(middlewareArguments, { ...detectOverflowOptions,
+              elementContext: 'reference'
+            });
+            const offsets = getSideOffsets(overflow, rects.reference);
+            return {
+              data: {
+                referenceHiddenOffsets: offsets,
+                referenceHidden: isAnySideFullyClipped(offsets)
+              }
+            };
+          }
+
+        case 'escaped':
+          {
+            const overflow = await detectOverflow(middlewareArguments, { ...detectOverflowOptions,
+              altBoundary: true
+            });
+            const offsets = getSideOffsets(overflow, rects.floating);
+            return {
+              data: {
+                escapedOffsets: offsets,
+                escaped: isAnySideFullyClipped(offsets)
+              }
+            };
+          }
+
+        default:
+          {
+            return {};
+          }
+      }
+    }
+
+  };
+};
+
+async function convertValueToCoords(middlewareArguments, value) {
+  const {
+    placement,
+    platform,
+    elements
+  } = middlewareArguments;
+  const rtl = await (platform.isRTL == null ? void 0 : platform.isRTL(elements.floating));
+  const side = getSide(placement);
+  const alignment = getAlignment(placement);
+  const isVertical = getMainAxisFromPlacement(placement) === 'x';
+  const mainAxisMulti = ['left', 'top'].includes(side) ? -1 : 1;
+  const crossAxisMulti = rtl && isVertical ? -1 : 1;
+  const rawValue = typeof value === 'function' ? value(middlewareArguments) : value; // eslint-disable-next-line prefer-const
+
+  let {
+    mainAxis,
+    crossAxis,
+    alignmentAxis
+  } = typeof rawValue === 'number' ? {
+    mainAxis: rawValue,
+    crossAxis: 0,
+    alignmentAxis: null
+  } : {
+    mainAxis: 0,
+    crossAxis: 0,
+    alignmentAxis: null,
+    ...rawValue
+  };
+
+  if (alignment && typeof alignmentAxis === 'number') {
+    crossAxis = alignment === 'end' ? alignmentAxis * -1 : alignmentAxis;
+  }
+
+  return isVertical ? {
+    x: crossAxis * crossAxisMulti,
+    y: mainAxis * mainAxisMulti
+  } : {
+    x: mainAxis * mainAxisMulti,
+    y: crossAxis * crossAxisMulti
+  };
+}
+/**
+ * Displaces the floating element from its reference element.
+ * @see https://floating-ui.com/docs/offset
+ */
+
+const offset = function (value) {
+  if (value === void 0) {
+    value = 0;
+  }
+
+  return {
+    name: 'offset',
+    options: value,
+
+    async fn(middlewareArguments) {
+      const {
+        x,
+        y
+      } = middlewareArguments;
+      const diffCoords = await convertValueToCoords(middlewareArguments, value);
+      return {
+        x: x + diffCoords.x,
+        y: y + diffCoords.y,
+        data: diffCoords
+      };
+    }
+
+  };
+};
+
+function getCrossAxis(axis) {
+  return axis === 'x' ? 'y' : 'x';
+}
+
+/**
+ * Shifts the floating element in order to keep it in view when it will overflow
+ * a clipping boundary.
+ * @see https://floating-ui.com/docs/shift
+ */
+const shift = function (options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  return {
+    name: 'shift',
+    options,
+
+    async fn(middlewareArguments) {
+      const {
+        x,
+        y,
+        placement
+      } = middlewareArguments;
+      const {
+        mainAxis: checkMainAxis = true,
+        crossAxis: checkCrossAxis = false,
+        limiter = {
+          fn: _ref => {
+            let {
+              x,
+              y
+            } = _ref;
+            return {
+              x,
+              y
+            };
+          }
+        },
+        ...detectOverflowOptions
+      } = options;
+      const coords = {
+        x,
+        y
+      };
+      const overflow = await detectOverflow(middlewareArguments, detectOverflowOptions);
+      const mainAxis = getMainAxisFromPlacement(getSide(placement));
+      const crossAxis = getCrossAxis(mainAxis);
+      let mainAxisCoord = coords[mainAxis];
+      let crossAxisCoord = coords[crossAxis];
+
+      if (checkMainAxis) {
+        const minSide = mainAxis === 'y' ? 'top' : 'left';
+        const maxSide = mainAxis === 'y' ? 'bottom' : 'right';
+        const min = mainAxisCoord + overflow[minSide];
+        const max = mainAxisCoord - overflow[maxSide];
+        mainAxisCoord = within(min, mainAxisCoord, max);
+      }
+
+      if (checkCrossAxis) {
+        const minSide = crossAxis === 'y' ? 'top' : 'left';
+        const maxSide = crossAxis === 'y' ? 'bottom' : 'right';
+        const min = crossAxisCoord + overflow[minSide];
+        const max = crossAxisCoord - overflow[maxSide];
+        crossAxisCoord = within(min, crossAxisCoord, max);
+      }
+
+      const limitedCoords = limiter.fn({ ...middlewareArguments,
+        [mainAxis]: mainAxisCoord,
+        [crossAxis]: crossAxisCoord
+      });
+      return { ...limitedCoords,
+        data: {
+          x: limitedCoords.x - x,
+          y: limitedCoords.y - y
+        }
+      };
+    }
+
+  };
+};
+
+/**
+ * Built-in `limiter` that will stop `shift()` at a certain point.
+ */
+const limitShift = function (options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  return {
+    options,
+
+    fn(middlewareArguments) {
+      const {
+        x,
+        y,
+        placement,
+        rects,
+        middlewareData
+      } = middlewareArguments;
+      const {
+        offset = 0,
+        mainAxis: checkMainAxis = true,
+        crossAxis: checkCrossAxis = true
+      } = options;
+      const coords = {
+        x,
+        y
+      };
+      const mainAxis = getMainAxisFromPlacement(placement);
+      const crossAxis = getCrossAxis(mainAxis);
+      let mainAxisCoord = coords[mainAxis];
+      let crossAxisCoord = coords[crossAxis];
+      const rawOffset = typeof offset === 'function' ? offset(middlewareArguments) : offset;
+      const computedOffset = typeof rawOffset === 'number' ? {
+        mainAxis: rawOffset,
+        crossAxis: 0
+      } : {
+        mainAxis: 0,
+        crossAxis: 0,
+        ...rawOffset
+      };
+
+      if (checkMainAxis) {
+        const len = mainAxis === 'y' ? 'height' : 'width';
+        const limitMin = rects.reference[mainAxis] - rects.floating[len] + computedOffset.mainAxis;
+        const limitMax = rects.reference[mainAxis] + rects.reference[len] - computedOffset.mainAxis;
+
+        if (mainAxisCoord < limitMin) {
+          mainAxisCoord = limitMin;
+        } else if (mainAxisCoord > limitMax) {
+          mainAxisCoord = limitMax;
+        }
+      }
+
+      if (checkCrossAxis) {
+        var _middlewareData$offse, _middlewareData$offse2, _middlewareData$offse3, _middlewareData$offse4;
+
+        const len = mainAxis === 'y' ? 'width' : 'height';
+        const isOriginSide = ['top', 'left'].includes(getSide(placement));
+        const limitMin = rects.reference[crossAxis] - rects.floating[len] + (isOriginSide ? (_middlewareData$offse = (_middlewareData$offse2 = middlewareData.offset) == null ? void 0 : _middlewareData$offse2[crossAxis]) != null ? _middlewareData$offse : 0 : 0) + (isOriginSide ? 0 : computedOffset.crossAxis);
+        const limitMax = rects.reference[crossAxis] + rects.reference[len] + (isOriginSide ? 0 : (_middlewareData$offse3 = (_middlewareData$offse4 = middlewareData.offset) == null ? void 0 : _middlewareData$offse4[crossAxis]) != null ? _middlewareData$offse3 : 0) - (isOriginSide ? computedOffset.crossAxis : 0);
+
+        if (crossAxisCoord < limitMin) {
+          crossAxisCoord = limitMin;
+        } else if (crossAxisCoord > limitMax) {
+          crossAxisCoord = limitMax;
+        }
+      }
+
+      return {
+        [mainAxis]: mainAxisCoord,
+        [crossAxis]: crossAxisCoord
+      };
+    }
+
+  };
+};
+
+/**
+ * Provides data to change the size of the floating element. For instance,
+ * prevent it from overflowing its clipping boundary or match the width of the
+ * reference element.
+ * @see https://floating-ui.com/docs/size
+ */
+const size = function (options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  return {
+    name: 'size',
+    options,
+
+    async fn(middlewareArguments) {
+      const {
+        placement,
+        rects,
+        platform,
+        elements
+      } = middlewareArguments;
+      const {
+        apply = () => {},
+        ...detectOverflowOptions
+      } = options;
+      const overflow = await detectOverflow(middlewareArguments, detectOverflowOptions);
+      const side = getSide(placement);
+      const alignment = getAlignment(placement);
+      let heightSide;
+      let widthSide;
+
+      if (side === 'top' || side === 'bottom') {
+        heightSide = side;
+        widthSide = alignment === ((await (platform.isRTL == null ? void 0 : platform.isRTL(elements.floating))) ? 'start' : 'end') ? 'left' : 'right';
+      } else {
+        widthSide = side;
+        heightSide = alignment === 'end' ? 'top' : 'bottom';
+      }
+
+      const xMin = max(overflow.left, 0);
+      const xMax = max(overflow.right, 0);
+      const yMin = max(overflow.top, 0);
+      const yMax = max(overflow.bottom, 0);
+      const dimensions = {
+        availableHeight: rects.floating.height - (['left', 'right'].includes(placement) ? 2 * (yMin !== 0 || yMax !== 0 ? yMin + yMax : max(overflow.top, overflow.bottom)) : overflow[heightSide]),
+        availableWidth: rects.floating.width - (['top', 'bottom'].includes(placement) ? 2 * (xMin !== 0 || xMax !== 0 ? xMin + xMax : max(overflow.left, overflow.right)) : overflow[widthSide])
+      };
+      await apply({ ...middlewareArguments,
+        ...dimensions
+      });
+      const nextDimensions = await platform.getDimensions(elements.floating);
+
+      if (rects.floating.width !== nextDimensions.width || rects.floating.height !== nextDimensions.height) {
+        return {
+          reset: {
+            rects: true
+          }
+        };
+      }
+
+      return {};
+    }
+
+  };
+};
+
+/**
+ * Provides improved positioning for inline reference elements that can span
+ * over multiple lines, such as hyperlinks or range selections.
+ * @see https://floating-ui.com/docs/inline
+ */
+const inline = function (options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  return {
+    name: 'inline',
+    options,
+
+    async fn(middlewareArguments) {
+      var _await$platform$getCl;
+
+      const {
+        placement,
+        elements,
+        rects,
+        platform,
+        strategy
+      } = middlewareArguments; // A MouseEvent's client{X,Y} coords can be up to 2 pixels off a
+      // ClientRect's bounds, despite the event listener being triggered. A
+      // padding of 2 seems to handle this issue.
+
+      const {
+        padding = 2,
+        x,
+        y
+      } = options;
+      const fallback = rectToClientRect(platform.convertOffsetParentRelativeRectToViewportRelativeRect ? await platform.convertOffsetParentRelativeRectToViewportRelativeRect({
+        rect: rects.reference,
+        offsetParent: await (platform.getOffsetParent == null ? void 0 : platform.getOffsetParent(elements.floating)),
+        strategy
+      }) : rects.reference);
+      const clientRects = (_await$platform$getCl = await (platform.getClientRects == null ? void 0 : platform.getClientRects(elements.reference))) != null ? _await$platform$getCl : [];
+      const paddingObject = getSideObjectFromPadding(padding);
+
+      function getBoundingClientRect() {
+        // There are two rects and they are disjoined
+        if (clientRects.length === 2 && clientRects[0].left > clientRects[1].right && x != null && y != null) {
+          var _clientRects$find;
+
+          // Find the first rect in which the point is fully inside
+          return (_clientRects$find = clientRects.find(rect => x > rect.left - paddingObject.left && x < rect.right + paddingObject.right && y > rect.top - paddingObject.top && y < rect.bottom + paddingObject.bottom)) != null ? _clientRects$find : fallback;
+        } // There are 2 or more connected rects
+
+
+        if (clientRects.length >= 2) {
+          if (getMainAxisFromPlacement(placement) === 'x') {
+            const firstRect = clientRects[0];
+            const lastRect = clientRects[clientRects.length - 1];
+            const isTop = getSide(placement) === 'top';
+            const top = firstRect.top;
+            const bottom = lastRect.bottom;
+            const left = isTop ? firstRect.left : lastRect.left;
+            const right = isTop ? firstRect.right : lastRect.right;
+            const width = right - left;
+            const height = bottom - top;
+            return {
+              top,
+              bottom,
+              left,
+              right,
+              width,
+              height,
+              x: left,
+              y: top
+            };
+          }
+
+          const isLeftSide = getSide(placement) === 'left';
+          const maxRight = max(...clientRects.map(rect => rect.right));
+          const minLeft = min(...clientRects.map(rect => rect.left));
+          const measureRects = clientRects.filter(rect => isLeftSide ? rect.left === minLeft : rect.right === maxRight);
+          const top = measureRects[0].top;
+          const bottom = measureRects[measureRects.length - 1].bottom;
+          const left = minLeft;
+          const right = maxRight;
+          const width = right - left;
+          const height = bottom - top;
+          return {
+            top,
+            bottom,
+            left,
+            right,
+            width,
+            height,
+            x: left,
+            y: top
+          };
+        }
+
+        return fallback;
+      }
+
+      const resetRects = await platform.getElementRects({
+        reference: {
+          getBoundingClientRect
+        },
+        floating: elements.floating,
+        strategy
+      });
+
+      if (rects.reference.x !== resetRects.reference.x || rects.reference.y !== resetRects.reference.y || rects.reference.width !== resetRects.reference.width || rects.reference.height !== resetRects.reference.height) {
+        return {
+          reset: {
+            rects: resetRects
+          }
+        };
+      }
+
+      return {};
+    }
+
+  };
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@floating-ui/dom/dist/floating-ui.dom.browser.mjs":
+/*!************************************************************************!*\
+  !*** ./node_modules/@floating-ui/dom/dist/floating-ui.dom.browser.mjs ***!
+  \************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "arrow": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.arrow),
+/* harmony export */   "autoPlacement": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.autoPlacement),
+/* harmony export */   "autoUpdate": () => (/* binding */ autoUpdate),
+/* harmony export */   "computePosition": () => (/* binding */ computePosition),
+/* harmony export */   "detectOverflow": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.detectOverflow),
+/* harmony export */   "flip": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.flip),
+/* harmony export */   "getOverflowAncestors": () => (/* binding */ getOverflowAncestors),
+/* harmony export */   "hide": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.hide),
+/* harmony export */   "inline": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.inline),
+/* harmony export */   "limitShift": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.limitShift),
+/* harmony export */   "offset": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.offset),
+/* harmony export */   "platform": () => (/* binding */ platform),
+/* harmony export */   "shift": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.shift),
+/* harmony export */   "size": () => (/* reexport safe */ _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.size)
+/* harmony export */ });
+/* harmony import */ var _floating_ui_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @floating-ui/core */ "./node_modules/@floating-ui/core/dist/floating-ui.core.browser.mjs");
+
+
+
+function isWindow(value) {
+  return value && value.document && value.location && value.alert && value.setInterval;
+}
+function getWindow(node) {
+  if (node == null) {
+    return window;
+  }
+
+  if (!isWindow(node)) {
+    const ownerDocument = node.ownerDocument;
+    return ownerDocument ? ownerDocument.defaultView || window : window;
+  }
+
+  return node;
+}
+
+function getComputedStyle(element) {
+  return getWindow(element).getComputedStyle(element);
+}
+
+function getNodeName(node) {
+  return isWindow(node) ? '' : node ? (node.nodeName || '').toLowerCase() : '';
+}
+
+function getUAString() {
+  const uaData = navigator.userAgentData;
+
+  if (uaData != null && uaData.brands) {
+    return uaData.brands.map(item => item.brand + "/" + item.version).join(' ');
+  }
+
+  return navigator.userAgent;
+}
+
+function isHTMLElement(value) {
+  return value instanceof getWindow(value).HTMLElement;
+}
+function isElement(value) {
+  return value instanceof getWindow(value).Element;
+}
+function isNode(value) {
+  return value instanceof getWindow(value).Node;
+}
+function isShadowRoot(node) {
+  // Browsers without `ShadowRoot` support
+  if (typeof ShadowRoot === 'undefined') {
+    return false;
+  }
+
+  const OwnElement = getWindow(node).ShadowRoot;
+  return node instanceof OwnElement || node instanceof ShadowRoot;
+}
+function isOverflowElement(element) {
+  // Firefox wants us to check `-x` and `-y` variations as well
+  const {
+    overflow,
+    overflowX,
+    overflowY
+  } = getComputedStyle(element);
+  return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
+}
+function isTableElement(element) {
+  return ['table', 'td', 'th'].includes(getNodeName(element));
+}
+function isContainingBlock(element) {
+  // TODO: Try and use feature detection here instead
+  const isFirefox = /firefox/i.test(getUAString());
+  const css = getComputedStyle(element); // This is non-exhaustive but covers the most common CSS properties that
+  // create a containing block.
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+
+  return css.transform !== 'none' || css.perspective !== 'none' || // @ts-ignore (TS 4.1 compat)
+  css.contain === 'paint' || ['transform', 'perspective'].includes(css.willChange) || isFirefox && css.willChange === 'filter' || isFirefox && (css.filter ? css.filter !== 'none' : false);
+}
+function isLayoutViewport() {
+  // Not Safari
+  return !/^((?!chrome|android).)*safari/i.test(getUAString()); // Feature detection for this fails in various ways
+  // • Always-visible scrollbar or not
+  // • Width of <html>, etc.
+  // const vV = win.visualViewport;
+  // return vV ? Math.abs(win.innerWidth / vV.scale - vV.width) < 0.5 : true;
+}
+
+const min = Math.min;
+const max = Math.max;
+const round = Math.round;
+
+function getBoundingClientRect(element, includeScale, isFixedStrategy) {
+  var _win$visualViewport$o, _win$visualViewport, _win$visualViewport$o2, _win$visualViewport2;
+
+  if (includeScale === void 0) {
+    includeScale = false;
+  }
+
+  if (isFixedStrategy === void 0) {
+    isFixedStrategy = false;
+  }
+
+  const clientRect = element.getBoundingClientRect();
+  let scaleX = 1;
+  let scaleY = 1;
+
+  if (includeScale && isHTMLElement(element)) {
+    scaleX = element.offsetWidth > 0 ? round(clientRect.width) / element.offsetWidth || 1 : 1;
+    scaleY = element.offsetHeight > 0 ? round(clientRect.height) / element.offsetHeight || 1 : 1;
+  }
+
+  const win = isElement(element) ? getWindow(element) : window;
+  const addVisualOffsets = !isLayoutViewport() && isFixedStrategy;
+  const x = (clientRect.left + (addVisualOffsets ? (_win$visualViewport$o = (_win$visualViewport = win.visualViewport) == null ? void 0 : _win$visualViewport.offsetLeft) != null ? _win$visualViewport$o : 0 : 0)) / scaleX;
+  const y = (clientRect.top + (addVisualOffsets ? (_win$visualViewport$o2 = (_win$visualViewport2 = win.visualViewport) == null ? void 0 : _win$visualViewport2.offsetTop) != null ? _win$visualViewport$o2 : 0 : 0)) / scaleY;
+  const width = clientRect.width / scaleX;
+  const height = clientRect.height / scaleY;
+  return {
+    width,
+    height,
+    top: y,
+    right: x + width,
+    bottom: y + height,
+    left: x,
+    x,
+    y
+  };
+}
+
+function getDocumentElement(node) {
+  return ((isNode(node) ? node.ownerDocument : node.document) || window.document).documentElement;
+}
+
+function getNodeScroll(element) {
+  if (isElement(element)) {
+    return {
+      scrollLeft: element.scrollLeft,
+      scrollTop: element.scrollTop
+    };
+  }
+
+  return {
+    scrollLeft: element.pageXOffset,
+    scrollTop: element.pageYOffset
+  };
+}
+
+function getWindowScrollBarX(element) {
+  // If <html> has a CSS width greater than the viewport, then this will be
+  // incorrect for RTL.
+  return getBoundingClientRect(getDocumentElement(element)).left + getNodeScroll(element).scrollLeft;
+}
+
+function isScaled(element) {
+  const rect = getBoundingClientRect(element);
+  return round(rect.width) !== element.offsetWidth || round(rect.height) !== element.offsetHeight;
+}
+
+function getRectRelativeToOffsetParent(element, offsetParent, strategy) {
+  const isOffsetParentAnElement = isHTMLElement(offsetParent);
+  const documentElement = getDocumentElement(offsetParent);
+  const rect = getBoundingClientRect(element, // @ts-ignore - checked above (TS 4.1 compat)
+  isOffsetParentAnElement && isScaled(offsetParent), strategy === 'fixed');
+  let scroll = {
+    scrollLeft: 0,
+    scrollTop: 0
+  };
+  const offsets = {
+    x: 0,
+    y: 0
+  };
+
+  if (isOffsetParentAnElement || !isOffsetParentAnElement && strategy !== 'fixed') {
+    if (getNodeName(offsetParent) !== 'body' || isOverflowElement(documentElement)) {
+      scroll = getNodeScroll(offsetParent);
+    }
+
+    if (isHTMLElement(offsetParent)) {
+      const offsetRect = getBoundingClientRect(offsetParent, true);
+      offsets.x = offsetRect.x + offsetParent.clientLeft;
+      offsets.y = offsetRect.y + offsetParent.clientTop;
+    } else if (documentElement) {
+      offsets.x = getWindowScrollBarX(documentElement);
+    }
+  }
+
+  return {
+    x: rect.left + scroll.scrollLeft - offsets.x,
+    y: rect.top + scroll.scrollTop - offsets.y,
+    width: rect.width,
+    height: rect.height
+  };
+}
+
+function getParentNode(node) {
+  if (getNodeName(node) === 'html') {
+    return node;
+  }
+
+  return (// this is a quicker (but less type safe) way to save quite some bytes from the bundle
+    // @ts-ignore
+    node.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+    node.parentNode || ( // DOM Element detected
+    isShadowRoot(node) ? node.host : null) || // ShadowRoot detected
+    getDocumentElement(node) // fallback
+
+  );
+}
+
+function getTrueOffsetParent(element) {
+  if (!isHTMLElement(element) || getComputedStyle(element).position === 'fixed') {
+    return null;
+  }
+
+  return element.offsetParent;
+}
+
+function getContainingBlock(element) {
+  let currentNode = getParentNode(element);
+
+  if (isShadowRoot(currentNode)) {
+    currentNode = currentNode.host;
+  }
+
+  while (isHTMLElement(currentNode) && !['html', 'body'].includes(getNodeName(currentNode))) {
+    if (isContainingBlock(currentNode)) {
+      return currentNode;
+    } else {
+      const parent = currentNode.parentNode;
+      currentNode = isShadowRoot(parent) ? parent.host : parent;
+    }
+  }
+
+  return null;
+} // Gets the closest ancestor positioned element. Handles some edge cases,
+// such as table ancestors and cross browser bugs.
+
+
+function getOffsetParent(element) {
+  const window = getWindow(element);
+  let offsetParent = getTrueOffsetParent(element);
+
+  while (offsetParent && isTableElement(offsetParent) && getComputedStyle(offsetParent).position === 'static') {
+    offsetParent = getTrueOffsetParent(offsetParent);
+  }
+
+  if (offsetParent && (getNodeName(offsetParent) === 'html' || getNodeName(offsetParent) === 'body' && getComputedStyle(offsetParent).position === 'static' && !isContainingBlock(offsetParent))) {
+    return window;
+  }
+
+  return offsetParent || getContainingBlock(element) || window;
+}
+
+function getDimensions(element) {
+  if (isHTMLElement(element)) {
+    return {
+      width: element.offsetWidth,
+      height: element.offsetHeight
+    };
+  }
+
+  const rect = getBoundingClientRect(element);
+  return {
+    width: rect.width,
+    height: rect.height
+  };
+}
+
+function convertOffsetParentRelativeRectToViewportRelativeRect(_ref) {
+  let {
+    rect,
+    offsetParent,
+    strategy
+  } = _ref;
+  const isOffsetParentAnElement = isHTMLElement(offsetParent);
+  const documentElement = getDocumentElement(offsetParent);
+
+  if (offsetParent === documentElement) {
+    return rect;
+  }
+
+  let scroll = {
+    scrollLeft: 0,
+    scrollTop: 0
+  };
+  const offsets = {
+    x: 0,
+    y: 0
+  };
+
+  if (isOffsetParentAnElement || !isOffsetParentAnElement && strategy !== 'fixed') {
+    if (getNodeName(offsetParent) !== 'body' || isOverflowElement(documentElement)) {
+      scroll = getNodeScroll(offsetParent);
+    }
+
+    if (isHTMLElement(offsetParent)) {
+      const offsetRect = getBoundingClientRect(offsetParent, true);
+      offsets.x = offsetRect.x + offsetParent.clientLeft;
+      offsets.y = offsetRect.y + offsetParent.clientTop;
+    } // This doesn't appear to be need to be negated.
+    // else if (documentElement) {
+    //   offsets.x = getWindowScrollBarX(documentElement);
+    // }
+
+  }
+
+  return { ...rect,
+    x: rect.x - scroll.scrollLeft + offsets.x,
+    y: rect.y - scroll.scrollTop + offsets.y
+  };
+}
+
+function getViewportRect(element, strategy) {
+  const win = getWindow(element);
+  const html = getDocumentElement(element);
+  const visualViewport = win.visualViewport;
+  let width = html.clientWidth;
+  let height = html.clientHeight;
+  let x = 0;
+  let y = 0;
+
+  if (visualViewport) {
+    width = visualViewport.width;
+    height = visualViewport.height;
+    const layoutViewport = isLayoutViewport();
+
+    if (layoutViewport || !layoutViewport && strategy === 'fixed') {
+      x = visualViewport.offsetLeft;
+      y = visualViewport.offsetTop;
+    }
+  }
+
+  return {
+    width,
+    height,
+    x,
+    y
+  };
+}
+
+// of the `<html>` and `<body>` rect bounds if horizontally scrollable
+
+function getDocumentRect(element) {
+  var _element$ownerDocumen;
+
+  const html = getDocumentElement(element);
+  const scroll = getNodeScroll(element);
+  const body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+  const width = max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
+  const height = max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
+  let x = -scroll.scrollLeft + getWindowScrollBarX(element);
+  const y = -scroll.scrollTop;
+
+  if (getComputedStyle(body || html).direction === 'rtl') {
+    x += max(html.clientWidth, body ? body.clientWidth : 0) - width;
+  }
+
+  return {
+    width,
+    height,
+    x,
+    y
+  };
+}
+
+function getNearestOverflowAncestor(node) {
+  const parentNode = getParentNode(node);
+
+  if (['html', 'body', '#document'].includes(getNodeName(parentNode))) {
+    // @ts-ignore assume body is always available
+    return node.ownerDocument.body;
+  }
+
+  if (isHTMLElement(parentNode) && isOverflowElement(parentNode)) {
+    return parentNode;
+  }
+
+  return getNearestOverflowAncestor(parentNode);
+}
+
+function getOverflowAncestors(node, list) {
+  var _node$ownerDocument;
+
+  if (list === void 0) {
+    list = [];
+  }
+
+  const scrollableAncestor = getNearestOverflowAncestor(node);
+  const isBody = scrollableAncestor === ((_node$ownerDocument = node.ownerDocument) == null ? void 0 : _node$ownerDocument.body);
+  const win = getWindow(scrollableAncestor);
+  const target = isBody ? [win].concat(win.visualViewport || [], isOverflowElement(scrollableAncestor) ? scrollableAncestor : []) : scrollableAncestor;
+  const updatedList = list.concat(target);
+  return isBody ? updatedList : // @ts-ignore: isBody tells us target will be an HTMLElement here
+  updatedList.concat(getOverflowAncestors(target));
+}
+
+function contains(parent, child) {
+  const rootNode = child.getRootNode == null ? void 0 : child.getRootNode(); // First, attempt with faster native method
+
+  if (parent.contains(child)) {
+    return true;
+  } // then fallback to custom implementation with Shadow DOM support
+  else if (rootNode && isShadowRoot(rootNode)) {
+    let next = child;
+
+    do {
+      // use `===` replace node.isSameNode()
+      if (next && parent === next) {
+        return true;
+      } // @ts-ignore: need a better way to handle this...
+
+
+      next = next.parentNode || next.host;
+    } while (next);
+  }
+
+  return false;
+}
+
+function getInnerBoundingClientRect(element, strategy) {
+  const clientRect = getBoundingClientRect(element, false, strategy === 'fixed');
+  const top = clientRect.top + element.clientTop;
+  const left = clientRect.left + element.clientLeft;
+  return {
+    top,
+    left,
+    x: left,
+    y: top,
+    right: left + element.clientWidth,
+    bottom: top + element.clientHeight,
+    width: element.clientWidth,
+    height: element.clientHeight
+  };
+}
+
+function getClientRectFromClippingAncestor(element, clippingParent, strategy) {
+  if (clippingParent === 'viewport') {
+    return (0,_floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.rectToClientRect)(getViewportRect(element, strategy));
+  }
+
+  if (isElement(clippingParent)) {
+    return getInnerBoundingClientRect(clippingParent, strategy);
+  }
+
+  return (0,_floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.rectToClientRect)(getDocumentRect(getDocumentElement(element)));
+} // A "clipping ancestor" is an overflowable container with the characteristic of
+// clipping (or hiding) overflowing elements with a position different from
+// `initial`
+
+
+function getClippingAncestors(element) {
+  const clippingAncestors = getOverflowAncestors(element);
+  const canEscapeClipping = ['absolute', 'fixed'].includes(getComputedStyle(element).position);
+  const clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
+
+  if (!isElement(clipperElement)) {
+    return [];
+  } // @ts-ignore isElement check ensures we return Array<Element>
+
+
+  return clippingAncestors.filter(clippingAncestors => isElement(clippingAncestors) && contains(clippingAncestors, clipperElement) && getNodeName(clippingAncestors) !== 'body');
+} // Gets the maximum area that the element is visible in due to any number of
+// clipping ancestors
+
+
+function getClippingRect(_ref) {
+  let {
+    element,
+    boundary,
+    rootBoundary,
+    strategy
+  } = _ref;
+  const mainClippingAncestors = boundary === 'clippingAncestors' ? getClippingAncestors(element) : [].concat(boundary);
+  const clippingAncestors = [...mainClippingAncestors, rootBoundary];
+  const firstClippingAncestor = clippingAncestors[0];
+  const clippingRect = clippingAncestors.reduce((accRect, clippingAncestor) => {
+    const rect = getClientRectFromClippingAncestor(element, clippingAncestor, strategy);
+    accRect.top = max(rect.top, accRect.top);
+    accRect.right = min(rect.right, accRect.right);
+    accRect.bottom = min(rect.bottom, accRect.bottom);
+    accRect.left = max(rect.left, accRect.left);
+    return accRect;
+  }, getClientRectFromClippingAncestor(element, firstClippingAncestor, strategy));
+  return {
+    width: clippingRect.right - clippingRect.left,
+    height: clippingRect.bottom - clippingRect.top,
+    x: clippingRect.left,
+    y: clippingRect.top
+  };
+}
+
+const platform = {
+  getClippingRect,
+  convertOffsetParentRelativeRectToViewportRelativeRect,
+  isElement,
+  getDimensions,
+  getOffsetParent,
+  getDocumentElement,
+  getElementRects: _ref => {
+    let {
+      reference,
+      floating,
+      strategy
+    } = _ref;
+    return {
+      reference: getRectRelativeToOffsetParent(reference, getOffsetParent(floating), strategy),
+      floating: { ...getDimensions(floating),
+        x: 0,
+        y: 0
+      }
+    };
+  },
+  getClientRects: element => Array.from(element.getClientRects()),
+  isRTL: element => getComputedStyle(element).direction === 'rtl'
+};
+
+/**
+ * Automatically updates the position of the floating element when necessary.
+ * @see https://floating-ui.com/docs/autoUpdate
+ */
+function autoUpdate(reference, floating, update, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  const {
+    ancestorScroll: _ancestorScroll = true,
+    ancestorResize: _ancestorResize = true,
+    elementResize = true,
+    animationFrame = false
+  } = options;
+  const ancestorScroll = _ancestorScroll && !animationFrame;
+  const ancestorResize = _ancestorResize && !animationFrame;
+  const ancestors = ancestorScroll || ancestorResize ? [...(isElement(reference) ? getOverflowAncestors(reference) : []), ...getOverflowAncestors(floating)] : [];
+  ancestors.forEach(ancestor => {
+    ancestorScroll && ancestor.addEventListener('scroll', update, {
+      passive: true
+    });
+    ancestorResize && ancestor.addEventListener('resize', update);
+  });
+  let observer = null;
+
+  if (elementResize) {
+    let initialUpdate = true;
+    observer = new ResizeObserver(() => {
+      if (!initialUpdate) {
+        update();
+      }
+
+      initialUpdate = false;
+    });
+    isElement(reference) && !animationFrame && observer.observe(reference);
+    observer.observe(floating);
+  }
+
+  let frameId;
+  let prevRefRect = animationFrame ? getBoundingClientRect(reference) : null;
+
+  if (animationFrame) {
+    frameLoop();
+  }
+
+  function frameLoop() {
+    const nextRefRect = getBoundingClientRect(reference);
+
+    if (prevRefRect && (nextRefRect.x !== prevRefRect.x || nextRefRect.y !== prevRefRect.y || nextRefRect.width !== prevRefRect.width || nextRefRect.height !== prevRefRect.height)) {
+      update();
+    }
+
+    prevRefRect = nextRefRect;
+    frameId = requestAnimationFrame(frameLoop);
+  }
+
+  update();
+  return () => {
+    var _observer;
+
+    ancestors.forEach(ancestor => {
+      ancestorScroll && ancestor.removeEventListener('scroll', update);
+      ancestorResize && ancestor.removeEventListener('resize', update);
+    });
+    (_observer = observer) == null ? void 0 : _observer.disconnect();
+    observer = null;
+
+    if (animationFrame) {
+      cancelAnimationFrame(frameId);
+    }
+  };
+}
+
+/**
+ * Computes the `x` and `y` coordinates that will place the floating element
+ * next to a reference element when it is given a certain CSS positioning
+ * strategy.
+ */
+
+const computePosition = (reference, floating, options) => (0,_floating_ui_core__WEBPACK_IMPORTED_MODULE_0__.computePosition)(reference, floating, {
+  platform,
+  ...options
+});
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/klona/dist/index.mjs":
+/*!*******************************************!*\
+  !*** ./node_modules/klona/dist/index.mjs ***!
+  \*******************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "klona": () => (/* binding */ klona)
+/* harmony export */ });
+function klona(x) {
+	if (typeof x !== 'object') return x;
+
+	var k, tmp, str=Object.prototype.toString.call(x);
+
+	if (str === '[object Object]') {
+		if (x.constructor !== Object && typeof x.constructor === 'function') {
+			tmp = new x.constructor();
+			for (k in x) {
+				if (x.hasOwnProperty(k) && tmp[k] !== x[k]) {
+					tmp[k] = klona(x[k]);
+				}
+			}
+		} else {
+			tmp = {}; // null
+			for (k in x) {
+				if (k === '__proto__') {
+					Object.defineProperty(tmp, k, {
+						value: klona(x[k]),
+						configurable: true,
+						enumerable: true,
+						writable: true,
+					});
+				} else {
+					tmp[k] = klona(x[k]);
+				}
+			}
+		}
+		return tmp;
+	}
+
+	if (str === '[object Array]') {
+		k = x.length;
+		for (tmp=Array(k); k--;) {
+			tmp[k] = klona(x[k]);
+		}
+		return tmp;
+	}
+
+	if (str === '[object Set]') {
+		tmp = new Set;
+		x.forEach(function (val) {
+			tmp.add(klona(val));
+		});
+		return tmp;
+	}
+
+	if (str === '[object Map]') {
+		tmp = new Map;
+		x.forEach(function (val, key) {
+			tmp.set(klona(key), klona(val));
+		});
+		return tmp;
+	}
+
+	if (str === '[object Date]') {
+		return new Date(+x);
+	}
+
+	if (str === '[object RegExp]') {
+		tmp = new RegExp(x.source, x.flags);
+		tmp.lastIndex = x.lastIndex;
+		return tmp;
+	}
+
+	if (str === '[object DataView]') {
+		return new x.constructor( klona(x.buffer) );
+	}
+
+	if (str === '[object ArrayBuffer]') {
+		return x.slice(0);
+	}
+
+	// ArrayBuffer.isView(x)
+	// ~> `new` bcuz `Buffer.slice` => ref
+	if (str.slice(-6) === 'Array]') {
+		return new x.constructor(x);
+	}
+
+	return x;
+}
+
 
 /***/ }),
 
