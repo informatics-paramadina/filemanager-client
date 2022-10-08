@@ -13236,6 +13236,213 @@ var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((t
 
 /***/ }),
 
+/***/ "./node_modules/@mantine/core/esm/Table/Table.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Table/Table.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Table": () => (/* binding */ Table)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/theme/MantineProvider.js");
+/* harmony import */ var _Table_styles_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Table.styles.js */ "./node_modules/@mantine/core/esm/Table/Table.styles.js");
+/* harmony import */ var _Box_Box_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Box/Box.js */ "./node_modules/@mantine/core/esm/Box/Box.js");
+
+
+
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __objRest = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+const defaultProps = {
+  striped: false,
+  highlightOnHover: false,
+  captionSide: "top",
+  horizontalSpacing: "xs",
+  fontSize: "sm",
+  verticalSpacing: 7,
+  withBorder: false,
+  withColumnBorders: false
+};
+const Table = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((props, ref) => {
+  const _a = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_1__.useComponentDefaultProps)("Table", defaultProps, props), {
+    className,
+    children,
+    striped,
+    highlightOnHover,
+    captionSide,
+    horizontalSpacing,
+    verticalSpacing,
+    fontSize,
+    unstyled,
+    withBorder,
+    withColumnBorders
+  } = _a, others = __objRest(_a, [
+    "className",
+    "children",
+    "striped",
+    "highlightOnHover",
+    "captionSide",
+    "horizontalSpacing",
+    "verticalSpacing",
+    "fontSize",
+    "unstyled",
+    "withBorder",
+    "withColumnBorders"
+  ]);
+  const { classes, cx } = (0,_Table_styles_js__WEBPACK_IMPORTED_MODULE_2__["default"])({ captionSide, verticalSpacing, horizontalSpacing, fontSize, withBorder, withColumnBorders }, { unstyled, name: "Table" });
+  return /* @__PURE__ */ react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Box_Box_js__WEBPACK_IMPORTED_MODULE_3__.Box, __spreadProps(__spreadValues({}, others), {
+    component: "table",
+    ref,
+    className: cx(classes.root, className),
+    "data-striped": striped || void 0,
+    "data-hover": highlightOnHover || void 0
+  }), children);
+});
+Table.displayName = "@mantine/core/Table";
+
+
+//# sourceMappingURL=Table.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@mantine/core/esm/Table/Table.styles.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@mantine/core/esm/Table/Table.styles.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _mantine_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mantine/styles */ "./node_modules/@mantine/styles/esm/tss/create-styles.js");
+
+
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var useStyles = (0,_mantine_styles__WEBPACK_IMPORTED_MODULE_0__.createStyles)((theme, {
+  captionSide,
+  horizontalSpacing,
+  verticalSpacing,
+  fontSize,
+  withBorder,
+  withColumnBorders
+}) => {
+  const border = `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]}`;
+  return {
+    root: __spreadProps(__spreadValues({}, theme.fn.fontStyles()), {
+      width: "100%",
+      borderCollapse: "collapse",
+      captionSide,
+      color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+      lineHeight: theme.lineHeight,
+      border: withBorder ? border : "",
+      "& caption": {
+        marginTop: captionSide === "top" ? 0 : theme.spacing.xs,
+        marginBottom: captionSide === "bottom" ? 0 : theme.spacing.xs,
+        fontSize: theme.fontSizes.sm,
+        color: theme.colorScheme === "dark" ? theme.colors.dark[2] : theme.colors.gray[6]
+      },
+      "& thead tr th, & tfoot tr th": {
+        textAlign: "left",
+        fontWeight: "bold",
+        color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.colors.gray[7],
+        fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes }),
+        padding: `${theme.fn.size({
+          size: verticalSpacing,
+          sizes: theme.spacing
+        })}px ${theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing })}px`
+      },
+      "& thead tr th": {
+        borderBottom: border
+      },
+      "& tfoot tr th": {
+        borderTop: border
+      },
+      "& tbody tr td": {
+        padding: `${theme.fn.size({
+          size: verticalSpacing,
+          sizes: theme.spacing
+        })}px ${theme.fn.size({ size: horizontalSpacing, sizes: theme.spacing })}px`,
+        borderBottom: border,
+        fontSize: theme.fn.size({ size: fontSize, sizes: theme.fontSizes })
+      },
+      "& tbody tr:last-of-type td": {
+        borderBottom: "none"
+      },
+      "& th + th, & td + td": {
+        borderLeft: withColumnBorders ? border : ""
+      },
+      "&[data-striped] tbody tr:nth-of-type(odd)": {
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0]
+      },
+      "&[data-hover] tbody tr": theme.fn.hover({
+        backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[1]
+      })
+    })
+  };
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useStyles);
+//# sourceMappingURL=Table.styles.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@mantine/core/esm/TextInput/TextInput.js":
 /*!***************************************************************!*\
   !*** ./node_modules/@mantine/core/esm/TextInput/TextInput.js ***!
@@ -27763,14 +27970,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Box/Box.js");
 /* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Dialog/Dialog.js");
 /* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Checkbox/Checkbox.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Image/Image.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Avatar/Avatar.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Breadcrumbs/Breadcrumbs.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Anchor/Anchor.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Menu/Menu.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/ActionIcon/ActionIcon.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Divider/Divider.js");
-/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/LoadingOverlay/LoadingOverlay.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Table/Table.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Avatar/Avatar.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Image/Image.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Breadcrumbs/Breadcrumbs.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Anchor/Anchor.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Menu/Menu.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/ActionIcon/ActionIcon.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Divider/Divider.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/LoadingOverlay/LoadingOverlay.js");
 /* harmony import */ var _mantine_form__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @mantine/form */ "./node_modules/@mantine/form/esm/use-form.js");
 /* harmony import */ var _mantine_notifications__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mantine/notifications */ "./node_modules/@mantine/notifications/esm/events.js");
 /* harmony import */ var _rpldy_uploader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @rpldy/uploader */ "./node_modules/@rpldy/uploader/lib/esm/index.js");
@@ -27780,8 +27988,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react_dropzone__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-dropzone */ "./node_modules/react-dropzone/dist/es/index.js");
 /* harmony import */ var react_icons_fc__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-icons/fc */ "./node_modules/react-icons/fc/index.esm.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! tabler-icons-react */ "./node_modules/tabler-icons-react/dist/icons/x.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var tabler_icons_react__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! tabler-icons-react */ "./node_modules/tabler-icons-react/dist/icons/x.js");
 /* harmony import */ var _components_IconGenerator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/IconGenerator */ "./resources/js/components/IconGenerator.js");
 /* harmony import */ var _constant_api_url__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constant/api_url */ "./resources/js/constant/api_url.js");
 /* harmony import */ var _images_logohimti_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../images/logohimti.png */ "./resources/js/images/logohimti.png");
@@ -27827,7 +28035,10 @@ var ContextMenu = function ContextMenu(_ref) {
   var pageX = _ref.pageX,
       pageY = _ref.pageY,
       setPosition = _ref.setPosition,
-      show = _ref.show;
+      show = _ref.show,
+      setInfoOpen = _ref.setInfoOpen,
+      file = _ref.file,
+      onDeleteFile = _ref.onDeleteFile;
   var ref = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     var handleClickOutside = function handleClickOutside(event) {
@@ -27856,14 +28067,15 @@ var ContextMenu = function ContextMenu(_ref) {
     withBorder: true,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
       onClick: function onClick() {
-        return console.log("wow");
+        return setInfoOpen();
       },
       label: "Info",
       icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcInfo, {})
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
       label: "Download",
       icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcDownload, {})
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
+    }), (file === null || file === void 0 ? void 0 : file.is_from_me) && !(file !== null && file !== void 0 && file.is_user_root_folder) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
+      onClick: onDeleteFile,
       label: "Delete",
       icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcFullTrash, {})
     })]
@@ -28003,18 +28215,15 @@ var ModalPassword = function ModalPassword(_ref3) {
 };
 
 var FilesBox = function FilesBox(_ref4) {
-  var mime_type = _ref4.mime_type,
-      filename = _ref4.filename,
+  var file = _ref4.file,
       focus = _ref4.focus,
+      setPosition = _ref4.setPosition,
       onClick = _ref4.onClick,
-      onDoubleClick = _ref4.onDoubleClick,
-      isPrivate = _ref4.isPrivate,
-      isRootFolder = _ref4.isRootFolder,
-      isFromMe = _ref4.isFromMe,
-      setPosition = _ref4.setPosition;
+      onDoubleClick = _ref4.onDoubleClick;
 
   var onContextMenuClick = function onContextMenuClick(e) {
     e.preventDefault();
+    onClick();
     setPosition({
       pageX: e.pageX,
       pageY: e.pageY,
@@ -28022,7 +28231,7 @@ var FilesBox = function FilesBox(_ref4) {
     });
   };
 
-  if (isRootFolder && isFromMe) {
+  if (file.is_user_root_folder && file.is_from_me) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
       onContextMenu: onContextMenuClick,
       p: "sm",
@@ -28039,9 +28248,9 @@ var FilesBox = function FilesBox(_ref4) {
         align: "center",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_IconGenerator__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            mime_type: mime_type,
+            mime_type: file.mime_type,
             size: 70
-          }), isPrivate == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+          }), file.is_private == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcLock, {})
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
@@ -28052,7 +28261,7 @@ var FilesBox = function FilesBox(_ref4) {
     });
   }
 
-  if (!isRootFolder && (!isPrivate || isPrivate)) {
+  if (!file.is_user_root_folder && (!file.is_private || file.is_private)) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
       onContextMenu: onContextMenuClick,
       p: "sm",
@@ -28069,14 +28278,14 @@ var FilesBox = function FilesBox(_ref4) {
         align: "center",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_IconGenerator__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            mime_type: mime_type,
+            mime_type: file.mime_type,
             size: 70
-          }), isPrivate == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
+          }), file.is_private == true && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.Fragment, {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcLock, {})
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
           align: "center",
-          children: filename
+          children: file.filename
         })]
       })
     });
@@ -28099,6 +28308,7 @@ var DialogFolder = function DialogFolder(_ref5) {
     initialValues: {
       'parent_id': fileId,
       'folder_name': '',
+      'description': '',
       'is_private': false,
       'password': ''
     }
@@ -28143,25 +28353,112 @@ var DialogFolder = function DialogFolder(_ref5) {
     size: "lg",
     radius: "md",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_14__.Stack, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
-        align: "flex-end",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.TextInput, _objectSpread(_objectSpread({
-          label: "Folder Name"
-        }, form.getInputProps('folder_name')), {}, {
-          style: {
-            flex: 1
-          }
-        })), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_17__.Button, {
+      spacing: "sm",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.TextInput, _objectSpread({
+        label: "Folder Name"
+      }, form.getInputProps('folder_name'))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.TextInput, _objectSpread({
+        label: "Description"
+      }, form.getInputProps('description'))), form.values.is_private && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.TextInput, _objectSpread({
+        label: "Password",
+        type: "password"
+      }, form.getInputProps('password'))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
+        position: "apart",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_21__.Checkbox, _objectSpread({
+          label: "Is private?"
+        }, form.getInputProps('is_private'))), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_17__.Button, {
           onClick: onSubmit,
           loading: loading,
           children: "Save"
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_21__.Checkbox, _objectSpread({
-        label: "Is private?"
-      }, form.getInputProps('is_private'))), form.values.is_private && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_15__.TextInput, _objectSpread({
-        label: "Password",
-        type: "password"
-      }, form.getInputProps('password')))]
+      })]
+    })
+  });
+};
+
+var InfoFile = function InfoFile(_ref6) {
+  var _file$owner, _file$owner$profile, _file$owner2, _file$owner2$profile;
+
+  var open = _ref6.open,
+      setOpen = _ref6.setOpen,
+      file = _ref6.file;
+
+  var formatBytes = function formatBytes(bytes) {
+    var decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+    if (!+bytes) return '0 Bytes';
+    var k = 1024;
+    var dm = decimals < 0 ? 0 : decimals;
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    var i = Math.floor(Math.log(bytes) / Math.log(k));
+    return "".concat(parseFloat((bytes / Math.pow(k, i)).toFixed(dm)), " ").concat(sizes[i]);
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+    console.log("ini file", file);
+  }, [file]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_12__.Modal, {
+    opened: open,
+    onClose: function onClose() {
+      return setOpen(!open);
+    },
+    title: "Informasi File",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_22__.Table, {
+      striped: true,
+      withBorder: true,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tbody", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
+              weight: "500",
+              children: "File Name"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: file === null || file === void 0 ? void 0 : file.filename
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
+              weight: "500",
+              children: "Description"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: file === null || file === void 0 ? void 0 : file.description
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
+              weight: "500",
+              children: "File Type"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: file === null || file === void 0 ? void 0 : file.mime_type
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
+              weight: "500",
+              children: "Size"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: formatBytes(file === null || file === void 0 ? void 0 : file.size)
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("tr", {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
+              weight: "500",
+              children: "Owner"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("td", {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_23__.Avatar, {
+                src: file === null || file === void 0 ? void 0 : (_file$owner = file.owner) === null || _file$owner === void 0 ? void 0 : (_file$owner$profile = _file$owner.profile) === null || _file$owner$profile === void 0 ? void 0 : _file$owner$profile.avatar,
+                radius: "xl"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_13__.Text, {
+                children: file === null || file === void 0 ? void 0 : (_file$owner2 = file.owner) === null || _file$owner2 === void 0 ? void 0 : (_file$owner2$profile = _file$owner2.profile) === null || _file$owner2$profile === void 0 ? void 0 : _file$owner2$profile.name
+              })]
+            })
+          })]
+        })]
+      })
     })
   });
 };
@@ -28201,33 +28498,38 @@ var FileManager = function FileManager() {
 
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState18 = _slicedToArray(_useState17, 2),
-      uploadOpen = _useState18[0],
-      setUploadOpen = _useState18[1];
+      infoOpen = _useState18[0],
+      _setInfoOpen = _useState18[1];
 
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({}),
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false),
       _useState20 = _slicedToArray(_useState19, 2),
-      profile = _useState20[0],
-      setProfile = _useState20[1];
+      uploadOpen = _useState20[0],
+      setUploadOpen = _useState20[1];
 
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({}),
+      _useState22 = _slicedToArray(_useState21, 2),
+      profile = _useState22[0],
+      setProfile = _useState22[1];
+
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)({
     pageX: "-1000px",
     pageY: "-1000px",
     show: false
   }),
-      _useState22 = _slicedToArray(_useState21, 2),
-      position = _useState22[0],
-      setPosition = _useState22[1];
+      _useState24 = _slicedToArray(_useState23, 2),
+      position = _useState24[0],
+      setPosition = _useState24[1];
 
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([{
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([{
     path: '/',
     name: 'Home',
     pass: ''
   }]),
-      _useState24 = _slicedToArray(_useState23, 2),
-      historyPath = _useState24[0],
-      setHistoryPath = _useState24[1];
+      _useState26 = _slicedToArray(_useState25, 2),
+      historyPath = _useState26[0],
+      setHistoryPath = _useState26[1];
 
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_22__.useNavigate)(); // useEffect(()=>{
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_24__.useNavigate)(); // useEffect(()=>{
   //     console.log(historyPath)
   // }, [historyPath])
 
@@ -28326,7 +28628,7 @@ var FileManager = function FileManager() {
           title: 'Unauthorized',
           message: (_err$response2 = err.response) === null || _err$response2 === void 0 ? void 0 : (_err$response2$data = _err$response2.data) === null || _err$response2$data === void 0 ? void 0 : _err$response2$data.message,
           color: 'red',
-          icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__["default"], {})
+          icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_25__["default"], {})
         });
       });
     }
@@ -28363,7 +28665,7 @@ var FileManager = function FileManager() {
         title: 'Unauthorized',
         message: (_err$response3 = err.response) === null || _err$response3 === void 0 ? void 0 : (_err$response3$data = _err$response3.data) === null || _err$response3$data === void 0 ? void 0 : _err$response3$data.message,
         color: 'red',
-        icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__["default"], {})
+        icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_25__["default"], {})
       });
     });
   };
@@ -28380,9 +28682,8 @@ var FileManager = function FileManager() {
       }).then(function (res) {
         console.log(res.data);
         setFiles(res.data);
-        setLoading(false);
-        var newHistoryPath = historyPath.slice(0, pos + 1);
-        setHistoryPath(newHistoryPath);
+        setLoading(false); // let newHistoryPath = historyPath.slice(0, pos + 1)
+        // setHistoryPath(newHistoryPath)
       })["catch"](function (err) {
         console.log(err.response);
       });
@@ -28410,15 +28711,43 @@ var FileManager = function FileManager() {
           title: 'Unauthorized',
           message: (_err$response4 = err.response) === null || _err$response4 === void 0 ? void 0 : (_err$response4$data = _err$response4.data) === null || _err$response4$data === void 0 ? void 0 : _err$response4$data.message,
           color: 'red',
-          icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__["default"], {})
+          icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_25__["default"], {})
         });
       });
     }
   };
 
+  var onDeleteFile = function onDeleteFile() {
+    var _files$selectedFile;
+
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files/").concat((_files$selectedFile = files[selectedFile]) === null || _files$selectedFile === void 0 ? void 0 : _files$selectedFile.id), {
+      "_method": "DELETE"
+    }, {
+      headers: {
+        "Authorization": "Bearer ".concat(token)
+      }
+    }).then(function (res) {
+      refreshCurrentFolder();
+      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
+        title: 'Success Delete',
+        message: 'file success deleted '
+      });
+    })["catch"](function (err) {
+      console.log(err.response);
+      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
+        title: 'Error',
+        message: 'error occured'
+      });
+    });
+  };
+
   var onOpenFolder = function onOpenFolder(data) {
     if (data !== null && data !== void 0 && data.is_private && data !== null && data !== void 0 && data.have_password && !(data !== null && data !== void 0 && data.is_from_me)) {
       setModalOpen(true);
+      return;
+    }
+
+    if ((data === null || data === void 0 ? void 0 : data.mime_type) != "directory") {
       return;
     }
 
@@ -28452,13 +28781,17 @@ var FileManager = function FileManager() {
         title: 'Unauthorized',
         message: (_err$response5 = err.response) === null || _err$response5 === void 0 ? void 0 : (_err$response5$data = _err$response5.data) === null || _err$response5$data === void 0 ? void 0 : _err$response5$data.message,
         color: 'red',
-        icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_23__["default"], {})
+        icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(tabler_icons_react__WEBPACK_IMPORTED_MODULE_25__["default"], {})
       });
     });
   };
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ModalUploader, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(InfoFile, {
+      file: files[selectedFile],
+      open: infoOpen,
+      setOpen: _setInfoOpen
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ModalUploader, {
       open: uploadOpen,
       setOpen: setUploadOpen,
       jwt: token,
@@ -28474,7 +28807,12 @@ var FileManager = function FileManager() {
       pageX: position.pageX,
       pageY: position.pageY,
       setPosition: setPosition,
-      show: position.show
+      show: position.show,
+      setInfoOpen: function setInfoOpen() {
+        return _setInfoOpen(!infoOpen);
+      },
+      file: files[selectedFile],
+      onDeleteFile: onDeleteFile
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ModalPassword, {
       data: files[selectedFile],
       setOpen: setModalOpen,
@@ -28488,7 +28826,7 @@ var FileManager = function FileManager() {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
           position: "apart",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_24__.Image, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_26__.Image, {
               src: _images_logohimti_png__WEBPACK_IMPORTED_MODULE_5__["default"],
               style: {
                 width: '100px'
@@ -28498,7 +28836,7 @@ var FileManager = function FileManager() {
               size: 24,
               children: "File Manager"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_25__.Avatar, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_23__.Avatar, {
             src: profile === null || profile === void 0 ? void 0 : (_profile$profile = profile.profile) === null || _profile$profile === void 0 ? void 0 : _profile$profile.avatar,
             radius: "xl"
           })]
@@ -28513,33 +28851,33 @@ var FileManager = function FileManager() {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_18__.Box, {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
             position: "apart",
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_26__.Breadcrumbs, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_27__.Breadcrumbs, {
               children: historyPath.map(function (data, key) {
-                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_27__.Anchor, {
+                return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Anchor, {
                   onClick: function onClick() {
                     return onClickAnchor(key);
                   },
                   children: data.name
                 }, key);
               })
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu, {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_29__.Menu, {
               position: "left-end",
               shadow: "md",
               width: 200,
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu.Target, {
-                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_29__.ActionIcon, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_29__.Menu.Target, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_30__.ActionIcon, {
                   children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcPlus, {
                     size: 30
                   })
                 })
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu.Dropdown, {
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu.Item, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mantine_core__WEBPACK_IMPORTED_MODULE_29__.Menu.Dropdown, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_29__.Menu.Item, {
                   onClick: function onClick() {
                     return setDialogOpen(true);
                   },
                   icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcFolder, {}),
                   children: "New Folder"
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_28__.Menu.Item, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_29__.Menu.Item, {
                   onClick: function onClick() {
                     return setUploadOpen(true);
                   },
@@ -28548,11 +28886,11 @@ var FileManager = function FileManager() {
                 })]
               })]
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_30__.Divider, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_31__.Divider, {
             my: "sm",
             variant: "dashed"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_31__.LoadingOverlay, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_32__.LoadingOverlay, {
           visible: loading
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_16__.Group, {
           children: files.map(function (data, key) {
@@ -28565,11 +28903,9 @@ var FileManager = function FileManager() {
               },
               focus: selectedFile == key,
               isPrivate: data.is_private,
-              mime_type: data === null || data === void 0 ? void 0 : data.mime_type,
-              isRootFolder: data.is_user_root_folder,
-              isFromMe: data === null || data === void 0 ? void 0 : data.is_from_me,
-              setPosition: setPosition,
-              filename: data === null || data === void 0 ? void 0 : data.filename
+              file: data,
+              onClickFile: onClickFile,
+              setPosition: setPosition
             }, key);
           })
         })]

@@ -1,4 +1,4 @@
-import { ActionIcon, Anchor, Avatar, Box, Breadcrumbs, Button, Center, Checkbox, Dialog, Divider, Group, Image, Loader, LoadingOverlay, Menu, Modal, NavLink, Paper, Stack, Text, TextInput } from "@mantine/core"
+import { ActionIcon, Anchor, Avatar, Box, Breadcrumbs, Button, Center, Checkbox, Dialog, Divider, Group, Image, Loader, LoadingOverlay, Menu, Modal, NavLink, Paper, Stack, Table, Text, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { showNotification, updateNotification } from "@mantine/notifications"
 import createUploader, { UPLOADER_EVENTS } from "@rpldy/uploader"
@@ -14,7 +14,7 @@ import IconGenerator from "../components/IconGenerator"
 import { api_url, base_url } from "../constant/api_url"
 import logo from "../images/logohimti.png"
 
-const ContextMenu = ({ pageX, pageY, setPosition, show }) => {
+const ContextMenu = ({ pageX, pageY, setPosition, show, setInfoOpen, file, onDeleteFile }) => {
     const ref = useRef()
 
     useEffect(() => {
@@ -32,9 +32,9 @@ const ContextMenu = ({ pageX, pageY, setPosition, show }) => {
 
     return (
         <Paper ref={ref} sx={{ width: 240, top: pageY, left: pageX, position: "absolute", zIndex: 2, }} withBorder>
-            <NavLink onClick={() => console.log("wow")} label="Info" icon={<FcInfo />} />
+            <NavLink onClick={() => setInfoOpen()} label="Info" icon={<FcInfo />} />
             <NavLink label="Download" icon={<FcDownload />} />
-            <NavLink label="Delete" icon={<FcFullTrash />} />
+            {file?.is_from_me  && !file?.is_user_root_folder && <NavLink onClick={onDeleteFile} label="Delete" icon={<FcFullTrash />} />}
         </Paper>
     )
 }
@@ -145,11 +145,11 @@ const ModalPassword = ({ data, open, setOpen, submit }) => {
     )
 }
 
-const FilesBox = ({ mime_type, filename, focus, onClick, onDoubleClick,
-    isPrivate, isRootFolder, isFromMe, setPosition }) => {
+const FilesBox = ({ file, focus, setPosition, onClick, onDoubleClick }) => {
 
     const onContextMenuClick = (e) => {
         e.preventDefault()
+        onClick()
         setPosition({
             pageX: e.pageX,
             pageY: e.pageY,
@@ -157,13 +157,14 @@ const FilesBox = ({ mime_type, filename, focus, onClick, onDoubleClick,
         })
     }
 
-    if (isRootFolder && isFromMe) {
+    if (file.is_user_root_folder && file.is_from_me) {
         return (
-            <Box onContextMenu={onContextMenuClick} p={"sm"} onClick={onClick} onDoubleClick={onDoubleClick} style={{ width: '150px', lineBreak: 'auto', border: focus ? '1px dashed black' : '', borderRadius: '10px' }}>
+            <Box onContextMenu={onContextMenuClick} p={"sm"}
+                onClick={onClick} onDoubleClick={onDoubleClick} style={{ width: '150px', lineBreak: 'auto', border: focus ? '1px dashed black' : '', borderRadius: '10px' }}>
                 <Stack spacing={0} align="center">
                     <Box>
-                        {<IconGenerator mime_type={mime_type} size={70} />}
-                        {isPrivate == true && <>
+                        {<IconGenerator mime_type={file.mime_type} size={70} />}
+                        {file.is_private == true && <>
                             <FcLock />
                         </>}
                     </Box>
@@ -173,17 +174,18 @@ const FilesBox = ({ mime_type, filename, focus, onClick, onDoubleClick,
         )
     }
 
-    if (!isRootFolder && (!isPrivate || isPrivate)) {
+    if (!file.is_user_root_folder && (!file.is_private || file.is_private)) {
         return (
-            <Box onContextMenu={onContextMenuClick} p={"sm"} onClick={onClick} onDoubleClick={onDoubleClick} style={{ width: '150px', lineBreak: 'auto', border: focus ? '1px dashed black' : '', borderRadius: '10px' }}>
+            <Box onContextMenu={onContextMenuClick} p={"sm"}
+                onClick={onClick} onDoubleClick={onDoubleClick} style={{ width: '150px', lineBreak: 'auto', border: focus ? '1px dashed black' : '', borderRadius: '10px' }}>
                 <Stack spacing={0} align="center">
                     <Box>
-                        {<IconGenerator mime_type={mime_type} size={70} />}
-                        {isPrivate == true && <>
+                        {<IconGenerator mime_type={file.mime_type} size={70} />}
+                        {file.is_private == true && <>
                             <FcLock />
                         </>}
                     </Box>
-                    <Text align="center">{filename}</Text>
+                    <Text align="center">{file.filename}</Text>
                 </Stack>
             </Box>
         )
@@ -198,6 +200,7 @@ const DialogFolder = ({ open, setOpen, fileId, jwt, refreshCurrentFolder }) => {
         initialValues: {
             'parent_id': fileId,
             'folder_name': '',
+            'description': '',
             'is_private': false,
             'password': ''
         }
@@ -236,17 +239,77 @@ const DialogFolder = ({ open, setOpen, fileId, jwt, refreshCurrentFolder }) => {
 
     return (
         <Dialog opened={open} withCloseButton onClose={() => setOpen(!open)} size="lg" radius={"md"} >
-            <Stack>
-                <Group align={"flex-end"}>
-                    <TextInput label="Folder Name" {...form.getInputProps('folder_name')} style={{ flex: 1 }} />
-                    <Button onClick={onSubmit} loading={loading}>Save</Button>
-                </Group>
-                <Checkbox label="Is private?" {...form.getInputProps('is_private')} />
+            <Stack spacing={"sm"}>
+                <TextInput label="Folder Name" {...form.getInputProps('folder_name')} />
+                <TextInput label="Description" {...form.getInputProps('description')} />
                 {form.values.is_private && (
                     <TextInput label="Password" type={"password"} {...form.getInputProps('password')} />
                 )}
+                <Group position="apart">
+                    <Checkbox label="Is private?" {...form.getInputProps('is_private')} />
+                    <Button onClick={onSubmit} loading={loading}>Save</Button>
+                </Group>
+
             </Stack>
         </Dialog>
+    )
+}
+
+const InfoFile = ({ open, setOpen, file }) => {
+
+
+    const formatBytes = (bytes, decimals = 2) => {
+        if (!+bytes) return '0 Bytes'
+
+        const k = 1024
+        const dm = decimals < 0 ? 0 : decimals
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+        return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+    }
+
+
+    useEffect(() => {
+        console.log("ini file", file)
+    }, [file])
+
+    return (
+        <Modal
+            opened={open}
+            onClose={() => setOpen(!open)}
+            title="Informasi File">
+            <Table striped withBorder>
+                <tbody>
+                    <tr>
+                        <td><Text weight={"500"}>File Name</Text></td>
+                        <td>{file?.filename}</td>
+                    </tr>
+                    <tr>
+                        <td><Text weight={"500"}>Description</Text></td>
+                        <td>{file?.description}</td>
+                    </tr>
+                    <tr>
+                        <td><Text weight={"500"}>File Type</Text></td>
+                        <td>{file?.mime_type}</td>
+                    </tr>
+                    <tr>
+                        <td><Text weight={"500"}>Size</Text></td>
+                        <td>{formatBytes(file?.size)}</td>
+                    </tr>
+                    <tr>
+                        <td><Text weight={"500"}>Owner</Text></td>
+                        <td>
+                            <Group>
+                                <Avatar src={file?.owner?.profile?.avatar} radius="xl" />
+                                <Text>{file?.owner?.profile?.name}</Text>
+                            </Group>
+                        </td>
+                    </tr>
+                </tbody>
+            </Table>
+        </Modal>
     )
 }
 
@@ -257,6 +320,7 @@ const FileManager = () => {
     const [selectedFile, setSelectedFile] = useState(-1)
     const [modalOpen, setModalOpen] = useState(false)
     const [dialogOpen, setDialogOpen] = useState(false)
+    const [infoOpen, setInfoOpen] = useState(false)
     const [uploadOpen, setUploadOpen] = useState(false)
     const [profile, setProfile] = useState({})
     const [position, setPosition] = useState({
@@ -413,8 +477,8 @@ const FileManager = () => {
                 console.log(res.data)
                 setFiles(res.data)
                 setLoading(false)
-                let newHistoryPath = historyPath.slice(0, pos + 1)
-                setHistoryPath(newHistoryPath)
+                // let newHistoryPath = historyPath.slice(0, pos + 1)
+                // setHistoryPath(newHistoryPath)
             }).catch((err) => {
 
                 console.log(err.response)
@@ -443,11 +507,38 @@ const FileManager = () => {
         }
     }
 
+    const onDeleteFile = () => {
+        axios.post(`${api_url}/files/${files[selectedFile]?.id}`, {
+            "_method": "DELETE"
+        }, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }).then((res) => {
+            refreshCurrentFolder()
+            showNotification({
+                title: 'Success Delete',
+                message: 'file success deleted '
+            })
+        }).catch((err) => {
+            console.log(err.response)
+            showNotification({
+                title: 'Error',
+                message: 'error occured'
+            })
+        })
+    }
+
     const onOpenFolder = (data) => {
         if (data?.is_private && data?.have_password && !data?.is_from_me) {
             setModalOpen(true)
             return
         }
+
+        if (data?.mime_type != "directory") {
+            return
+        }
+
         setLoading(true)
         axios.get(`${api_url}/files/${data.id}`, {
             params: {
@@ -481,13 +572,16 @@ const FileManager = () => {
 
     return (
         <Box>
+            <InfoFile file={files[selectedFile]} open={infoOpen} setOpen={setInfoOpen} />
             <ModalUploader open={uploadOpen} setOpen={setUploadOpen}
                 jwt={token} parentId={historyPath[historyPath.length - 1]?.path == "/" ? null : historyPath[historyPath.length - 1]?.path}
                 refreshCurrentFolder={refreshCurrentFolder} />
             <DialogFolder open={dialogOpen} setOpen={setDialogOpen}
                 jwt={token} fileId={historyPath[historyPath.length - 1]?.path == "/" ? null : historyPath[historyPath.length - 1]?.path}
                 refreshCurrentFolder={refreshCurrentFolder} />
-            <ContextMenu pageX={position.pageX} pageY={position.pageY} setPosition={setPosition} show={position.show} />
+            <ContextMenu pageX={position.pageX} pageY={position.pageY}
+                setPosition={setPosition} show={position.show} setInfoOpen={() => setInfoOpen(!infoOpen)}
+                file={files[selectedFile]} onDeleteFile={onDeleteFile} />
             <ModalPassword data={files[selectedFile]} setOpen={setModalOpen}
                 open={modalOpen} submit={onOpenFolderProtected} />
             <Stack spacing={0}>
@@ -528,10 +622,10 @@ const FileManager = () => {
                         {files.map((data, key) => (
                             <FilesBox onClick={() => onClickFile(key)} onDoubleClick={() => onOpenFolder(data)}
                                 focus={selectedFile == key} isPrivate={data.is_private}
-                                mime_type={data?.mime_type} isRootFolder={data.is_user_root_folder}
-                                isFromMe={data?.is_from_me}
+                                file={data}
+                                onClickFile={onClickFile}
                                 setPosition={setPosition}
-                                key={key} filename={data?.filename} />
+                                key={key} />
                         ))}
                     </Group>
                 </Paper>
