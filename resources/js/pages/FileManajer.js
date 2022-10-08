@@ -34,7 +34,7 @@ const ContextMenu = ({ pageX, pageY, setPosition, show, setInfoOpen, file, onDel
         <Paper ref={ref} sx={{ width: 240, top: pageY, left: pageX, position: "absolute", zIndex: 2, }} withBorder>
             <NavLink onClick={() => setInfoOpen()} label="Info" icon={<FcInfo />} />
             <NavLink label="Download" icon={<FcDownload />} />
-            {file?.is_from_me  && !file?.is_user_root_folder && <NavLink onClick={onDeleteFile} label="Delete" icon={<FcFullTrash />} />}
+            {file?.is_from_me && !file?.is_user_root_folder && <NavLink onClick={onDeleteFile} label="Delete" icon={<FcFullTrash />} />}
         </Paper>
     )
 }
@@ -219,7 +219,10 @@ const DialogFolder = ({ open, setOpen, fileId, jwt, refreshCurrentFolder }) => {
             }
         }).then((res) => {
             setOpen(!open)
-            form.reset()
+            form.setFieldValue('description', '')
+            form.setFieldValue('folder_name', '')
+            form.setFieldValue('password', '')
+            form.setFieldValue('is_private', false)
             setLoading(false)
             console.log(res.data)
             showNotification({
