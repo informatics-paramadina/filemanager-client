@@ -27889,8 +27889,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_icons_fc__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-icons/fc */ "./node_modules/react-icons/fc/index.esm.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react_icons_fc__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-icons/fc */ "./node_modules/react-icons/fc/index.esm.js");
+/* harmony import */ var _mantine_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mantine/core */ "./node_modules/@mantine/core/esm/Image/Image.js");
+/* harmony import */ var _images_programming__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../images/programming */ "./resources/js/images/programming/index.js");
+/* harmony import */ var _images__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../images */ "./resources/js/images/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
 
 
 
@@ -27901,25 +27907,101 @@ var IconGenerator = function IconGenerator(_ref) {
   // console.log(mime_type)
   switch (mime_type) {
     case "directory":
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_1__.FcFolder, {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_3__.FcFolder, {
         size: size
       });
 
     case "image/jpeg":
     case "image/png":
     case "image/jpg":
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_1__.FcImageFile, {
-        size: size
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.imageLogo
+      });
+
+    case "video/mp4":
+    case "video/webm":
+    case "video/x-m4v":
+    case "video/quicktime":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.movLogo
+      });
+
+    case "application/x-msdownload":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.exeLogo
       });
 
     case "application/x-rar":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images_programming__WEBPACK_IMPORTED_MODULE_0__.winrarLogo
+      });
+
+    case "application/pdf":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.pdfLogo
+      });
+
     case "application/zip":
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_1__.FcSafe, {
-        size: size
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images_programming__WEBPACK_IMPORTED_MODULE_0__.zipLogo
+      });
+
+    case "application/x-7z-compressed":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.sevenZipLogo
+      });
+
+    case "application/msword":
+    case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.wordLogo
+      });
+
+    case "application/vnd.ms-excel":
+    case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.excelLogo
+      });
+
+    case "application/vnd.ms-powerpoint":
+    case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.powerPointLogo
+      });
+
+    case "application/vnd.google-apps.document":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.docsLogo
+      });
+
+    case "application/vnd.google-apps.form":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.formsLogo
+      });
+
+    case "application/vnd.google-apps.spreadsheet":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images__WEBPACK_IMPORTED_MODULE_1__.sheetsLogo
+      });
+    // programming
+
+    case "text/javascript":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images_programming__WEBPACK_IMPORTED_MODULE_0__.javascriptLogo
+      });
+
+    case "application/java-archive":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images_programming__WEBPACK_IMPORTED_MODULE_0__.javaLogo
+      });
+
+    case "application/json":
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_4__.Image, {
+        src: _images_programming__WEBPACK_IMPORTED_MODULE_0__.jsonLogo
       });
 
     default:
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_1__.FcQuestions, {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_3__.FcQuestions, {
         size: size
       });
       break;
@@ -27944,6 +28026,121 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var api_url = "https://filemanager-engine.org/api";
 var base_url = document.querySelector('meta[name="base_url"]').content;
+
+
+/***/ }),
+
+/***/ "./resources/js/images/index.js":
+/*!**************************************!*\
+  !*** ./resources/js/images/index.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "afterEffectLogo": () => (/* reexport safe */ _icons8_adobe_after_effects_96_png__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "docsLogo": () => (/* reexport safe */ _icons8_google_docs_96_png__WEBPACK_IMPORTED_MODULE_6__["default"]),
+/* harmony export */   "excelLogo": () => (/* reexport safe */ _icons8_microsoft_excel_2019_96_png__WEBPACK_IMPORTED_MODULE_9__["default"]),
+/* harmony export */   "exeLogo": () => (/* reexport safe */ _icons8_exe_96_png__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "formsLogo": () => (/* reexport safe */ _icons8_google_forms_96_png__WEBPACK_IMPORTED_MODULE_7__["default"]),
+/* harmony export */   "illustratorLogo": () => (/* reexport safe */ _icons8_adobe_illustrator_96_png__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "imageLogo": () => (/* reexport safe */ _icons8_image_96_png__WEBPACK_IMPORTED_MODULE_17__["default"]),
+/* harmony export */   "mkvLogo": () => (/* reexport safe */ _icons8_mkv_96_png__WEBPACK_IMPORTED_MODULE_12__["default"]),
+/* harmony export */   "movLogo": () => (/* reexport safe */ _icons8_mov_96_png__WEBPACK_IMPORTED_MODULE_13__["default"]),
+/* harmony export */   "musicLogo": () => (/* reexport safe */ _icons8_musical_notes_96_png__WEBPACK_IMPORTED_MODULE_14__["default"]),
+/* harmony export */   "pdfLogo": () => (/* reexport safe */ _icons8_pdf_96_png__WEBPACK_IMPORTED_MODULE_15__["default"]),
+/* harmony export */   "photoshopLogo": () => (/* reexport safe */ _icons8_adobe_photoshop_96_png__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "powerPointLogo": () => (/* reexport safe */ _icons8_microsoft_powerpoint_2019_96_png__WEBPACK_IMPORTED_MODULE_10__["default"]),
+/* harmony export */   "premiereLogo": () => (/* reexport safe */ _icons8_adobe_premiere_pro_96_png__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "sevenZipLogo": () => (/* reexport safe */ _icons8_7_zip_96_png__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "sheetsLogo": () => (/* reexport safe */ _icons8_google_sheets_96_png__WEBPACK_IMPORTED_MODULE_8__["default"]),
+/* harmony export */   "videoLogo": () => (/* reexport safe */ _icons8_video_file_96_png__WEBPACK_IMPORTED_MODULE_16__["default"]),
+/* harmony export */   "wordLogo": () => (/* reexport safe */ _icons8_microsoft_word_2019_96_png__WEBPACK_IMPORTED_MODULE_11__["default"])
+/* harmony export */ });
+/* harmony import */ var _icons8_7_zip_96_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./icons8-7-zip-96.png */ "./resources/js/images/icons8-7-zip-96.png");
+/* harmony import */ var _icons8_adobe_after_effects_96_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./icons8-adobe-after-effects-96.png */ "./resources/js/images/icons8-adobe-after-effects-96.png");
+/* harmony import */ var _icons8_adobe_illustrator_96_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons8-adobe-illustrator-96.png */ "./resources/js/images/icons8-adobe-illustrator-96.png");
+/* harmony import */ var _icons8_adobe_photoshop_96_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons8-adobe-photoshop-96.png */ "./resources/js/images/icons8-adobe-photoshop-96.png");
+/* harmony import */ var _icons8_adobe_premiere_pro_96_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icons8-adobe-premiere-pro-96.png */ "./resources/js/images/icons8-adobe-premiere-pro-96.png");
+/* harmony import */ var _icons8_exe_96_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./icons8-exe-96.png */ "./resources/js/images/icons8-exe-96.png");
+/* harmony import */ var _icons8_google_docs_96_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./icons8-google-docs-96.png */ "./resources/js/images/icons8-google-docs-96.png");
+/* harmony import */ var _icons8_google_forms_96_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./icons8-google-forms-96.png */ "./resources/js/images/icons8-google-forms-96.png");
+/* harmony import */ var _icons8_google_sheets_96_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./icons8-google-sheets-96.png */ "./resources/js/images/icons8-google-sheets-96.png");
+/* harmony import */ var _icons8_microsoft_excel_2019_96_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./icons8-microsoft-excel-2019-96.png */ "./resources/js/images/icons8-microsoft-excel-2019-96.png");
+/* harmony import */ var _icons8_microsoft_powerpoint_2019_96_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./icons8-microsoft-powerpoint-2019-96.png */ "./resources/js/images/icons8-microsoft-powerpoint-2019-96.png");
+/* harmony import */ var _icons8_microsoft_word_2019_96_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./icons8-microsoft-word-2019-96.png */ "./resources/js/images/icons8-microsoft-word-2019-96.png");
+/* harmony import */ var _icons8_mkv_96_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./icons8-mkv-96.png */ "./resources/js/images/icons8-mkv-96.png");
+/* harmony import */ var _icons8_mov_96_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./icons8-mov-96.png */ "./resources/js/images/icons8-mov-96.png");
+/* harmony import */ var _icons8_musical_notes_96_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./icons8-musical-notes-96.png */ "./resources/js/images/icons8-musical-notes-96.png");
+/* harmony import */ var _icons8_pdf_96_png__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./icons8-pdf-96.png */ "./resources/js/images/icons8-pdf-96.png");
+/* harmony import */ var _icons8_video_file_96_png__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./icons8-video-file-96.png */ "./resources/js/images/icons8-video-file-96.png");
+/* harmony import */ var _icons8_image_96_png__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./icons8-image-96.png */ "./resources/js/images/icons8-image-96.png");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/index.js":
+/*!**************************************************!*\
+  !*** ./resources/js/images/programming/index.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cLangLogo": () => (/* reexport safe */ _icons8_c_programming_96_png__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "cPlusPlusLogo": () => (/* reexport safe */ _icons8_c_96_png__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "cSharpLogo": () => (/* reexport safe */ _icons8_c_sharp_logo_2_96_png__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "golangLogo": () => (/* reexport safe */ _icons8_golang_96_png__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "javaLogo": () => (/* reexport safe */ _icons8_java_96_png__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "javascriptLogo": () => (/* reexport safe */ _icons8_javascript_96_png__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "jsonLogo": () => (/* reexport safe */ _icons8_json_96_png__WEBPACK_IMPORTED_MODULE_6__["default"]),
+/* harmony export */   "pythonLogo": () => (/* reexport safe */ _icons8_python_96_png__WEBPACK_IMPORTED_MODULE_7__["default"]),
+/* harmony export */   "typescriptLogo": () => (/* reexport safe */ _icons8_typescript_96_png__WEBPACK_IMPORTED_MODULE_8__["default"]),
+/* harmony export */   "winrarLogo": () => (/* reexport safe */ _icons8_winrar_96_png__WEBPACK_IMPORTED_MODULE_9__["default"]),
+/* harmony export */   "zipLogo": () => (/* reexport safe */ _icons8_zip_96_png__WEBPACK_IMPORTED_MODULE_10__["default"])
+/* harmony export */ });
+/* harmony import */ var _icons8_c_96_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./icons8-c++-96.png */ "./resources/js/images/programming/icons8-c++-96.png");
+/* harmony import */ var _icons8_c_programming_96_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./icons8-c-programming-96.png */ "./resources/js/images/programming/icons8-c-programming-96.png");
+/* harmony import */ var _icons8_c_sharp_logo_2_96_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./icons8-c-sharp-logo-2-96.png */ "./resources/js/images/programming/icons8-c-sharp-logo-2-96.png");
+/* harmony import */ var _icons8_golang_96_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons8-golang-96.png */ "./resources/js/images/programming/icons8-golang-96.png");
+/* harmony import */ var _icons8_java_96_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icons8-java-96.png */ "./resources/js/images/programming/icons8-java-96.png");
+/* harmony import */ var _icons8_javascript_96_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./icons8-javascript-96.png */ "./resources/js/images/programming/icons8-javascript-96.png");
+/* harmony import */ var _icons8_json_96_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./icons8-json-96.png */ "./resources/js/images/programming/icons8-json-96.png");
+/* harmony import */ var _icons8_python_96_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./icons8-python-96.png */ "./resources/js/images/programming/icons8-python-96.png");
+/* harmony import */ var _icons8_typescript_96_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./icons8-typescript-96.png */ "./resources/js/images/programming/icons8-typescript-96.png");
+/* harmony import */ var _icons8_winrar_96_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./icons8-winrar-96.png */ "./resources/js/images/programming/icons8-winrar-96.png");
+/* harmony import */ var _icons8_zip_96_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./icons8-zip-96.png */ "./resources/js/images/programming/icons8-zip-96.png");
+
+
+
+
+
+
+
+
+
+
+
 
 
 /***/ }),
@@ -28326,7 +28523,10 @@ var DialogFolder = function DialogFolder(_ref5) {
       }
     }).then(function (res) {
       setOpen(!open);
-      form.reset();
+      form.setFieldValue('description', '');
+      form.setFieldValue('folder_name', '');
+      form.setFieldValue('password', '');
+      form.setFieldValue('is_private', false);
       setLoading(false);
       console.log(res.data);
       (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
@@ -29153,6 +29353,276 @@ module.exports = function equal(a, b) {
 
 /***/ }),
 
+/***/ "./resources/js/images/icons8-7-zip-96.png":
+/*!*************************************************!*\
+  !*** ./resources/js/images/icons8-7-zip-96.png ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-7-zip-96.png?644952bc184aa46ceb9ad3cc6c15f07e");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-adobe-after-effects-96.png":
+/*!***************************************************************!*\
+  !*** ./resources/js/images/icons8-adobe-after-effects-96.png ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-adobe-after-effects-96.png?159ce4b1ab4e32ec02431bfd8ef7d9d7");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-adobe-illustrator-96.png":
+/*!*************************************************************!*\
+  !*** ./resources/js/images/icons8-adobe-illustrator-96.png ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-adobe-illustrator-96.png?c32879c1ed30cb39671c1eaa6cec4de1");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-adobe-photoshop-96.png":
+/*!***********************************************************!*\
+  !*** ./resources/js/images/icons8-adobe-photoshop-96.png ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-adobe-photoshop-96.png?bf5eda473f583c98b9c7fccf74d9d66a");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-adobe-premiere-pro-96.png":
+/*!**************************************************************!*\
+  !*** ./resources/js/images/icons8-adobe-premiere-pro-96.png ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-adobe-premiere-pro-96.png?3dc54f0754d36270f42c8dcced710b56");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-exe-96.png":
+/*!***********************************************!*\
+  !*** ./resources/js/images/icons8-exe-96.png ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-exe-96.png?c5b849c6bd47004e1f031daa6ae2aa1a");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-google-docs-96.png":
+/*!*******************************************************!*\
+  !*** ./resources/js/images/icons8-google-docs-96.png ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-google-docs-96.png?67b65bbb82c122297f346268914c89fb");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-google-forms-96.png":
+/*!********************************************************!*\
+  !*** ./resources/js/images/icons8-google-forms-96.png ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-google-forms-96.png?c63178ea6b0ea45aceedfc7153a6b51a");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-google-sheets-96.png":
+/*!*********************************************************!*\
+  !*** ./resources/js/images/icons8-google-sheets-96.png ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-google-sheets-96.png?b69755320788f2b8471df444740b4d18");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-image-96.png":
+/*!*************************************************!*\
+  !*** ./resources/js/images/icons8-image-96.png ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-image-96.png?c7433d1c30cdcb66c61df21410e6616e");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-microsoft-excel-2019-96.png":
+/*!****************************************************************!*\
+  !*** ./resources/js/images/icons8-microsoft-excel-2019-96.png ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-microsoft-excel-2019-96.png?f248860e20fdfb5cdd6524926ad2429c");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-microsoft-powerpoint-2019-96.png":
+/*!*********************************************************************!*\
+  !*** ./resources/js/images/icons8-microsoft-powerpoint-2019-96.png ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-microsoft-powerpoint-2019-96.png?95834c9a7227f76b36395a438b83a1bd");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-microsoft-word-2019-96.png":
+/*!***************************************************************!*\
+  !*** ./resources/js/images/icons8-microsoft-word-2019-96.png ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-microsoft-word-2019-96.png?2429e24e07d3459f59d8efe7173f5ff0");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-mkv-96.png":
+/*!***********************************************!*\
+  !*** ./resources/js/images/icons8-mkv-96.png ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-mkv-96.png?1c9627a1ebba577d9b321a5f80cbfe3d");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-mov-96.png":
+/*!***********************************************!*\
+  !*** ./resources/js/images/icons8-mov-96.png ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-mov-96.png?61fc154bb5e774666897a1f91fa23acc");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-musical-notes-96.png":
+/*!*********************************************************!*\
+  !*** ./resources/js/images/icons8-musical-notes-96.png ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-musical-notes-96.png?b991c80565a155bf97169a24d0da6162");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-pdf-96.png":
+/*!***********************************************!*\
+  !*** ./resources/js/images/icons8-pdf-96.png ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-pdf-96.png?4bfbc502ddf38bae2a4bbc4e9e42e825");
+
+/***/ }),
+
+/***/ "./resources/js/images/icons8-video-file-96.png":
+/*!******************************************************!*\
+  !*** ./resources/js/images/icons8-video-file-96.png ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-video-file-96.png?e5817a736ac2f8f3f355ecfac9eea764");
+
+/***/ }),
+
 /***/ "./resources/js/images/logohimti.png":
 /*!*******************************************!*\
   !*** ./resources/js/images/logohimti.png ***!
@@ -29165,6 +29635,171 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/logohimti.png?f4973552e480df1bffff8d9e0c5c23cc");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-c++-96.png":
+/*!***********************************************************!*\
+  !*** ./resources/js/images/programming/icons8-c++-96.png ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-c++-96.png?caecd87c4646df3765b83dde8d0ed8a1");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-c-programming-96.png":
+/*!*********************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-c-programming-96.png ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-c-programming-96.png?f73d1c9f4e5e39abaeae3aa02cda594f");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-c-sharp-logo-2-96.png":
+/*!**********************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-c-sharp-logo-2-96.png ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-c-sharp-logo-2-96.png?3f70884be1a1e347fffb8bf07578bdcd");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-golang-96.png":
+/*!**************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-golang-96.png ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-golang-96.png?7f4af7e737537192a55dd16f4c84bcd9");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-java-96.png":
+/*!************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-java-96.png ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-java-96.png?1bf32f77eea1f255b72fa199ab6625f9");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-javascript-96.png":
+/*!******************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-javascript-96.png ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-javascript-96.png?e8677e80cacb4bc4db7608f6e3c63734");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-json-96.png":
+/*!************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-json-96.png ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-json-96.png?312830795f3ec5d0e203cc5d4e14b85c");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-python-96.png":
+/*!**************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-python-96.png ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-python-96.png?b73ba2b789f5aff542f515f194ad2a29");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-typescript-96.png":
+/*!******************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-typescript-96.png ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-typescript-96.png?abfff48539bc154e07d54f6ab9fe5b8c");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-winrar-96.png":
+/*!**************************************************************!*\
+  !*** ./resources/js/images/programming/icons8-winrar-96.png ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-winrar-96.png?d52493477578be9af25835aba2f8282b");
+
+/***/ }),
+
+/***/ "./resources/js/images/programming/icons8-zip-96.png":
+/*!***********************************************************!*\
+  !*** ./resources/js/images/programming/icons8-zip-96.png ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/icons8-zip-96.png?45a6edfc2be4fd7bd5f01992d12c5719");
 
 /***/ }),
 
