@@ -14,7 +14,7 @@ import IconGenerator from "../components/IconGenerator"
 import { api_url, base_url } from "../constant/api_url"
 import logo from "../images/logohimti.png"
 
-const ContextMenu = ({ pageX, pageY, setPosition, show, setInfoOpen, file, onDeleteFile }) => {
+const ContextMenu = ({ pageX, pageY, setPosition, show, setInfoOpen, file, onDeleteFile, onDownloadFile }) => {
     const ref = useRef()
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const ContextMenu = ({ pageX, pageY, setPosition, show, setInfoOpen, file, onDel
     return (
         <Paper ref={ref} sx={{ width: 240, top: pageY, left: pageX, position: "absolute", zIndex: 2, }} withBorder>
             <NavLink onClick={() => setInfoOpen()} label="Info" icon={<FcInfo />} />
-            <NavLink label="Download" icon={<FcDownload />} />
+            <NavLink onClick={() => onDownloadFile()} label="Download" icon={<FcDownload />} />
             {file?.is_from_me && !file?.is_user_root_folder && <NavLink onClick={onDeleteFile} label="Delete" icon={<FcFullTrash />} />}
         </Paper>
     )
@@ -510,6 +510,62 @@ const FileManager = () => {
         }
     }
 
+    const onDownloadFile = () => {
+        let objFile = { ...files[selectedFile] }
+        showNotification({
+            id: objFile?.id,
+            title: `Downloading ${files[selectedFile]?.filename}`,
+            message: "download started...",
+            autoClose: false,
+            disallowClose: true,
+        })
+        axios.get(`${api_url}/files/${objFile?.id}/download`, {
+            responseType: "blob",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            },
+            onDownloadProgress: (progressEvent) => {
+                updateNotification({
+                    id: objFile?.id,
+                    title: `Downloading ${objFile?.filename}`,
+                    message: `${Math.round((progressEvent.loaded * 100) / progressEvent.total)}% downloaded`,
+                    autoClose: false,
+                    disallowClose: true,
+                })
+                console.log(Math.round(progressEvent.loaded))
+            }
+        }).then((res) => {
+            const href = URL.createObjectURL(res.data)
+            const link = document.createElement('a')
+            console.log(res.headers)
+            link.href = href
+            link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1])
+            document.body.appendChild(link)
+            link.click();
+            console.log(res.data)
+            updateNotification({
+                id: objFile?.id,
+                title: `Downloaded ${objFile?.filename}`,
+                message: `download success`,
+                color: 'green',
+                autoClose: 5000,
+                disallowClose: true,
+            })
+            document.body.removeChild(link);
+            URL.revokeObjectURL(href);
+        }).catch((err) => {
+            updateNotification({
+                id: objFile?.id,
+                title: `Downloaded ${objFile?.filename}`,
+                message: `download failed`,
+                color: 'red',
+                autoClose: 5000,
+                disallowClose: true,
+            })
+            console.log(err)
+        })
+    }
+
     const onDeleteFile = () => {
         axios.post(`${api_url}/files/${files[selectedFile]?.id}`, {
             "_method": "DELETE"
@@ -584,7 +640,7 @@ const FileManager = () => {
                 refreshCurrentFolder={refreshCurrentFolder} />
             <ContextMenu pageX={position.pageX} pageY={position.pageY}
                 setPosition={setPosition} show={position.show} setInfoOpen={() => setInfoOpen(!infoOpen)}
-                file={files[selectedFile]} onDeleteFile={onDeleteFile} />
+                file={files[selectedFile]} onDeleteFile={onDeleteFile} onDownloadFile={onDownloadFile} />
             <ModalPassword data={files[selectedFile]} setOpen={setModalOpen}
                 open={modalOpen} submit={onOpenFolderProtected} />
             <Stack spacing={0}>

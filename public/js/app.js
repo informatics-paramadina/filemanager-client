@@ -28235,7 +28235,8 @@ var ContextMenu = function ContextMenu(_ref) {
       show = _ref.show,
       setInfoOpen = _ref.setInfoOpen,
       file = _ref.file,
-      onDeleteFile = _ref.onDeleteFile;
+      onDeleteFile = _ref.onDeleteFile,
+      onDownloadFile = _ref.onDownloadFile;
   var ref = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
     var handleClickOutside = function handleClickOutside(event) {
@@ -28269,6 +28270,9 @@ var ContextMenu = function ContextMenu(_ref) {
       label: "Info",
       icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcInfo, {})
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
+      onClick: function onClick() {
+        return onDownloadFile();
+      },
       label: "Download",
       icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_icons_fc__WEBPACK_IMPORTED_MODULE_9__.FcDownload, {})
     }), (file === null || file === void 0 ? void 0 : file.is_from_me) && !(file !== null && file !== void 0 && file.is_user_root_folder) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mantine_core__WEBPACK_IMPORTED_MODULE_8__.NavLink, {
@@ -28917,10 +28921,69 @@ var FileManager = function FileManager() {
     }
   };
 
-  var onDeleteFile = function onDeleteFile() {
+  var onDownloadFile = function onDownloadFile() {
     var _files$selectedFile;
 
-    axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files/").concat((_files$selectedFile = files[selectedFile]) === null || _files$selectedFile === void 0 ? void 0 : _files$selectedFile.id), {
+    var objFile = _objectSpread({}, files[selectedFile]);
+
+    (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.showNotification)({
+      id: objFile === null || objFile === void 0 ? void 0 : objFile.id,
+      title: "Downloading ".concat((_files$selectedFile = files[selectedFile]) === null || _files$selectedFile === void 0 ? void 0 : _files$selectedFile.filename),
+      message: "download started...",
+      autoClose: false,
+      disallowClose: true
+    });
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files/").concat(objFile === null || objFile === void 0 ? void 0 : objFile.id, "/download"), {
+      responseType: "blob",
+      headers: {
+        "Authorization": "Bearer ".concat(token)
+      },
+      onDownloadProgress: function onDownloadProgress(progressEvent) {
+        (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.updateNotification)({
+          id: objFile === null || objFile === void 0 ? void 0 : objFile.id,
+          title: "Downloading ".concat(objFile === null || objFile === void 0 ? void 0 : objFile.filename),
+          message: "".concat(Math.round(progressEvent.loaded * 100 / progressEvent.total), "% downloaded"),
+          autoClose: false,
+          disallowClose: true
+        });
+        console.log(Math.round(progressEvent.loaded));
+      }
+    }).then(function (res) {
+      var href = URL.createObjectURL(res.data);
+      var link = document.createElement('a');
+      console.log(res.headers);
+      link.href = href;
+      link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1]);
+      document.body.appendChild(link);
+      link.click();
+      console.log(res.data);
+      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.updateNotification)({
+        id: objFile === null || objFile === void 0 ? void 0 : objFile.id,
+        title: "Downloaded ".concat(objFile === null || objFile === void 0 ? void 0 : objFile.filename),
+        message: "download success",
+        color: 'green',
+        autoClose: 5000,
+        disallowClose: true
+      });
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+    })["catch"](function (err) {
+      (0,_mantine_notifications__WEBPACK_IMPORTED_MODULE_11__.updateNotification)({
+        id: objFile === null || objFile === void 0 ? void 0 : objFile.id,
+        title: "Downloaded ".concat(objFile === null || objFile === void 0 ? void 0 : objFile.filename),
+        message: "download failed",
+        color: 'red',
+        autoClose: 5000,
+        disallowClose: true
+      });
+      console.log(err);
+    });
+  };
+
+  var onDeleteFile = function onDeleteFile() {
+    var _files$selectedFile2;
+
+    axios__WEBPACK_IMPORTED_MODULE_1___default().post("".concat(_constant_api_url__WEBPACK_IMPORTED_MODULE_4__.api_url, "/files/").concat((_files$selectedFile2 = files[selectedFile]) === null || _files$selectedFile2 === void 0 ? void 0 : _files$selectedFile2.id), {
       "_method": "DELETE"
     }, {
       headers: {
@@ -29012,7 +29075,8 @@ var FileManager = function FileManager() {
         return _setInfoOpen(!infoOpen);
       },
       file: files[selectedFile],
-      onDeleteFile: onDeleteFile
+      onDeleteFile: onDeleteFile,
+      onDownloadFile: onDownloadFile
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(ModalPassword, {
       data: files[selectedFile],
       setOpen: setModalOpen,
