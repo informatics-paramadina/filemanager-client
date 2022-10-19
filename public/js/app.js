@@ -28953,7 +28953,7 @@ var FileManager = function FileManager() {
       var link = document.createElement('a');
       console.log(res.headers);
       link.href = href;
-      link.setAttribute('download', res.headers['content-disposition'].split('filename=')[1]);
+      link.setAttribute('download', objFile === null || objFile === void 0 ? void 0 : objFile.filename);
       document.body.appendChild(link);
       link.click();
       console.log(res.data);
